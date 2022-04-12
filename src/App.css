@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&family=Roboto+Condensed:wght@300&display=swap');
+
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: rgb(248,249,250)
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}

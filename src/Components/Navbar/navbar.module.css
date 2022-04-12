@@ -1,0 +1,26 @@
+.navbar{
+    
+    background-color: rgb(29,53,87);
+    height: 40px;
+    width: 100%;
+}
+
+.ul{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+}
+
+.icon{
+    width: 1.2rem;
+    height: 1.2rem;
+    padding-right: 5px;
+    
+}
