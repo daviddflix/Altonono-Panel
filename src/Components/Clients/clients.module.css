@@ -5,3 +5,13 @@
     left: 20%;
 
 } 
+
+.grid{
+    position: relative;
+    top: 2rem;
+    width: 90%;
+    height: 500px;
+    left: 2rem;
+    border: 1px solid;
+    border-radius: 5px;
+}
