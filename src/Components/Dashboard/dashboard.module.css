@@ -3,5 +3,59 @@
     height: 100vh;
     position: relative;
     left: 20%;
-
 } 
+
+.maincontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title{
+    position: relative;
+    right: 25rem;
+    top: 1rem;
+    color: rgb(47,69,80);
+}
+
+.box1{
+    margin: 2rem;
+    width: 70%;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.box2{
+   
+    width: 80%;
+    height: 277px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.box_title{
+    border-bottom: 1px solid;
+    border-color: rgb(233,236,239);
+    padding: 10px;
+    color: rgb(47,69,80);
+}
+
+.link{
+    text-decoration: none;
+    padding: 10px;
+}
+
+.link:hover{
+    color: rgb(128,161,212);
+}
+
+.icon{
+    padding-right: 6px;
+}
+
+.containerIcons{
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+}

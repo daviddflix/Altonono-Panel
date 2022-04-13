@@ -1,0 +1,64 @@
+.main{
+    width: 80%;
+    height: 100vh;
+    position: relative;
+    left: 20%;
+} 
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title{
+    position: relative;
+    right: 25rem;
+    top: 1rem;
+    color: rgb(47,69,80);
+} 
+
+.boxInput{
+    margin: 2rem;
+    width: 70%;
+    height: 40px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.input{
+    outline: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.2rem;
+    padding-left: 1rem;
+    
+}
+
+.icon{
+    width: 1.5rem;
+    height: 1.5rem;
+    position: relative;
+    left:45rem;
+    bottom: 2rem;   
+
+}
+
+ .grid{
+    height: 400px;
+    width: 90%;
+    position: relative;
+    top: 1rem;
+   
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+
