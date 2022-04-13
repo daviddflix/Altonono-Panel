@@ -24,7 +24,7 @@
 .box1{
     margin: 6rem;
     width: 30%;
-    height: 300px;
+    height: 320px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -42,6 +42,7 @@
     margin: 1rem;
     position: relative;
     right: 1rem;
+    font-size: 1rem;
 }
 
 .button{
