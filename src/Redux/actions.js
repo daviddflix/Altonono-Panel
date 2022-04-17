@@ -1,37 +1,81 @@
-// const axios = require('axios').default;
+import swal from 'sweetalert'
 
-// export const GET_COUNTRY = 'GET_COUNTRY'
-// export const GET_DETAILS = 'GET_DETAILS'
-// export const  GET_All = ' GET_All'
-// export const POST = 'POST'
-// export const FILTER_CONTINENT = 'FILTER_CONTINENT'
-// export const FILTER_POPULATION = 'FILTER_POPULATION'
-// export const FILTERAZ = 'FILTERAZ'
+export const GET_USERS = 'GET_USERS'
+export const CREDENTIAL = 'CREDENTIAL'
+export const PAYMENT_DETAIL = 'PAYMENT_DETAIL'
+const axios = require('axios').default;
 
-// export function getCountries (title){
 
-//     if(title){
-//        return async function (dispatch){
-//           try {
-//                const res = await axios.get(`http://localhost:3001/countries?name=${title}`);
-//                console.log(res)
-//                return dispatch({ type: GET_COUNTRY, payload: res.data });
-//            } catch (err) {
-//                return console.error(err);
-//            }
+export function getUsers (){
+       return async function (dispatch){
+          try {
+               const res = await axios.get('https://deviaje.herokuapp.com/getusers');
+               console.log('res',res)
+               return dispatch({ type: GET_USERS, payload: res.data });
+           } catch (err) {
+               return console.error('error',err);
+           }
                
-//        } 
-//     }
+       } 
     
-//  }
+    
+ }
 
-//  export function getDetail(idPais){
+
+//  export function accessAdmin (payload){
 //     return async function (dispatch){
-//        const data = await fetch(`http://localhost:3001/countries/${idPais}`)
-//        const info = await data.json()
-//        return dispatch({ type: GET_DETAILS, payload: info })
-//     }        
-//  }
+//         console.log('payload createAdmin',payload)
+//        try {
+//             const res = await axios.get('http://localhost:4001/createAdmin');
+//             const creds = res.data
+          
+//             if(JSON.stringify(creds) === JSON.stringify(payload)){
+//                 dispatch({ type: CREDENTIAL, payload: true});
+//             } else {
+//                 return false
+//             }
+//         } catch (err) {
+//             return console.error('errorAdmin',err);
+//         }
+            
+//     } 
+ 
+ 
+// }
+
+export function accessAdmin (payload){
+   
+    return function(dispatch){
+        fetch('https://deviaje.herokuapp.com/createAdmin')
+        .then(res => res.json())
+        .then(data => {
+            const datapay = Object.values(payload) 
+            const creds = Object.values(data)
+           
+            if(JSON.stringify(creds) === JSON.stringify(datapay)){
+                dispatch({ type: CREDENTIAL, payload: true});
+    
+            } else {
+                swal('Wrong Credentials')
+            }
+        })
+        .catch(err => {
+            console.log('errorAdmin', err)
+        })
+    }
+}
+
+export function paymentDetail(){
+    return async function (dispatch){
+        try {
+            fetch('https://deviaje.herokuapp.com/getclientdetails')
+            .then(res => res.json())
+            .then(data => dispatch({type: PAYMENT_DETAIL, payload: data}))
+        } catch (error) {
+            console.log('errorpayment', error)
+        }
+    } 
+}
 
 //  export function getAll (){
 //   return async function (dispatch){
