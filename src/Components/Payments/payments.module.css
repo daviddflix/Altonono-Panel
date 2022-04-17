@@ -5,3 +5,27 @@
     left: 20%;
 
 } 
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.title{
+    position: relative;
+    right: 25rem;
+    top: 1rem;
+    color: rgb(47,69,80);
+} 
+
+.grid{
+    position: relative;
+    top: 2rem;
+    width: 90%;
+    height: 500px;
+    left: 2rem;
+    border: 1px solid;
+    border-radius: 5px;
+}

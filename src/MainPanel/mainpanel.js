@@ -1,10 +1,15 @@
 import s from './mainpanel.module.css'
 import { useEffect, useState } from 'react'
-
+import { useDispatch } from 'react-redux';
+import { accessAdmin } from '../Redux/actions';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import swal from 'sweetalert'
+import InsidePanel from '../Components/InsidePanel/insidepanel';
 
 const MainPanel = () => {
 
-
+   const dispatch= useDispatch()
     useEffect(()=> {
         document.title='Panel Admin - DeViaje.com'
     })
@@ -13,10 +18,16 @@ const MainPanel = () => {
   const [formValues, setFormValues] = useState(intialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [loading, setLoading] = useState(true);
+  const history = useHistory()
+  const admin = useSelector(state => state.admin)
+  console.log(admin)
+  const submit = async () => {
 
-//   const submit = () => {
-//     console.log(formValues);
-//   };
+   dispatch(accessAdmin(formValues))
+    setFormValues({ email: "", password: "" });
+      
+  };
 
   //input change handler
   const handleChange = (e) => {
@@ -53,51 +64,49 @@ const MainPanel = () => {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmitting) {
-        console.log(true);
+      submit()
     }
   }, [formErrors, isSubmitting]);
 
   return (
-    <div className={s.main}>
-       <div className={s.container}>
-           <h1 className={s.title}>Panel Admin</h1>
-         <div className={s.box1}>
-         <h2 style={{color:'rgb(47,69,80)', margin: '1rem'}}>Enter your Admin Credential</h2>
-      {Object.keys(formErrors).length === 0 && isSubmitting && (
-        <span>Form submitted successfully</span>
-      )}
-      <form onSubmit={handleSubmit} noValidate>
-        <div className={s.boxInput}>
-          <label htmlFor="email">Email</label>
-          <input
-            className={s.input}
-            type="email"
-            name="email"
-            id="email"
-            value={formValues.email}
-            onChange={handleChange}
-          />
-          {formErrors.email && <span>{formErrors.email}</span>}
-        </div>
+    !admin? <div className={s.main}>
+    <div className={s.container}>
+        <h1 className={s.title}>Panel Admin</h1>
+      <div className={s.box1}>
+      <h2 style={{color:'rgb(47,69,80)', margin: '1rem'}}>Enter your Admin Credential</h2>
 
-        <div className={s.boxInput}>
-          <label htmlFor="password">Password</label>
-          <input
-            className={s.input}
-            type="password"
-            name="password"
-            id="password"
-            value={formValues.password}
-            onChange={handleChange}
-          />
-          {formErrors.password && <span>{formErrors.password}</span>}
-        </div>
+   <form onSubmit={handleSubmit} noValidate>
+     <div className={s.boxInput}>
+       <label htmlFor="email">Email</label>
+       <input
+         className={s.input}
+         type="email"
+         name="email"
+         id="email"
+         value={formValues.email}
+         onChange={handleChange}
+       />
+       {formErrors.email && <span>{formErrors.email}</span>}
+     </div>
 
-        <button className={s.button} type="submit">Sign In</button>
-      </form>
-         </div>
-       </div>
+     <div className={s.boxInput}>
+       <label htmlFor="password">Password</label>
+       <input
+         className={s.input}
+         type="password"
+         name="password"
+         id="password"
+         value={formValues.password}
+         onChange={handleChange}
+       />
+       {formErrors.password && <span>{formErrors.password}</span>}
+     </div>
+
+     <button className={s.button} type="submit">Sign In</button>
+   </form>
+      </div>
     </div>
+ </div> : <InsidePanel/>
   );
 };
 

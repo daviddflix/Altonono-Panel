@@ -1,11 +1,14 @@
 import s from './dashboard.module.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {NavLink} from 'react-router-dom'
 import {FaUser} from 'react-icons/fa'
 import {MdPayment} from 'react-icons/md'
 import { DataGrid } from '@mui/x-data-grid';
+import Spinner from '../spinner/spinner'
 
 export default function Dashboard(){
+
+     const [users, setUsers] = useState([])
 
 useEffect(() => {
      document.title = 'Dashboard - DeViaje.com'
@@ -13,36 +16,40 @@ useEffect(() => {
 
 const columns = [
      { field: 'id', headerName: 'ID', width: 70 },
-     { field: 'firstName', headerName: 'First name', width: 130 },
-     { field: 'lastName', headerName: 'Last name', width: 130 },
-     {
-       field: 'age',
-       headerName: 'Age',
-       type: 'number',
-       width: 90,
-     },
-     {
-       field: 'fullName',
-       headerName: 'Full name',
-       description: 'This column has a value getter and is not sortable.',
-       sortable: false,
-       width: 160,
-       valueGetter: (params) =>
-         `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-     },
+     { field: 'Username', headerName: 'Username', width: 130 },
+     { field: 'Email', headerName: 'Email', width: 130 },
+     { field: 'Birthday', headerName: 'Birthday', width: 130 },
+     
    ];
    
    const rows = [
-     { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-     { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-     { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-     { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-     { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-     { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+     { id: 1, Username: '', Email: '', Birthday: ''  },
+     { id: 2, Username: '', Email: '', Birthday: '' },
+    
    ];
+
+   useEffect(()=> {
+     const fetchUsers = async () => {
+       try {
+       const res = await fetch('https://deviaje.herokuapp.com/getusers')
+      const data = await res.json()
+      setUsers(data)
+      console.log(data)
+      } catch (error) {
+         console.log('fetchUsers', error)
+       }
+     }
+     fetchUsers()
+    }, [])
+       
+      const trim = users?.map(p => {
+        return{
+         Birthday: p?.birthday,
+         Email: p?.mail,
+         Username: p?.username,
+         id: p?.id,
+        }
+      })
 
    return(
         <div className={s.main}>
@@ -69,13 +76,16 @@ const columns = [
                     <h3 className={s.box_title}>Activity</h3>
                     <h6 style={{padding:'10px', fontSize:'13px'}}>New Clients</h6>
                     <div style={{ height: 200, width: '100%' }}>
-                         <DataGrid
-                         rows={rows}
+                    
+                        <DataGrid
+                         rows={trim}
                          columns={columns}
                          pageSize={2}
                          rowsPerPageOptions={[2]}
-                        
+                         checkboxSelection
+                         disableSelectionOnClick
                          />
+                         
                     </div>
                </div>   
         

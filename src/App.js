@@ -6,6 +6,7 @@ import Payments from './Components/Payments/payments';
 import Dashboard from './Components/Dashboard/panel';
 import Search from './Components/Search/search';
 import MainPanel from './MainPanel/mainpanel';
+import PrivateRoutes from './Privateroutes';
 
 function App() {
   return (
@@ -18,22 +19,22 @@ function App() {
   <MainPanel/>
   </Route>
   
-<Route exact path='/clients'>
+<PrivateRoutes exact path='/clients'>
   <Clients/>
-  </Route>
+  </PrivateRoutes>
  
-  <Route exact path='/dashboard'>
+  <PrivateRoutes exact path='/dashboard'>
   <Dashboard/>
-  </Route>
+  </PrivateRoutes>
 
   
-  <Route exact  path='/payments'>
+  <PrivateRoutes exact  path='/payments'>
   <Payments/>
-  </Route>
+  </PrivateRoutes>
 
-  <Route exact  path='/search'>
+  <PrivateRoutes exact  path='/search'>
   <Search/>
-  </Route>
+  </PrivateRoutes>
 
 
 
