@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom'
 import './App.css'
-import Clients from './Components/Clients/clients'; 
+import Users from './Components/Users/users'; 
 import Navbar from './Components/Navbar/navbar';
 import Payments from './Components/Payments/payments';
 import Dashboard from './Components/Dashboard/panel';
@@ -20,7 +20,7 @@ function App() {
   </Route>
   
 <PrivateRoutes exact path='/clients'>
-  <Clients/>
+  <Users/>
   </PrivateRoutes>
  
   <PrivateRoutes exact path='/dashboard'>

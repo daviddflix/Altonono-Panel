@@ -19,9 +19,9 @@
 }
 
 .box1{
-    margin: 2rem;
+    margin: 1rem;
     width: 70%;
-    height: 200px;
+    height: 180px;
     background-color: white;
     border-radius: 5px;
 }
@@ -29,9 +29,13 @@
 .box2{
    
     width: 80%;
-    height: 277px;
+    height: 310px;
     background-color: white;
     border-radius: 5px;
+}
+
+.insidebox{
+    display: flex;
 }
 
 .box_title{
@@ -58,4 +62,32 @@
     display: flex;
     flex-direction: column;
     margin: 2rem;
+}
+
+.graphbox{
+    display: flex;
+}
+
+.graph{
+    display: flex;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 2rem;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.index{
+    margin: 5px;
+    color: green;
+}
+
+.graphTitle{
+    color: rgb(47,69,80);
+}
+
+.button{
+    position: relative;
+    top: 3px;
+    left: 30.5rem;
 }
