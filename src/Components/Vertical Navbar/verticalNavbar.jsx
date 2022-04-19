@@ -21,12 +21,12 @@ export default function VerticalNavbar (){
 
                <NavLink to='/clients' activeClassName={s.active} className={s.link}>
                    <FaUser className={s.icon}/>
-                  Clients
+                  Users
                </NavLink>
 
                <NavLink to='/search' activeClassName={s.active} className={s.link}>
                    <BsSearch className={s.icon}/>
-                  Search 
+                  Search Travelers
                </NavLink>
 
         

@@ -13,7 +13,6 @@ const columns = [
   {
     field: 'Email',
     headerName: 'Email',
-    type: 'email',
     width: 210,
     editable: true,
   },
@@ -39,8 +38,8 @@ export default function InsidePanel() {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[1]}
+        pageSize={2}
+        rowsPerPageOptions={[2]}
        
         disableSelectionOnClick
       />

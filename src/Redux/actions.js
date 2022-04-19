@@ -1,8 +1,9 @@
 import swal from 'sweetalert'
-
+import Cookies from 'universal-cookie';
 export const GET_USERS = 'GET_USERS'
 export const CREDENTIAL = 'CREDENTIAL'
 export const PAYMENT_DETAIL = 'PAYMENT_DETAIL'
+export const PASSANGERS = 'PASSANGERS'
 const axios = require('axios').default;
 
 
@@ -10,7 +11,6 @@ export function getUsers (){
        return async function (dispatch){
           try {
                const res = await axios.get('https://deviaje.herokuapp.com/getusers');
-               console.log('res',res)
                return dispatch({ type: GET_USERS, payload: res.data });
            } catch (err) {
                return console.error('error',err);
@@ -22,46 +22,24 @@ export function getUsers (){
  }
 
 
-//  export function accessAdmin (payload){
-//     return async function (dispatch){
-//         console.log('payload createAdmin',payload)
-//        try {
-//             const res = await axios.get('http://localhost:4001/createAdmin');
-//             const creds = res.data
-          
-//             if(JSON.stringify(creds) === JSON.stringify(payload)){
-//                 dispatch({ type: CREDENTIAL, payload: true});
-//             } else {
-//                 return false
-//             }
-//         } catch (err) {
-//             return console.error('errorAdmin',err);
-//         }
-            
-//     } 
- 
- 
-// }
-
 export function accessAdmin (payload){
-   
+     console.log(payload)
+     const admin = {mail: 'deviajepuntocom12@gmail.com', password: '123456'}
+     const dataAdmin = Object.values(admin) 
+     const dataPayload = Object.values(payload)
+     const cookies = new Cookies()
     return function(dispatch){
-        fetch('https://deviaje.herokuapp.com/createAdmin')
-        .then(res => res.json())
-        .then(data => {
-            const datapay = Object.values(payload) 
-            const creds = Object.values(data)
-           
-            if(JSON.stringify(creds) === JSON.stringify(datapay)){
-                dispatch({ type: CREDENTIAL, payload: true});
-    
-            } else {
-                swal('Wrong Credentials')
-            }
-        })
-        .catch(err => {
-            console.log('errorAdmin', err)
-        })
+          try {
+            if(JSON.stringify(dataAdmin) === JSON.stringify(dataPayload)){
+                                dispatch({ type: CREDENTIAL, payload: true});
+                                cookies.set('mail', payload.mail, {path: '/'})
+                                cookies.set('password', payload.password, {path: '/'})
+                            } else {
+                                swal('Wrong Credentials')
+                            }
+          } catch (error) {
+              console.log('errorAdmin', error)
+          }
     }
 }
 
@@ -77,59 +55,48 @@ export function paymentDetail(){
     } 
 }
 
-//  export function getAll (){
-//   return async function (dispatch){
-//          try {
-//               const res = await axios.get(`http://localhost:3001/countries`);
-//               return dispatch({ type: GET_All, payload: res.data });
-//           } catch (err) {
-//               return console.error(err);
-//           }
-              
-//       } 
-   
-   
-// } 
+export function getPassangers(payload){
+    return async function (dispatch){
+        try {
+            if(payload){
+                fetch(`https://deviaje.herokuapp.com/searchPassengers?name=${payload}`)
+                .then(res => res.json())
+                .then(data => dispatch({type: PASSANGERS, payload: data}))
+            } else{
+                fetch(`https://deviaje.herokuapp.com/searchPassengers`)
+                .then(res => res.json())
+                .then(data => dispatch({type: PASSANGERS, payload: data}))
+            }
+           
+        } catch (error) {
+            console.log('errorpassangers', error)
+    } 
+}
+}
 
- 
 
-//  export function postAcitvity (nombre, dificultad, duracion, temporada, countries){
-  
-//           try {
-//                const res =  axios.post(`http://localhost:3001/activity`, {
-//                   nombre, dificultad, duracion, temporada, countries
-//                });
-//                 return res
-//            } catch (err) {
-//                return console.error(err);
-//            }
-               
-       
+
+  // fetch('https://deviaje.herokuapp.com/createAdmin')
+        // .then(res => res.json())
+        // .then(data => {
+        //     const datapay = Object.values(payload) 
+        //     const creds = Object.values(data)
+           
+        //     if(JSON.stringify(creds) === JSON.stringify(datapay)){
+        //         dispatch({ type: CREDENTIAL, payload: true});
     
-    
-//  } 
+        //     } else {
+        //         swal('Wrong Credentials')
+        //     }
+        // })
 
-
-//  export function filterByContinent(value){
-//      return{
-//          type:FILTER_CONTINENT,
-//          payload: value
-//      }
-//  }
- 
-//  export function filterByPopulation(value){
-//      return{
-//        type: FILTER_POPULATION,
-//        payload: value
-//      }
-//  }
-
-//  export function filterAz(value){
-//      return{
-//          type: FILTERAZ,
-//          payload: value
-//      }
-//  }
-
-
-
+        // try{
+        //     if(JSON.stringify(dataAdmin) === JSON.stringify(dataPayload)){
+        //                 dispatch({ type: CREDENTIAL, payload: true});
+        //             } else {
+        //                 swal('Wrong Credentials')
+        //             }
+        //     }
+        //     catch(err => {
+        //         console.log('errorAdmin', err)
+        //     })

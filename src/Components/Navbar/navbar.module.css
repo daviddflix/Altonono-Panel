@@ -24,3 +24,11 @@
     padding-right: 5px;
     
 }
+
+.iconMail{
+    color: white;
+}
+
+.iconMail:hover{
+    color: rgb(131,197,190);
+}

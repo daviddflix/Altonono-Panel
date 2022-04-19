@@ -2,10 +2,9 @@ import s from './mainpanel.module.css'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { accessAdmin } from '../Redux/actions';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import swal from 'sweetalert'
-import InsidePanel from '../Components/InsidePanel/insidepanel';
+import { useHistory } from 'react-router-dom';
+
 
 const MainPanel = () => {
 
@@ -13,21 +12,25 @@ const MainPanel = () => {
     useEffect(()=> {
         document.title='Panel Admin - DeViaje.com'
     })
-  const intialValues = { email: "", password: "" };
+  const intialValues = { mail: "", password: "" };
+ 
+
+  
 
   const [formValues, setFormValues] = useState(intialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [loading, setLoading] = useState(true);
-  const history = useHistory()
+ 
+   const history = useHistory()
   const admin = useSelector(state => state.admin)
   console.log(admin)
-  const submit = async () => {
 
+  const submit = async () => {
    dispatch(accessAdmin(formValues))
-    setFormValues({ email: "", password: "" });
-      
+    setFormValues({ mail: "", password: "" });
+      history.push('/dashboard')
   };
+
 
   //input change handler
   const handleChange = (e) => {
@@ -47,10 +50,10 @@ const MainPanel = () => {
     let errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-    if (!values.email) {
-      errors.email = "Cannot be blank";
-    } else if (!regex.test(values.email)) {
-      errors.email = "Invalid email format";
+    if (!values.mail) {
+      errors.mail = "Cannot be blank";
+    } else if (!regex.test(values.mail)) {
+      errors.mail = "Invalid mail format";
     }
 
     if (!values.password) {
@@ -69,7 +72,7 @@ const MainPanel = () => {
   }, [formErrors, isSubmitting]);
 
   return (
-    !admin? <div className={s.main}>
+    <div className={s.main}>
     <div className={s.container}>
         <h1 className={s.title}>Panel Admin</h1>
       <div className={s.box1}>
@@ -77,16 +80,16 @@ const MainPanel = () => {
 
    <form onSubmit={handleSubmit} noValidate>
      <div className={s.boxInput}>
-       <label htmlFor="email">Email</label>
+       <label htmlFor="mail">Mail</label>
        <input
          className={s.input}
-         type="email"
-         name="email"
-         id="email"
-         value={formValues.email}
+         type="mail"
+         name="mail"
+         id="mail"
+         value={formValues.mail}
          onChange={handleChange}
        />
-       {formErrors.email && <span>{formErrors.email}</span>}
+       {formErrors.mail && <span>{formErrors.mail}</span>}
      </div>
 
      <div className={s.boxInput}>
@@ -106,7 +109,7 @@ const MainPanel = () => {
    </form>
       </div>
     </div>
- </div> : <InsidePanel/>
+ </div>
   );
 };
 

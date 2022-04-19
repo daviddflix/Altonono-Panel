@@ -1,9 +1,10 @@
-import { CREDENTIAL, GET_USERS, PAYMENT_DETAIL } from "./actions"
+import { CREDENTIAL, GET_USERS, PASSANGERS, PAYMENT_DETAIL } from "./actions"
 
 const InicialState ={
     payments: [],
     users:[],
-    admin: ''
+    admin: '',
+    passangers: []
 }
 
 
@@ -27,6 +28,12 @@ const InicialState ={
                  ...state,
                  payments: action.payload
              }
+
+        case PASSANGERS:
+            return{
+                ...state,
+                passangers: action.payload
+            }
      
          default:
              return {...state};
