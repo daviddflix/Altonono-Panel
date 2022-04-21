@@ -18,7 +18,7 @@ export default function Navbar (){
                <NavLink to='/' className={s.link}>
               < MdAdminPanelSettings className={s.icon}/>
                   Panel Administration
-                   <Badge badgeContent={1} color="primary" style={{marginLeft:'1rem'}}>
+                   <Badge badgeContent={0} color="primary" style={{marginLeft:'1rem'}}>
                     <MailIcon className={s.iconMail} onClick={handleMailIcon}/>
                   </Badge>
                </NavLink>
