@@ -4,7 +4,40 @@ export const GET_USERS = 'GET_USERS'
 export const CREDENTIAL = 'CREDENTIAL'
 export const PAYMENT_DETAIL = 'PAYMENT_DETAIL'
 export const PASSANGERS = 'PASSANGERS'
+
+export const  GET_All_PAGOS = 'GET_All_PAGOS'
+export const  GET_All_USERS = 'GET_All_USERS'
 const axios = require('axios').default;
+
+const url = 'https://hit-pasta.herokuapp.com/'
+
+export function getAllPagos (){
+    return async function (dispatch){
+       try {
+            const res = await axios.get(`${url}getallpagos`);
+            return dispatch({ type: GET_All_PAGOS, payload: res.data });
+        } catch (err) {
+            return console.error('error EN PAGOS',err);
+        }
+            
+    } 
+ 
+ 
+}
+
+export function getAllUsers (){
+    return async function (dispatch){
+       try {
+            const res = await axios.get(`${url}getuser`);
+            return dispatch({ type: GET_All_USERS, payload: res.data });
+        } catch (error) {
+            return console.error('error EN getAllUsers',error);
+        }
+            
+    } 
+ 
+ 
+}
 
 
 export function getUsers (){
@@ -73,6 +106,8 @@ export function getPassangers(payload){
     } 
 }
 }
+
+
 
 
 

@@ -10,7 +10,7 @@ const MainPanel = () => {
 
    const dispatch= useDispatch()
     useEffect(()=> {
-        document.title='Panel Admin - DeViaje.com'
+        document.title='Panel Admin'
     })
   const intialValues = { mail: "", password: "" };
  

@@ -14,20 +14,22 @@ export default function VerticalNavbar (){
                   Dashboard 
                </NavLink>
 
+               
+               <NavLink to='/search' activeClassName={s.active} className={s.link}>
+                   <BsSearch className={s.icon}/>
+                  Pedidos
+               </NavLink>
+
                <NavLink to='/payments' activeClassName={s.active} className={s.link}>
                 <MdPayment className={s.icon}/>
-                  payments
+                  Pagos
                </NavLink>
 
                <NavLink to='/clients' activeClassName={s.active} className={s.link}>
                    <FaUser className={s.icon}/>
-                  Users
+                  Clientes
                </NavLink>
 
-               <NavLink to='/search' activeClassName={s.active} className={s.link}>
-                   <BsSearch className={s.icon}/>
-                  Search Travelers
-               </NavLink>
 
         
            </ul>

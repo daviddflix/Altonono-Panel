@@ -5,7 +5,7 @@ import {FaUser} from 'react-icons/fa'
 import {MdPayment} from 'react-icons/md'
 import { DataGrid } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux'
-import { getUsers, paymentDetail } from '../../Redux/actions'
+import { getAllPagos, getAllUsers } from '../../Redux/actions'
 import Cookies from 'universal-cookie'
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -17,9 +17,11 @@ export default function Dashboard(){
   const cookies = new Cookies() 
   console.log(cookies.get('mail'))
   console.log(cookies.get('password'))
+  
+  
+  const pagos = useSelector(state => state.pagos)
   const users = useSelector(state => state.users)
-  const payments = useSelector(state => state.payments)
-
+console.log('users', users)
 
   const handleLogOut = () => {
      cookies.remove('mail', {path:'/'})
@@ -28,17 +30,18 @@ export default function Dashboard(){
   }
    
 useEffect(() => {
-     document.title = 'Dashboard - DeViaje.com'
+     document.title = 'Dashboard'
 })
 
 
 useEffect(()=> {
-  dispatch(getUsers())
-  dispatch(paymentDetail())
+  dispatch(getAllPagos())
+  dispatch(getAllUsers())
 }, [dispatch])
- const init = 0
- const amount = payments.map(p => p.monto)
- const pays = amount.reduce((a,b) => Number(a) + Number(b), init)
+
+ 
+ const amount = pagos.map(p => p.monto)
+ const netAmount = amount.reduce((a,b) => a + b, 0)
  
 
 const columns = [
@@ -55,19 +58,19 @@ const columns = [
    ];
    
        
-      const trim = users?.map(p => {
-        return{
-          Birthday: p?.birthday,
-          Email: p?.mail,
-          Username: p?.username,
-          id: p?.id,
-          City: p?.city,
-          State: p?.state,
-          PhoneNumber: p?.phonenumber,
-          DNI: p?.dni,
-          Points: p?.points,
-         }
-      })
+      // const trim = users?.map(p => {
+      //   return{
+      //     Birthday: p?.birthday,
+      //     Email: p?.mail,
+      //     Username: p?.username,
+      //     id: p?.id,
+      //     City: p?.city,
+      //     State: p?.state,
+      //     PhoneNumber: p?.phonenumber,
+      //     DNI: p?.dni,
+      //     Points: p?.points,
+      //    }
+      // })
 
    return(
         <div className={s.main}>
@@ -82,23 +85,23 @@ const columns = [
                   <div className={s.containerIcons}>
                   <NavLink to='/payments' className={s.link}>
                 <MdPayment className={s.icon}/>
-                  payments
+                  Pagos
                </NavLink>
 
                <NavLink to='/clients' className={s.link}>
                    <FaUser className={s.icon}/>
-                  Users
+                 Clientes
                </NavLink>
                   </div>
 
                   <div className={s.graphbox}>
                      <div className={s.graph}>
-                     <span className={s.graphTitle}>Revenue</span>
-                     <p className={s.index}>${nFormatter(pays)}</p>
+                     <span className={s.graphTitle}>Total</span>
+                     <p className={s.index}>${nFormatter(netAmount)}</p>
                     </div>
 
                      <div className={s.graph}>
-                     <span className={s.graphTitle}>Users</span>
+                     <span className={s.graphTitle}>Clientes</span>
                      <p className={s.index}>{users.length}</p>
                     </div>
 
@@ -107,17 +110,16 @@ const columns = [
                </div>
 
                <div className={s.box2}>
-                    <h3 className={s.box_title}>Activity</h3>
-                    <h6 style={{padding:'10px', fontSize:'13px'}}>New Users</h6>
+                    <h3 className={s.box_title}>Pedidos recientes</h3>
                     <div style={{ height: 230, width: '100%' }}>
                     
-                        <DataGrid
-                         rows={trim}
-                         columns={columns}
+                        {/* <DataGrid
+                         rows={0}
+                         columns={0}
                          pageSize={2}
                          rowsPerPageOptions={[2]}
                          disableSelectionOnClick
-                         />
+                         /> */}
                          
                     </div>
                </div>   

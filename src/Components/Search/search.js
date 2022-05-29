@@ -16,7 +16,7 @@ export default function Search(){
     }
 
     useEffect(() => {
-        document.title = 'Search - DeViaje.com'
+        document.title = 'Busqueda'
    })
 
     const handleSearch = (e) => {

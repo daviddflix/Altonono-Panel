@@ -7,15 +7,13 @@ import Spinner from '../spinner/spinner';
 
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 30 },
-  { field: 'Username', headerName: 'Username', width: 90 }, 
+  { field: 'id', headerName: 'ID', width: 50 },
+  { field: 'Nombre', headerName: 'Nombre', width: 100 }, 
   { field: 'Email', headerName: 'Email', width: 180 },
-  { field: 'Birthday', headerName: 'Birthday', width: 130 },
-  { field: 'City', headerName: 'City', width: 120 },
-  { field: 'State', headerName: 'State', width: 90 },
-  { field: 'PhoneNumber', headerName: 'PhoneNumber', width: 120 },
-  { field: 'DNI', headerName: 'DNI', width: 90 },
-  { field: 'Points', headerName: 'Points', width: 90 },
+  { field: 'Numero', headerName: 'Numero', width: 120 },
+  { field: 'zona', headerName: 'Zona', width: 90 },
+  { field: 'Direccion', headerName: 'Direccion', width: 110 },
+  
 ];    
 
 export default function Users(){
@@ -25,39 +23,22 @@ export default function Users(){
     const clients = useSelector(state => state.users)
     
      useEffect(() => {
-          document.title = 'Clients - DeViaje.com'
+          document.title = 'Clientes'
      })
 
      useEffect(()=> {
        dispatch(getUsers())
      }, [dispatch])
 
-     
-
-    //  useEffect(()=> {
-    //   const fetchUsers = async () => {
-    //     try {
-    //     const res = await fetch('https://deviaje.herokuapp.com/getusers')
-    //    const data = await res.json()
-    //    setUsers(data) 
-    //    } catch (error) {
-    //       console.log('fetchUsers', error)
-    //     }
-    //   }
-    //   fetchUsers()
-    //  }, [])
         
        const trim = clients?.map(p => {
          return{
-          Birthday: p?.birthday,
-          Email: p?.mail,
-          Username: p?.username,
+          Email: p?.email,
+          Nombre: p?.name,
           id: p?.id,
-          City: p?.city,
-          State: p?.state,
-          PhoneNumber: p?.phonenumber,
-          DNI: p?.dni,
-          Points: p?.points,
+          Numero: p?.phonenumber,
+          zona: p?.zona,
+          Direccion: p?.address,
          }
        })
       
@@ -65,13 +46,13 @@ export default function Users(){
      return(
       <div className={s.main}>
         <div className={s.container}>
-        <h1 className={s.title}>Clients</h1>
+        <h1 className={s.title}>Clientes</h1>
         <div className={s.grid}>
       
       <DataGrid
         rows={clients.length===0? <Spinner/> : trim }
         columns={columns}
-        disableSelectionOnClick
+       
      />
       
     

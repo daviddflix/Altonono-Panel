@@ -17,14 +17,14 @@ export default function Navbar (){
            <ul className={s.ul}>
                <NavLink to='/' className={s.link}>
               < MdAdminPanelSettings className={s.icon}/>
-                  Panel Administration
-                   <Badge badgeContent={0} color="primary" style={{marginLeft:'1rem'}}>
-                    <MailIcon className={s.iconMail} onClick={handleMailIcon}/>
-                  </Badge>
+                  Panel Administracion
                </NavLink>
 
                <NavLink to='/' className={s.link}>
-                  DeViaje.com
+               <Badge badgeContent={'0'} color="primary" style={{marginRight:'1rem'}}>
+                    <MailIcon className={s.iconMail} onClick={handleMailIcon}/>
+                  </Badge>
+                  Hit Pasta
                </NavLink>
            </ul>
 

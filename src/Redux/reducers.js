@@ -1,39 +1,32 @@
-import { CREDENTIAL, GET_USERS, PASSANGERS, PAYMENT_DETAIL } from "./actions"
+import { GET_All_PAGOS, CREDENTIAL, GET_All_USERS } from "./actions"
 
 const InicialState ={
-    payments: [],
-    users:[],
+    pagos: [],
     admin: '',
-    passangers: []
+    users: []
 }
 
 
  const rootReducer = (state = InicialState, action) => {
     
      switch (action.type) {
-         case GET_USERS:
+         case GET_All_PAGOS:
              return{
                  ...state,
-                 users: action.payload
+                 pagos: action.payload
              }
+        case CREDENTIAL:
+        return{
+            ...state,
+            admin: action.payload
+        }
 
-         case CREDENTIAL: 
-             return{
-                 ...state,
-                 admin: action.payload
-             }
-
-         case PAYMENT_DETAIL:
-             return{
-                 ...state,
-                 payments: action.payload
-             }
-
-        case PASSANGERS:
+        case GET_All_USERS:
             return{
                 ...state,
-                passangers: action.payload
+                users: action.payload
             }
+
      
          default:
              return {...state};

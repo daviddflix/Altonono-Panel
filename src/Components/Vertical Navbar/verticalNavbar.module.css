@@ -1,11 +1,11 @@
 .navbar{
-    background-color: rgb(29,53,87);
+    background-color: #fff;
     height: 100vh;
     width: 20%;
     margin: 0;
     padding: 0;
     position: relative;
-    bottom: 2.8px;
+    bottom: -6px;
 }
 
 .ul{
@@ -17,21 +17,25 @@
 
 .link{
     text-decoration: none;
-    color: white;
+    color: #282828;
     padding: 10px;
+    font-size: 18px;
+    
 }
 
 .link:hover{
-    color: rgb(168,218,220);
+    color: #009ee3
 }
 
 .icon{
     width: 1.2rem;
     height: 1.2rem;
     padding-right: 5px;
+    margin-right:1rem 
+  ;
     
 }
 
 .active{
-    background-color: green;
+    background-color: rgb(168,218,220);
 }

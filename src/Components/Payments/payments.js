@@ -19,7 +19,7 @@ export default function Payments(){
 
 
      useEffect(() => {
-          document.title = 'Payments - DeViaje.com'
+          document.title = 'Pagos'
      })
 
 
