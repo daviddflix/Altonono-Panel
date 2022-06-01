@@ -1,4 +1,4 @@
-import swal from 'sweetalert'
+import Swal from 'sweetalert2'
 import Cookies from 'universal-cookie';
 export const CREDENTIAL = 'CREDENTIAL'
 export const  ADD_ORDERS = 'ADD_ORDER'
@@ -23,7 +23,12 @@ export function accessAdmin (payload){
                                 cookies.set('mail', payload.mail, {path: '/'})
                                 cookies.set('password', payload.password, {path: '/'})
                             } else {
-                                swal('Wrong Credentials')
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Something went wrong!',
+                                  
+                                  })
                             }
           } catch (error) {
               console.log('errorAdmin', error)
