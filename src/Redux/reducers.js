@@ -1,30 +1,30 @@
-import { GET_All_PAGOS, CREDENTIAL, GET_All_USERS } from "./actions"
+import storage from "redux-persist/lib/storage"
+import {ADD_ORDERS, CREDENTIAL, RESET } from "./actions"
 
 const InicialState ={
-    pagos: [],
-    admin: '',
-    users: []
+    admin: false,
+    pedidos: []
 }
 
 
  const rootReducer = (state = InicialState, action) => {
     
      switch (action.type) {
-         case GET_All_PAGOS:
+         case ADD_ORDERS:
              return{
                  ...state,
-                 pagos: action.payload
+                 pedidos: [...state.pedidos, action.payload]
              }
         case CREDENTIAL:
         return{
             ...state,
             admin: action.payload
         }
-
-        case GET_All_USERS:
+    
+        case RESET:
+            storage.removeItem('persist:root')
             return{
-                ...state,
-                users: action.payload
+                admin: false,
             }
 
      

@@ -3,9 +3,8 @@ import { useEffect } from 'react'
 import {NavLink} from 'react-router-dom'
 import {FaUser} from 'react-icons/fa'
 import {MdPayment} from 'react-icons/md'
-import { DataGrid } from '@mui/x-data-grid';
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllPagos, getAllUsers } from '../../Redux/actions'
+import { getAllPagos, getAllUsers, reset } from '../../Redux/actions'
 import Cookies from 'universal-cookie'
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -18,12 +17,9 @@ export default function Dashboard(){
   console.log(cookies.get('mail'))
   console.log(cookies.get('password'))
   
-  
-  const pagos = useSelector(state => state.pagos)
-  const users = useSelector(state => state.users)
-console.log('users', users)
 
   const handleLogOut = () => {
+     dispatch(reset())
      cookies.remove('mail', {path:'/'})
      cookies.remove('password', {path:'/'})
       history.push('/')
@@ -32,30 +28,20 @@ console.log('users', users)
 useEffect(() => {
      document.title = 'Dashboard'
 })
-
-
-useEffect(()=> {
-  dispatch(getAllPagos())
-  dispatch(getAllUsers())
-}, [dispatch])
-
- 
- const amount = pagos.map(p => p.monto)
- const netAmount = amount.reduce((a,b) => a + b, 0)
  
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 30 },
-  { field: 'Username', headerName: 'Username', width: 90 }, 
-  { field: 'Email', headerName: 'Email', width: 210 },
-  { field: 'Birthday', headerName: 'Birthday', width: 130 },
-  { field: 'City', headerName: 'City', width: 120 },
-  { field: 'State', headerName: 'State', width: 90 },
-  { field: 'PhoneNumber', headerName: 'PhoneNumber', width: 120 },
-  { field: 'DNI', headerName: 'DNI', width: 90 },
-  { field: 'Points', headerName: 'Points', width: 90 },
+// const columns = [
+//   { field: 'id', headerName: 'ID', width: 30 },
+//   { field: 'Username', headerName: 'Username', width: 90 }, 
+//   { field: 'Email', headerName: 'Email', width: 210 },
+//   { field: 'Birthday', headerName: 'Birthday', width: 130 },
+//   { field: 'City', headerName: 'City', width: 120 },
+//   { field: 'State', headerName: 'State', width: 90 },
+//   { field: 'PhoneNumber', headerName: 'PhoneNumber', width: 120 },
+//   { field: 'DNI', headerName: 'DNI', width: 90 },
+//   { field: 'Points', headerName: 'Points', width: 90 },
      
-   ];
+//    ];
    
        
       // const trim = users?.map(p => {
@@ -97,12 +83,12 @@ const columns = [
                   <div className={s.graphbox}>
                      <div className={s.graph}>
                      <span className={s.graphTitle}>Total</span>
-                     <p className={s.index}>${nFormatter(netAmount)}</p>
+                     <p className={s.index}>${nFormatter(0)}</p>
                     </div>
 
                      <div className={s.graph}>
                      <span className={s.graphTitle}>Clientes</span>
-                     <p className={s.index}>{users.length}</p>
+                     <p className={s.index}>{0}</p>
                     </div>
 
                   </div>

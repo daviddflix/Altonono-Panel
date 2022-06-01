@@ -7,7 +7,7 @@ export default function PrivateRoutes(props){
  
     const admin = useSelector(state => state.admin)
     
-    if(!admin) return <Redirect to='/'/> 
+    if(admin === false) return <Redirect to='/'/> 
 
     return(
         <Route {...props}/>

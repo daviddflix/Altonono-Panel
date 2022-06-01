@@ -3,6 +3,8 @@
     background-color: #009ee3;
     height: 50px;
     width: 100%;
+    box-shadow:  6px 6px 12px #bebebe,
+             -6px -6px 12px #ffffff;
 }
 
 .ul{
@@ -16,19 +18,20 @@
     text-decoration: none;
     color: white;
     padding: 10px;
+    font-size:20px;
+}
+
+.link:hover{
+    color: rgb(53, 53, 182);
 }
 
 .icon{
     width: 1.2rem;
     height: 1.2rem;
     padding-right: 5px;
+    position: relative;
+    top: 5px;
     
 }
 
-.iconMail{
-    color: white;
-}
 
-.iconMail:hover{
-    color: rgb(131,197,190);
-}

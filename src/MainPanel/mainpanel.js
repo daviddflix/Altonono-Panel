@@ -74,13 +74,13 @@ const MainPanel = () => {
   return (
     <div className={s.main}>
     <div className={s.container}>
-        <h1 className={s.title}>Panel Admin</h1>
+       
       <div className={s.box1}>
       <h2 style={{color:'rgb(47,69,80)', margin: '1rem'}}>Enter your Admin Credential</h2>
 
    <form onSubmit={handleSubmit} noValidate>
      <div className={s.boxInput}>
-       <label htmlFor="mail">Mail</label>
+       <label htmlFor="mail">Email</label>
        <input
          className={s.input}
          type="mail"

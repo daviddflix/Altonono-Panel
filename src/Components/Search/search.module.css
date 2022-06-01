@@ -46,16 +46,14 @@
 
 }
 
- .grid{
-    height: 400px;
+.grid{
+    /* height: 400px; */
     width: 90%;
-    position: relative;
-    top: 1rem;
-   
-    border: 1px solid;
-    border-radius: 5px;
+   display: flex;
+   justify-content: space-around;
+   position: relative;
+   top: 2rem;
 }
-
 
 
 
