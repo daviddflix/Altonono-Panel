@@ -18,7 +18,7 @@ export default function Dashboard(){
   const pedidos = useSelector(state => state.pedidos)
 
   const amount = pedidos? pedidos.map(p => p.monto): 0;
-  const total = amount? amount.reduce((a,b) => a + b, 0) : 0;
+  const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
 
 useEffect(() => {
      document.title = 'Dashboard'

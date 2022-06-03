@@ -69,8 +69,8 @@ export default function Search(){
             <h4>Hora</h4>
             <h4 >Cliente</h4>
             <h4 >Mesa</h4>
-            <h4 >Metodo de Pago</h4>
-            <h4 >Telefono</h4>
+            <h4 className={s.position1}>Metodo de Pago</h4>
+            <h4 className={s.position1} >Telefono</h4>
             <h4>Total</h4>
             </div>
    
