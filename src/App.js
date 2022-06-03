@@ -5,13 +5,17 @@ import Dashboard from './Components/Dashboard/panel';
 import MainPanel from './MainPanel/mainpanel';
 import PrivateRoutes from './Privateroutes';
 import Search from './Components/Search/search'
-
+import {  useState } from 'react';
+import modalContext from './context/modalContext';
+import Detail from './Components/modal/modal';
 
 function App() {
 
+  const [showModal, setShowModal] = useState(false)
+
   return (
     <div> 
-          
+<modalContext.Provider value={{showModal, setShowModal}}>
     <Navbar/>
 <Switch>
 
@@ -27,10 +31,14 @@ function App() {
   <Search/>
   </PrivateRoutes>
 
+  <PrivateRoutes exact  path='/detail/:id'>
+  <Detail/>
+  </PrivateRoutes>
 
 
 
 </Switch>
+</modalContext.Provider>
  </div>
   );
 }

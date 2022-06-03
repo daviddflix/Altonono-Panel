@@ -3,18 +3,22 @@
     height: 100vh;
     position: relative;
     left: 20%;
+   
 } 
 
 .maincontainer{
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+   
+    top: 2rem;
 }
 
 .title{
     position: relative;
-    right: 28rem;
-    top: 0;
+    left: 1rem;
+   
     color: rgb(47,69,80);
 }
 
@@ -24,8 +28,7 @@
     height: 180px;
     background-color: white;
     border-radius: 5px;
-    box-shadow:  6px 6px 12px #bebebe,
-             -6px -6px 12px #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .box2{
@@ -34,8 +37,7 @@
     height: 310px;
     background-color: white;
     border-radius: 5px;
-    box-shadow:  6px 6px 12px #bebebe,
-             -6px -6px 12px #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .insidebox{
@@ -70,20 +72,25 @@
 
 .graphbox{
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .graph{
     display: flex;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     margin: 2rem;
     flex-direction: column;
     padding: 15px;
     border-radius: 5px;
+    width: 100px;
+    height: 50px;
 }
 
 .index{
-    margin: 5px;
+    margin-top: 10px;
     color: green;
+    font-size: 1.1rem;
 }
 
 .graphTitle{
@@ -94,4 +101,31 @@
     position: relative;
     top: 3px;
     left: 30.5rem;
+}
+
+.navlink{
+    text-decoration: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 97.8%;
+    padding: 10px;
+   
+    color: rgb(47,69,80);
+}
+
+.navlink:hover{
+   background-color: #c1c1c1;
+   border-radius: 5px;
+}
+
+.grid{
+   padding: 10px;
+    width: 97.8%;
+   display: flex;
+   justify-content: space-around;
+   position: relative;
+   font-size: 1.1rem;
+ 
+   border-bottom: #c1c1c1 1px solid;
 }

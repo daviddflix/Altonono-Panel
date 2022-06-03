@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 export const CREDENTIAL = 'CREDENTIAL'
 export const  ADD_ORDERS = 'ADD_ORDER'
 export const  RESET = 'RESET'
+export const  GET_DETAILS = 'GET_DETAILS'
 
 const axios = require('axios').default;
 
@@ -51,3 +52,17 @@ export const reset = () => {
         type: RESET
     }
 }
+
+export function getDetails(id){
+    return async function (dispatch){  
+       const res = await axios.get(`${url}details/${id}`)
+       return dispatch({ type: GET_DETAILS, payload: res.data })
+    }        
+ }
+
+ export function getTienda(payload){
+     return async function(dispatch){
+       const res = await axios.post(`${url}online?status=${payload}`)
+       console.log('status store', res.data)
+     }
+ }

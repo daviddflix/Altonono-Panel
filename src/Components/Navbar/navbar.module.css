@@ -1,5 +1,5 @@
 .navbar{
-    
+   
     background-color: #009ee3;
     height: 50px;
     width: 100%;
@@ -32,6 +32,21 @@
     position: relative;
     top: 5px;
     
+}
+
+.iconOnline{
+    color: green;
+    margin-right:5px ;
+}
+
+.iconOffline{
+    color: red;
+    margin-right:5px ;
+}
+
+.log{
+    color: #009ee3;
+    margin-right:5px ;
 }
 
 

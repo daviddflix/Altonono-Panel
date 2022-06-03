@@ -1,0 +1,163 @@
+.main{
+    width: 80%;
+    height: 100vh;
+    position: relative;
+    left: 20%;
+    font-family: 'roboto';
+    color: #282828;
+}
+.arrow{
+    position: relative;
+    top: 1rem;
+    left: 2rem;
+    width: 32px;
+    height: 32px;
+    color: #282828
+}
+
+.submain{
+ display: flex;
+ flex-direction: column;
+ justify-content: space-around;
+ align-items: flex-start;
+ width: 100%;
+
+
+ 
+}
+
+
+
+.container{
+   width: 90%;
+   height: 80vh;
+   border-radius: 5px;
+   margin: 2rem;
+   background-color: #fff;
+}
+
+.header{
+    color: #fff;
+}
+
+.boxClient{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    padding-left: 1rem;
+    padding-bottom: 3rem;
+    padding-top: 1rem;
+}
+
+.boxTable{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+}
+
+.boxNumeroPedido{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 95%;
+    padding-left: 1rem;
+    padding-bottom: 3rem;
+    padding-top: 1rem;
+    border-bottom: 1px solid #f5f6f8;
+}
+
+.boxClientAndTable{
+    width: 100;
+    display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+
+}
+
+.title{
+    color: #ff595a
+}
+
+.arrow2{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    color: #282828;
+    margin: 10px;
+
+}
+
+.mainContainer{
+    width: 100%;
+   position: relative;
+    height: 100%;
+    display: flex; 
+    justify-content: space-between;  
+    border-radius: 5px;
+}
+
+.subcontainer{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.subcontainer2{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #e3d5ca;
+    border-radius: 40px 0px 5px 0px;
+    height: 90%;
+    position: relative;
+    top: 3.1rem;
+    overflow-y: auto;
+}
+
+.iconPerson{
+    width: 25px;
+    height: 25px;
+    margin-right: 1rem;
+   
+    
+   
+}
+
+.boxItems{
+    display: flex;
+    width: 70%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 1rem;
+}
+
+.boxTotal{
+    display: flex;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 1rem;
+    background-color: #04e762;
+    border-radius: 5px;
+}
+
+.items{
+    width: 90%;
+    display: flex;
+    padding: 10px;
+    margin: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    color: #282828;
+    border-bottom: #c1c1c1 1px solid;
+}
+

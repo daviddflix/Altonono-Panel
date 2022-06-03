@@ -88,6 +88,7 @@ const MainPanel = () => {
          id="mail"
          value={formValues.mail}
          onChange={handleChange}
+         placeholder='Ingresa tu email'
        />
        {formErrors.mail && <span>{formErrors.mail}</span>}
      </div>
@@ -101,6 +102,7 @@ const MainPanel = () => {
          id="password"
          value={formValues.password}
          onChange={handleChange}
+         placeholder='Ingresa tu contraseña'
        />
        {formErrors.password && <span>{formErrors.password}</span>}
      </div>

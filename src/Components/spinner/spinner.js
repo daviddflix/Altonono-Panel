@@ -2,8 +2,8 @@ import './spinner.css'
 
 export default function Spinner (){
     return(
-       <div className='bigbox'>
-            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
-       </div>
+        <div class="loadingio-spinner-eclipse-6bbcrquce9v"><div class="ldio-58spmgaefxn">
+        <div></div>
+        </div></div>
     )
 }
