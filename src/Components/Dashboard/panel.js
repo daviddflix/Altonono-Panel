@@ -41,6 +41,9 @@ useEffect(() => {
         notificcation.addEventListener('canplaythrough', onPlay)
         Swal.fire({
           title: 'Nuevo Pedido',
+          width: 600,
+          padding: '3em',
+          color: '#716add',
           confirmButtonText: 'Confirmar',
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
