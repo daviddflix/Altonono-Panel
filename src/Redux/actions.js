@@ -4,6 +4,7 @@ export const CREDENTIAL = 'CREDENTIAL'
 export const  ADD_ORDERS = 'ADD_ORDER'
 export const  RESET = 'RESET'
 export const  GET_DETAILS = 'GET_DETAILS'
+export const  STATUS = 'STATUS'
 
 const axios = require('axios').default;
 
@@ -55,14 +56,18 @@ export const reset = () => {
 
 export function getDetails(id){
     return async function (dispatch){  
-       const res = await axios.get(`${url}details/${id}`)
-       return dispatch({ type: GET_DETAILS, payload: res.data })
+       const res = await fetch(`${url}details/${id}`)
+       const info = await res.json()
+       return dispatch({ type: GET_DETAILS, payload: info })
     }        
  }
 
- export function getTienda(payload){
+ 
+
+ export function getTienda(data){
      return async function(dispatch){
-       const res = await axios.post(`${url}online?status=${payload}`)
+       const res = await axios.post(`${url}online?status=${data}`)
        console.log('status store', res.data)
+       return dispatch({ type: STATUS, payload: data})
      }
  }

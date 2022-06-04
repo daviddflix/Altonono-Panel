@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { getTienda, reset } from '../../Redux/actions';
 import {RiRadioButtonLine} from 'react-icons/ri'
@@ -12,7 +12,8 @@ import s from './navbar.module.css'
 export default function Logout () {
 
     const cookies = new Cookies() 
-    const [tienda, setTienda] = React.useState('offline')
+    const status = useSelector(state => state.status)
+    console.log('status', status)
 
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,17 +22,15 @@ export default function Logout () {
       setAnchorEl(event.currentTarget);
     };
     const handleTienda = () => {
-        if(tienda==='offline'){
+        if(status==='offline'){
             dispatch(getTienda('online'))
+          
         }
-        if(tienda === 'online'){
+        if(status === 'online'){
             dispatch(getTienda('offline'))
+           
         }
-       if(tienda === 'online'){
-        setTienda('offline')
-       } else{
-           setTienda('online')
-       }
+      
       setAnchorEl(null);
     };
 
@@ -74,7 +73,7 @@ export default function Logout () {
           }}
         >
          
-          <MenuItem onClick={handleTienda}><RiRadioButtonLine className={tienda==='offline'? s.iconOffline: s.iconOnline}/> {tienda}</MenuItem>
+          <MenuItem onClick={handleTienda}><RiRadioButtonLine className={status==='offline'? s.iconOffline: s.iconOnline}/> {status}</MenuItem>
           <MenuItem onClick={handleLogOut}><BiLogOut className={s.log}/>Logout</MenuItem>
         </Menu>
       </div>

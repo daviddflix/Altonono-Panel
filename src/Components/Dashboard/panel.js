@@ -1,21 +1,21 @@
 import s from './dashboard.module.css'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
 import Logout from '../Navbar/Button';
-import io from "socket.io-client";
 import { addOrder } from '../../Redux/actions';
 import Swal from 'sweetalert2'
 import sound from '../Search/Sounds/SD_ALERT_27.mp3'
-
-const port = 'https://altonono.herokuapp.com'
-
+import { SocketContext } from '../../context/socketContext';
+import io from "socket.io-client"; 
 
 export default function Dashboard(){
 
    const dispatch = useDispatch()
   const pedidos = useSelector(state => state.pedidos)
+
+  const socket = useContext(SocketContext)
 
   const amount = pedidos? pedidos.map(p => p.monto): 0;
   const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
@@ -29,33 +29,32 @@ console.log('res.socket', response)
 
 const ref = useRef(new Audio(sound))
 
+const port = 'https://altonono.herokuapp.com'
+
 useEffect(() => {  
-   let isMounted = true
-    const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']})
-     socket.on('payment', data => {
-        if (isMounted) setResponse(data)
-      
-       if(data){
-         const notificcation = ref.current;
-        const onPlay = () => notificcation.play()
-        notificcation.addEventListener('canplaythrough', onPlay)
-        Swal.fire({
-          title: 'Nuevo Pedido',
-          width: 600,
-          padding: '3em',
-          color: '#716add',
-          confirmButtonText: 'Confirmar',
-        }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
-          if (result.isConfirmed) {
-            Swal.fire('Confirmado!', '', 'success')
-           dispatch(addOrder(data))
-          } 
-        })
-      }
-     })
-     return ()=> { isMounted = false}
+  let isMounted = true
+   const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']})
+    socket.on('payment1', data => {
+       if (isMounted) setResponse(data)
+     
+      if(data){
+        const notificcation = ref.current;
+       const onPlay = () => notificcation.play()
+       notificcation.addEventListener('canplaythrough', onPlay)
+       Swal.fire({
+         title: 'Nuevo Pedido',
+         confirmButtonText: 'Confirmar',
+       }).then((result) => {
+         /* Read more about isConfirmed, isDenied below */
+         if (result.isConfirmed) {
+           Swal.fire('Confirmado!', '', 'success')
+          dispatch(addOrder(data))
+         } 
+       })
+     }
     })
+    return ()=> { isMounted = false}
+   })
 
    
  

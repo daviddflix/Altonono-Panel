@@ -19,8 +19,8 @@ export default function Detail (){
 
      console.log('detalle', detalle)
 
-    useEffect(() => {
-        dispatch(getDetails(id))
+    useEffect( () => {
+       dispatch(getDetails(id))
     }, [id, dispatch])
 
     const back = () => {

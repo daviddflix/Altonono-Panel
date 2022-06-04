@@ -5,17 +5,16 @@ import Dashboard from './Components/Dashboard/panel';
 import MainPanel from './MainPanel/mainpanel';
 import PrivateRoutes from './Privateroutes';
 import Search from './Components/Search/search'
-import {  useState } from 'react';
-import modalContext from './context/modalContext';
 import Detail from './Components/modal/modal';
+import { SocketContext, socket } from './context/socketContext';
 
 function App() {
 
-  const [showModal, setShowModal] = useState(false)
+
 
   return (
     <div> 
-<modalContext.Provider value={{showModal, setShowModal}}>
+<SocketContext.Provider value={socket}>
     <Navbar/>
 <Switch>
 
@@ -38,7 +37,7 @@ function App() {
 
 
 </Switch>
-</modalContext.Provider>
+</SocketContext.Provider>
  </div>
   );
 }

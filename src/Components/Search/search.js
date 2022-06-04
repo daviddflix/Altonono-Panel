@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import s from './search.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import io from "socket.io-client";
+import io from "socket.io-client"; 
 import { addOrder } from '../../Redux/actions';
 import Swal from 'sweetalert2'
 import sound from './Sounds/SD_ALERT_27.mp3'
