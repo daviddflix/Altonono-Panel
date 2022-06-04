@@ -32,6 +32,9 @@ export default function Search(){
  
    useEffect(() => {  
      let isMounted = true
+     socket.on('ping', data => {
+      socket.emit('pong', {beat: 1})
+   })
       const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']})
        socket.on('payment', data => {
           if (isMounted) setResponse(data)

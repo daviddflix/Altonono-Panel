@@ -33,6 +33,9 @@ const port = 'https://altonono.herokuapp.com'
 
 useEffect(() => {  
   let isMounted = true
+    socket.on('ping', data => {
+       socket.emit('pong', {beat: 1})
+    })
    const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']})
     socket.on('payment1', data => {
        if (isMounted) setResponse(data)
