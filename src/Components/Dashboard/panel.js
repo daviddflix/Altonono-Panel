@@ -17,11 +17,18 @@ export default function Dashboard(){
 
   const socket = useContext(SocketContext)
 
-  useEffect(()=> {
-   socket.on('ping', data => {
-      socket.emit('pong', {beat: 1})
+  socket.on('ping', data => {
+     console.log(data)
+   socket.emit('pong', {beat: 1})
+})
+
+useEffect(() => {
+   socket.on('order', data => {
+      console.log('data:', data)
    })
-  }, [])
+   
+}, [socket])
+  
 
   const amount = pedidos? pedidos.map(p => p.monto): 0;
   const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
@@ -40,7 +47,7 @@ const port = 'https://altonono.herokuapp.com'
 useEffect(() => {  
   let isMounted = true  
    const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']})
-    socket.on('payment1', data => {
+    socket.on('payment', data => {
        if (isMounted) setResponse(data)
      
       if(data){

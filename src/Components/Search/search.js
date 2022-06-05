@@ -30,11 +30,11 @@ export default function Search(){
 
    const ref = useRef(new Audio(sound))
  
+   const socket = io.connect(port, {transports: ['websocket', 'polling']})
    useEffect(() => {  
      let isMounted = true
     
-      const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']})
-       socket.on('payment', data => {
+       socket.on('order', data => {
           if (isMounted) setResponse(data)
         
          if(data){
@@ -94,17 +94,7 @@ export default function Search(){
                   <h4><CurrencyFormat value={p.monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
                   </div>
                   </NavLink>
-                // <Card key={i} 
-                // hora={p.updatedAt}
-                //  client={p.name} 
-                //  table={p.table}
-                //  metodo={p.method} 
-                //  telefono={p.email}
-                //  total={p.monto} 
-                //  product={p.items.map(p => p.title)}
-                //  quantity={p.items.map(p => p.quantity)}
-                 
-                //  />
+              
 
                 
                 )
