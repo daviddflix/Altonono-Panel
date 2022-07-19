@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useContext } from 'react'
 import s from './search.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import io from "socket.io-client"; 
@@ -7,43 +7,33 @@ import Swal from 'sweetalert2'
 import sound from './Sounds/SD_ALERT_27.mp3'
 import CurrencyFormat from 'react-currency-format'
 import { NavLink } from 'react-router-dom';
+import { SocketContext } from '../../context/socketContext';
 
-const port = 'https://altonono.herokuapp.com'
 
-export default function Search(){
+export default function Pedidos(){
 
     const pedidos = useSelector(state => state.pedidos)
     const statusFood = useSelector(state => state.statusFood)
+    const socket = useContext(SocketContext)
     const dispatch = useDispatch()
-   console.log('sta', statusFood)
- 
+    console.log(socket)
+    
     useEffect(() => {
         document.title = 'Pedidos'
    })
 
-   useEffect(() => {
-
-    statusFood === 'Entregado'?   document.getElementById('boxpedido').style.backgroundColor = '#29d884':
-    document.getElementById('boxpedido').style.backgroundColor = 'rgba(0,0,0,0.1)'
-  
-   }, [statusFood])
-  
-   
    const [response, setResponse] = useState("");
-   console.log('res.socket', response)
-
    const ref = useRef(new Audio(sound))
-
-   const socket = io.connect(port, {transports: ['websocket', 'polling']})
+  
    useEffect(() => {  
      let isMounted = true
        socket.on('order', data => {
           if (isMounted) setResponse(data)
         
-         if(data){
+          if(data){
            const notificcation = ref.current;
-          const onPlay = () => notificcation.play()
-          notificcation.addEventListener('canplaythrough', onPlay)
+            const onPlay = () => notificcation.play()
+           notificcation.addEventListener('canplaythrough', onPlay)
           Swal.fire({
             title: 'Nuevo Pedido',
             confirmButtonText: 'Confirmar',
@@ -56,13 +46,9 @@ export default function Search(){
           })
         }
        })
-       socket.on('ping', data => {
-        socket.emit('pong', {beat: 1})
-     })
+       
        return ()=> { isMounted = false}
       })
-
-     const date = new Date()
     
    
 

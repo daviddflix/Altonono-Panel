@@ -1,5 +1,5 @@
 import {  useContext, useEffect, useState } from 'react'
-import s from './modal.module.css'
+import s from './detail.module.css'
 import { useHistory, useParams } from 'react-router-dom';
 import { cancelar, getDetails, setStatusFood } from '../../Redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,7 +23,7 @@ export default function Detail (){
     // const {statusFood, setStatusFood} = useContext(ModalContext)
     const detalle = useSelector(state => state.detalle)
     const statusFood = useSelector(state => state.statusFood)
-   console.log('detalle', detalle)
+  
 
     useEffect( () => {
        dispatch(getDetails(id))
