@@ -1,11 +1,11 @@
 import { Route, Switch } from 'react-router-dom'
 import './App.css'
 import Navbar from './Components/Navbar/navbar';
-import Dashboard from './Components/Dashboard/panel';
+import Dashboard from './Components/Dashboard/dashboard';
 import MainPanel from './MainPanel/mainpanel';
 import PrivateRoutes from './Privateroutes';
-import Search from './Components/Search/search'
-import Detail from './Components/modal/modal';
+import Order from './Components/Order/order'
+import Detail from './Components/Detail/detail';
 import { SocketContext, socket } from './context/socketContext';
 import ModalContext from './context/modalContext';
 import { useState } from 'react';
@@ -24,36 +24,32 @@ const isProduction = process.env.NODE_ENV === 'production';
     isEnabled={isProduction} //If false, the library is disabled.
     isVerboseMode={false} //If true, the library writes verbose logs to console.
     loadingComponent={<Spinner />} //If not pass, nothing appears at the time of new version check.
-  >
+    >
     <div> 
 <SocketContext.Provider value={socket}>
 <ModalContext.Provider value={{statusFood, setStatusFood}}>
     <Navbar/>
-<Switch>
+      <Switch>
+        <Route exact path='/'>
+        <MainPanel/>
+        </Route>
+    
+        <PrivateRoutes exact path='/dashboard'>
+        <Dashboard/>
+        </PrivateRoutes>
 
-<Route exact path='/'>
-  <MainPanel/>
-  </Route>
- 
-  <PrivateRoutes exact path='/dashboard'>
-  <Dashboard/>
-  </PrivateRoutes>
+        <PrivateRoutes exact  path='/search'>
+        <Order/>
+        </PrivateRoutes>
 
-  <PrivateRoutes exact  path='/search'>
-  <Search/>
-  </PrivateRoutes>
-
-  <PrivateRoutes exact  path='/detail/:id'>
-  <Detail/>
-  </PrivateRoutes>
-
-
-
-</Switch>
+        <PrivateRoutes exact  path='/detail/:id'>
+        <Detail/>
+        </PrivateRoutes>
+ </Switch>
 </ModalContext.Provider>
 </SocketContext.Provider>
- </div>
- </CacheBuster>
+</div>
+</CacheBuster>
   );
 }
 

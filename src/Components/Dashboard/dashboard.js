@@ -6,7 +6,7 @@ import CurrencyFormat from 'react-currency-format';
 import Logout from '../Navbar/Button';
 import { addOrder } from '../../Redux/actions';
 import Swal from 'sweetalert2'
-import sound from '../Search/Sounds/SD_ALERT_27.mp3'
+import sound from '../Order/Sounds/SD_ALERT_27.mp3'
 import { SocketContext } from '../../context/socketContext';
 import io from "socket.io-client"; 
 
@@ -17,16 +17,10 @@ export default function Dashboard(){
 
   const socket = useContext(SocketContext)
 
-//   socket.on('ping', data => {
-//      console.log(data)
-//    socket.emit('pong', {beat: 1})
-// })
-
 useEffect(() => {
    socket.on('order', data => {
       console.log('data:', data)
    })
-   
 }, [socket])
   
 
@@ -38,15 +32,10 @@ useEffect(() => {
 })
 
 const [response, setResponse] = useState("");
-console.log('res.socket', response)
-
 const ref = useRef(new Audio(sound))
-
-const port = 'https://altonono.herokuapp.com'
 
 useEffect(() => {  
   let isMounted = true  
-   const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']})
     socket.on('payment', data => {
        if (isMounted) setResponse(data)
      
