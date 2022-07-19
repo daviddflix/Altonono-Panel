@@ -1,12 +1,13 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_ORDERS, CREDENTIAL, GET_DETAILS, RESET, STATUS } from "./actions"
+import {ADD_ORDERS, CANCEL, CREDENTIAL, GET_DETAILS, RESET, SET_STATUS_FOOD, STATUS } from "./actions"
 
 
 const InicialState ={
     admin: false,
     pedidos: [],
     detalle : {},
-    status: 'offline'
+    status: 'offline',
+    statusFood: ''
 }
 
 
@@ -46,6 +47,21 @@ const InicialState ={
                 ...state,
                 detalle: action.payload,
             }
+
+        case CANCEL:
+            const filter = state.pedidos.filter(p => p.id !== action.payload)
+                return{
+                    ...state,
+                    pedidos: filter,
+                }
+
+        case SET_STATUS_FOOD:
+          
+                return{
+                    ...state,
+                    statusFood: action.payload,
+                }
+        
 
      
          default:

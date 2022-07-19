@@ -77,7 +77,25 @@
 }
 
 .title{
-    color: #ff595a
+    color: #ff595a;
+    font-size: 1.3rem;
+}
+
+.check{
+    width: 25px;
+    height: 25px;
+}
+
+
+.cancel{
+    background-color: #ff595a;
+    color:#fff;
+    padding: 10px 20px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 5px 0;
+
 }
 
 .arrow2{
@@ -159,5 +177,21 @@
     justify-content: space-between;
     color: #282828;
     border-bottom: #c1c1c1 1px solid;
+}
+
+.status{
+    width: 90%;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+    color: #282828;
+   
+}
+
+.radio{
+    display: grid;
+    place-content: center;
+    
 }
 

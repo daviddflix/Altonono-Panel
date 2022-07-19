@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
 
- const modalContext = createContext(null)
+ const ModalContext = createContext(null)
   
- export default modalContext
+ export default ModalContext

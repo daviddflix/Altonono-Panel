@@ -4,6 +4,7 @@
     position: relative;
     left: 20%;
     overflow-y: scroll;
+   
 } 
 
 .container{
@@ -48,8 +49,7 @@
 }
 
 .grid{
-    /* height: 400px; */
-    width: 90%;
+   width: 95%;
    display: flex;
    justify-content: space-around;
    position: relative;
@@ -63,17 +63,16 @@
     justify-content: space-around;
     position: relative;
     top: 3rem;
-    width: 95%;
-    left: 1rem;
     margin-bottom: 1rem;
-    background-color: #fff;
-    padding: 10px;
+    padding: 18px;
     font-family: 'Roboto', sans-serif;
-    border-radius: 10px;
+    border-radius: 5px;
+    
 }
 
 .boxpedido:hover{
-  background-color: rgb(0,0,0,0.2)
+  background-color: rgb(0,0,0,0.1);
+ 
 }
 
 
@@ -94,10 +93,15 @@
 }
 
 .navLink{
-    width: 97%;
+    width: 98%;
     text-decoration: none;
-    color: #ff595a;
+    color: #282828;
    
+}
+
+.check{
+    width: 25px;
+    height: 25px;
 }
 
 

@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  
+ 
  
 }
 
@@ -20,13 +20,13 @@
     position: relative;
     right: 25rem;
     top: 1rem;
-    color: rgb(47,69,80);
+   
 } 
 
 .box1{
     margin: 6rem;
-    width: 30%;
-    height: 320px;
+    min-width: 40%;
+    height: 400px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -34,20 +34,19 @@
     align-items: center;
     box-shadow:  6px 6px 12px #bebebe,
     -6px -6px 12px #ffffff;
-  
+    border: #009ee3 2px solid;
+    justify-content: center;
 }
 
 .input{
-    width: 96%;
+    width: 94%;
     height: 40px;
-    border: none;
-    outline: none;
+    border: 1px solid #282828;
     border-radius: 5px;
     margin: 1rem;
     position: relative;
     right: 1rem;
     font-size: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding-left: 10px;
 }
 
@@ -61,6 +60,8 @@
     position: relative;
     left: 2rem;
     text-transform: uppercase;
+    box-shadow:  6px 6px 12px #bebebe,
+    -6px -6px 12px #ffffff;
 }
 
 .button:hover{

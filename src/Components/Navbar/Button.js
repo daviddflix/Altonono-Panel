@@ -8,27 +8,40 @@ import { getTienda, reset } from '../../Redux/actions';
 import {RiRadioButtonLine} from 'react-icons/ri'
 import {BiLogOut} from 'react-icons/bi'
 import s from './navbar.module.css'
+import { SocketContext } from '../../context/socketContext';
 
 export default function Logout () {
 
     const cookies = new Cookies() 
     const status = useSelector(state => state.status)
-    console.log('status', status)
+    const socket = React.useContext(SocketContext)
 
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
+
+
+// emite a cada momento el status de la tienda
+   React.useEffect(() => {
+    if(status === 'offline'){
+   socket.emit('offline', {status: 'offline' })
+    }
+    if(status === 'online'){
+      socket.emit('online', {status: 'online' })
+       }
+   }, [status])
+
     const handleTienda = () => {
-        if(status==='offline'){
+        if(status ==='offline'){
             dispatch(getTienda('online'))
           
         }
         if(status === 'online'){
             dispatch(getTienda('offline'))
-           
         }
       
       setAnchorEl(null);

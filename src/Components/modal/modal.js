@@ -1,23 +1,29 @@
-import {  useEffect } from 'react'
+import {  useContext, useEffect, useState } from 'react'
 import s from './modal.module.css'
 import { useHistory, useParams } from 'react-router-dom';
-import { getDetails } from '../../Redux/actions';
+import { cancelar, getDetails, setStatusFood } from '../../Redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import {BsArrowLeft} from 'react-icons/bs'
 import {BsPersonPlus} from 'react-icons/bs'
 import {GiRoundTable} from 'react-icons/gi'
 import {BsTelephonePlus} from 'react-icons/bs'
 import CurrencyFormat from 'react-currency-format'
+import Swal from 'sweetalert2'
+import ModalContext from '../../context/modalContext';
+import { FormControlLabel } from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import Spinner from '../spinner/spinner'
 
 export default function Detail (){
 
     const dispatch = useDispatch();
     const {id} = useParams();
     const history = useHistory()
-
+    // const {statusFood, setStatusFood} = useContext(ModalContext)
     const detalle = useSelector(state => state.detalle)
-
-     console.log('detalle', detalle)
+    const statusFood = useSelector(state => state.statusFood)
+   console.log('detalle', detalle)
 
     useEffect( () => {
        dispatch(getDetails(id))
@@ -25,6 +31,28 @@ export default function Detail (){
 
     const back = () => {
         history.push('/search')
+    }
+
+    const cancel = () => {
+        Swal.fire({
+            title: 'Confirmar cancelacion?',
+            showDenyButton: true,
+            confirmButtonText: 'Cancelar',
+            denyButtonText: `No Cancelar`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              Swal.fire('Cancelado!', '', 'success')
+              dispatch(cancelar(id))
+              history.push('/search')
+            } else if (result.isDenied) {
+              Swal.fire('Pedido no cancelado', '', 'info')
+            }
+          })
+    }
+   
+    const handleCheck = (e) => {
+      dispatch(setStatusFood(e.target.value))
     }
    
     return(
@@ -81,7 +109,7 @@ export default function Detail (){
                  
                      <div >
                          {
-                            detalle.items && detalle.items.map((item,i) => {
+                            detalle.items ? detalle.items.map((item,i) => {
                                 return(
                                   <div key={i} className={s.items}>
                                   <h4 className={s.title}>{item.quantity} x</h4>
@@ -89,7 +117,7 @@ export default function Detail (){
                                   <h4>ARS{item.unit_price}</h4>
                               </div>
                                 )
-                             })
+                             }) : <Spinner/>
                          }
       
                      </div>
@@ -98,16 +126,32 @@ export default function Detail (){
                          <h4>{detalle.comentarios}</h4>
                      </div>
                      }
-                     <div className={s.boxTotal}>
-                         <h3>Total</h3>
-                         <h4><CurrencyFormat value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
-                     </div>
-                 </div>
-               </div>
-           
-                 </div> 
+        <div className={s.radio}>
+        <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        onChange={handleCheck}
+        value={statusFood}
+       
+      >
+        <FormControlLabel value="Entregado"     control={<Radio />} label="Entregado" />
+        <FormControlLabel value="En Prep..."    control={<Radio />} label="En Preparacion" />
+      </RadioGroup>
+        </div>
+                   
+
+      <div className={s.boxTotal}>
+          <h3>Total</h3>
+          <h4><CurrencyFormat value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
+      </div>
+      <h4 className={s.cancel} onClick={cancel}>Cancelar</h4>
+    </div>
+  </div>
+    
+  </div> 
           
-           </div>
-       </div>
+</div>
+</div>
     )
 }

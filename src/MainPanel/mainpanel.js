@@ -78,7 +78,7 @@ const MainPanel = () => {
       <div className={s.box1}>
       <h2 style={{color:'rgb(47,69,80)', margin: '1rem'}}>Enter your Admin Credential</h2>
 
-   <form onSubmit={handleSubmit} noValidate>
+   <form onSubmit={handleSubmit} noValidate> 
      <div className={s.boxInput}>
        <label htmlFor="mail">Email</label>
        <input

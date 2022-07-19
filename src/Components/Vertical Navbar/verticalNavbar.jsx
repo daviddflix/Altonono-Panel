@@ -15,15 +15,8 @@ export default function VerticalNavbar (){
                
                <NavLink to='/search' activeClassName={s.active} className={s.link}>
                    <BsSearch className={s.icon}/>
-                  Pedidos
+                 Pedidos
                </NavLink>
-
-               
-
-               
-
-
-        
            </ul>
        </nav>
     )

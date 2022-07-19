@@ -17,10 +17,10 @@ export default function Dashboard(){
 
   const socket = useContext(SocketContext)
 
-  socket.on('ping', data => {
-     console.log(data)
-   socket.emit('pong', {beat: 1})
-})
+//   socket.on('ping', data => {
+//      console.log(data)
+//    socket.emit('pong', {beat: 1})
+// })
 
 useEffect(() => {
    socket.on('order', data => {

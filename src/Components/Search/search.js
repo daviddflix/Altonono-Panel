@@ -8,32 +8,35 @@ import sound from './Sounds/SD_ALERT_27.mp3'
 import CurrencyFormat from 'react-currency-format'
 import { NavLink } from 'react-router-dom';
 
-
 const port = 'https://altonono.herokuapp.com'
-
-
 
 export default function Search(){
 
     const pedidos = useSelector(state => state.pedidos)
+    const statusFood = useSelector(state => state.statusFood)
     const dispatch = useDispatch()
-  console.log('pedidos', pedidos)
+   console.log('sta', statusFood)
  
-
     useEffect(() => {
         document.title = 'Pedidos'
    })
+
+   useEffect(() => {
+
+    statusFood === 'Entregado'?   document.getElementById('boxpedido').style.backgroundColor = '#29d884':
+    document.getElementById('boxpedido').style.backgroundColor = 'rgba(0,0,0,0.1)'
+  
+   }, [statusFood])
   
    
    const [response, setResponse] = useState("");
    console.log('res.socket', response)
 
    const ref = useRef(new Audio(sound))
- 
+
    const socket = io.connect(port, {transports: ['websocket', 'polling']})
    useEffect(() => {  
      let isMounted = true
-    
        socket.on('order', data => {
           if (isMounted) setResponse(data)
         
@@ -59,7 +62,8 @@ export default function Search(){
        return ()=> { isMounted = false}
       })
 
-     
+     const date = new Date()
+    
    
 
     return(
@@ -73,39 +77,52 @@ export default function Search(){
             <h4>Hora</h4>
             <h4 >Cliente</h4>
             <h4 >Mesa</h4>
-            <h4 className={s.position1}>Metodo de Pago</h4>
-            <h4 className={s.position1} >Telefono</h4>
+            <h4 >Metodo de Pago</h4>
+            <h4>Telefono</h4>
             <h4>Total</h4>
+            <h4>Status</h4> 
             </div>
    
             {
               pedidos?.map((p, i) => {
-
-
                 return(
-
-                  <NavLink  className={s.navLink} key={i} to={`/detail/${p.id}`}>
-                    <div  className={s.boxpedido} >
-                  <h4>{p.updatedAt.slice(11,16)}</h4>
-                  <h4>{p.name}</h4>
-                  <h4>{p.table}</h4>
-                  <h4>{p.method}</h4>
-                  <h4>{p.telefono}</h4>
-                  <h4><CurrencyFormat value={p.monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
-                  </div>
-                  </NavLink>
-              
-
-                
+                  <Card
+                  key={i}
+                  id={p.id}
+                  name={p.name}
+                  table={p.table}
+                  method={p.method}
+                  telefono={p.telefono}
+                  monto={p.monto}
+                  statusFood={statusFood}
+                  />
                 )
-              })
-             
-            }
-
-                
-            </div>
+              })    
+            }       
+          </div>
         </div>
     )
+}
+
+
+function Card({id, name, table, method, telefono, monto, statusFood}){
+
+  const date = new Date()
+
+  return(
+    <NavLink  className={s.navLink}  to={`/detail/${id}`}>
+    <div id='boxpedido' className={s.boxpedido} >
+  <h4>{`${date.getHours()}:${date.getMinutes()}`}</h4>
+  <h4>{name}</h4>
+  <h4>{table}</h4>
+  <h4>{method}</h4>
+  <h4>{telefono}</h4>
+  <h4><CurrencyFormat value={monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
+  <h4>{statusFood? statusFood : 'Nuevo'}</h4>
+  </div>
+  </NavLink>
+  )
+ 
 }
 
 

@@ -5,6 +5,8 @@ export const  ADD_ORDERS = 'ADD_ORDER'
 export const  RESET = 'RESET'
 export const  GET_DETAILS = 'GET_DETAILS'
 export const  STATUS = 'STATUS'
+export const  CANCEL = 'CANCEL'
+export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
 
 const axios = require('axios').default;
 
@@ -71,3 +73,17 @@ export function getDetails(id){
        return dispatch({ type: STATUS, payload: data})
      }
  }
+
+export function cancelar (value){
+    return{
+        type: CANCEL,
+        payload: value
+    }
+}
+
+export function setStatusFood (value){
+    return{
+        type: SET_STATUS_FOOD,
+        payload: value
+    }
+}
