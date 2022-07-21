@@ -77,14 +77,19 @@ function Card({name, id}){
 function Card2({id, method, name}){
 
   const socket = React.useContext(SocketContext);
-
-  const timer = () => {
-    setTimeout(() => {
-      
-    }, );
-  }
-
+  const [crono, setCrono] = React.useState(0)
   const [entrega, setEntrega] = React.useState(false);
+
+  React.useEffect(() => {
+    if(entrega === false){
+      setInterval(() => {
+        setCrono((crono) => crono + 1)
+        }, 60000);
+    }
+   
+
+  }, [entrega])
+
 
   const handleEntrega = (e) => {
     e.stopPropagation()
@@ -112,7 +117,7 @@ function Card2({id, method, name}){
       </div>
       <div className={s.subcard2boxtime}>
         <h4 className={s.font}>Tiempo de preparacion</h4>
-        <h4 className={s.font}>17 minutos</h4>
+        <h4 className={s.font}>{crono} minutos</h4>
       </div>
     </NavLink>
   )
