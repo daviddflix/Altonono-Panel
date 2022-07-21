@@ -23,7 +23,7 @@ const MainPanel = () => {
  
    const history = useHistory()
   const admin = useSelector(state => state.admin)
-  console.log(admin)
+ 
 
   const submit = async () => {
    dispatch(accessAdmin(formValues))

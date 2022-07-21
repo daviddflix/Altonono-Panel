@@ -10,13 +10,13 @@ export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
 
 const axios = require('axios').default;
 
-const url = 'https://altonono.herokuapp.com/'
+const url = process.env.REACT_APP_URL
 
 
 
 export function accessAdmin (payload){
-     console.log(payload)
-     const admin = {mail: 'altonono@gmail.com', password: '123456'}
+    
+     const admin = {mail: 'altonono@gmail.com', password: '234567' }
      const dataAdmin = Object.values(admin) 
      const dataPayload = Object.values(payload)
      const cookies = new Cookies()
@@ -69,7 +69,6 @@ export function getDetails(id){
  export function getTienda(data){
      return async function(dispatch){
        const res = await axios.post(`${url}online?status=${data}`)
-       console.log('status store', res.data)
        return dispatch({ type: STATUS, payload: data})
      }
  }

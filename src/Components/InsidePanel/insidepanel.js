@@ -1,49 +1,119 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import s from './insidepanel.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {BsCartX} from 'react-icons/bs'
+import {MdOutlineWbTwilight} from 'react-icons/md'
+import {GiConfirmed} from 'react-icons/gi'
+import { NavLink } from 'react-router-dom';
+import { SocketContext } from '../../context/socketContext';
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'Admin',
-    headerName: 'Admin',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'Email',
-    headerName: 'Email',
-    width: 210,
-    editable: true,
-  },
-  {
-    field: 'Company',
-    headerName: 'Company',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: true,
-    // width: 160,
-    // valueGetter: (params) =>
-    //   `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-];
+export default function IncomingOrders() {
 
-const rows = [
-  { id: 1, Admin : 'David', Email: 'deviajepuntocom12@gmail.com', Company: 'Deviaje.com'},
-];
+  
+  const newOrder = useSelector(state => state.queue);
+  const confirmOrder = useSelector(state => state.confirmOrder);
 
-export default function InsidePanel() {
+
   return (
     <div className={s.main}>
-        <div style={{ height: 200, width: '90%', position:'relative', left:'2rem', top:'3rem'}}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={2}
-        rowsPerPageOptions={[2]}
-       
-        disableSelectionOnClick
-      />
-    </div>
+      <div className={s.submain}>
+        <div className={s.new}>
+            <h2 className={s.title}>Nuevos</h2>
+            <div style={{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start'}}>
+              {
+                newOrder.length>0? newOrder.map((p, i) => {
+                  return(
+                  <Card
+                  key={i}
+                  name={p.name}
+                  id={p.id}
+                  />
+                  )
+                }): <div className={s.noOrder}>
+                  <BsCartX className={s.iconNoOrder}/>
+                  <h3>No hay pedidos aun</h3>
+                </div>
+              }
+            </div>
+        </div>
+        <div className={s.new}>
+            <h2 className={s.title}>Confirmados</h2>
+            <div style={{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start'}}>
+            {
+              confirmOrder && confirmOrder.map((p, i) => {
+                return(
+                  <Card2
+                  key={i}
+                  name={p.name}
+                  method={p.method}
+                  id={p.id}
+                  />
+                )
+              })
+            }
+            </div>
+        </div>
+      </div>
     </div>
   );
+}
+
+
+function Card({name, id}){
+
+  
+  return(
+    <NavLink to={`/detail/${id}`} className={s.cardMainBox}>
+      <div style={{display: 'flex', position: 'relative', right: '2rem'}}>
+       <MdOutlineWbTwilight className={s.iconCircle}/>
+       <h4>Nuevo pedido</h4>
+      </div>
+      <h4>{name}</h4>
+    </NavLink>
+  )
+}
+
+
+function Card2({id, method, name}){
+
+  const socket = React.useContext(SocketContext);
+
+  const timer = () => {
+    setTimeout(() => {
+      
+    }, );
+  }
+
+  const [entrega, setEntrega] = React.useState(false);
+
+  const handleEntrega = (e) => {
+    e.stopPropagation()
+    setEntrega(true)
+    socket.emit('pedidoListo', {status: 'Pedido Listo'})
+  }
+
+  React.useEffect(() => {
+    if(entrega === true){
+      document.getElementById('readyto').style.backgroundColor = 'transparent'
+    } else {
+      document.getElementById('readyto').style.backgroundColor = 'rgba(0,0,0,0.2)'
+    }
+  }, [entrega])
+
+  return(
+    <NavLink to={`/detail/${id}`} className={s.card2MainBox}>
+      <div className={s.subcard2box}>
+        <div>
+          <h3 className={s.font}>#{id}</h3>
+          <h3 className={s.font}>{name}</h3>
+        </div>
+        <h4 className={s.method}>{method}</h4>
+        <button id='readyto' className={s.readyto} onClick={handleEntrega}>{entrega === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button>
+      </div>
+      <div className={s.subcard2boxtime}>
+        <h4 className={s.font}>Tiempo de preparacion</h4>
+        <h4 className={s.font}>17 minutos</h4>
+      </div>
+    </NavLink>
+  )
 }

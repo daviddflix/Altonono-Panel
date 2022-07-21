@@ -1,7 +1,6 @@
 import s from './navbar.module.css'
 import {  MdAdminPanelSettings } from 'react-icons/md';
-import VerticalNavbar from '../Vertical Navbar/verticalNavbar';
-
+import img from '../../Assets/logo.png'
 
 export default function Navbar (){
 
@@ -13,9 +12,8 @@ export default function Navbar (){
               < MdAdminPanelSettings className={s.icon}/>
                   Panel Administracion
                </div>
+               <img src={img} className={s.logo} alt='logo' />
            </ul>
-
-           <VerticalNavbar/>
        </nav>
     )
 }

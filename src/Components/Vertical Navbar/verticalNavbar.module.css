@@ -1,18 +1,22 @@
 .navbar{
-    background-color: #fff;
-    height: 100vh;
+    background-color: rgba(0,0,0,0.1);
+    height: 90%;
+    position: absolute;
+    top: 50px;
     width: 20%;
     margin: 0;
     padding: 0;
-    position: relative;
-    bottom: -6px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(0,0,0,0.1);;
 }
 
 .ul{
     display: flex;
     flex-direction: column;
-  
+   justify-content: center;
    
 }
 
@@ -22,6 +26,7 @@
     padding: 10px;
     font-size: 18px;
     font-weight: 500;
+    display: flex;
     
 }
 

@@ -8,12 +8,27 @@ import Order from './Components/Order/order'
 import Detail from './Components/Detail/detail';
 import { SocketContext, socket } from './context/socketContext';
 import ModalContext from './context/modalContext';
-import { useState } from 'react';
+import { useEffect ,useState } from 'react';
 import Spinner from './Components/spinner/spinner';
 import CacheBuster from 'react-cache-buster';
 import { version } from '../package.json';
+import IncomingOrders from './Components/InsidePanel/insidepanel';
+import VerticalNavbar from './Components/Vertical Navbar/verticalNavbar';
+import { useDispatch } from 'react-redux';
+import { addOrder } from './Redux/actions';
 
 function App() {
+
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {  
+    let isMounted = true
+      socket.on('order', data => {
+         if (isMounted) dispatch(addOrder(data))
+      })
+      return ()=> { isMounted = false}
+     })
 
 const [statusFood, setStatusFood] = useState('En Prep...')
 const isProduction = process.env.NODE_ENV === 'production';
@@ -29,6 +44,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 <SocketContext.Provider value={socket}>
 <ModalContext.Provider value={{statusFood, setStatusFood}}>
     <Navbar/>
+    <VerticalNavbar/>
       <Switch>
         <Route exact path='/'>
         <MainPanel/>
@@ -38,8 +54,12 @@ const isProduction = process.env.NODE_ENV === 'production';
         <Dashboard/>
         </PrivateRoutes>
 
-        <PrivateRoutes exact  path='/search'>
-        <Order/>
+        <PrivateRoutes exact  path='/resume'>
+         <Order/>
+        </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/orders'>
+         <IncomingOrders/>
         </PrivateRoutes>
 
         <PrivateRoutes exact  path='/detail/:id'>
@@ -54,3 +74,21 @@ const isProduction = process.env.NODE_ENV === 'production';
 }
 
 export default App;
+
+
+     
+// if(data){
+//   const notificcation = ref.current;
+//    const onPlay = () => notificcation.play()
+//   notificcation.addEventListener('canplaythrough', onPlay)
+//  Swal.fire({
+//    title: 'Nuevo Pedido',
+//    confirmButtonText: 'Confirmar',
+//  }).then((result) => {
+//    /* Read more about isConfirmed, isDenied below */
+//    if (result.isConfirmed) {
+//      Swal.fire('Confirmado!', '', 'success')
+//     dispatch(addOrder(data))
+//    } 
+//  })
+// }

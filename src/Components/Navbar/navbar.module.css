@@ -1,7 +1,7 @@
 .navbar{
    
     background-color: #009ee3;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
     height: 50px;
     width: 100%;
     box-shadow:  6px 6px 12px #bebebe,
@@ -17,9 +17,10 @@
 
 .link{
     text-decoration: none;
-    color: white;
+    color: #282828;
     padding: 10px;
     font-size:20px;
+    font-weight: 900;
 }
 
 .link:hover{
@@ -48,6 +49,14 @@
 .log{
     color: #009ee3;
     margin-right:5px ;
+}
+
+.logo{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    position: relative;
+    right: 1rem;
 }
 
 

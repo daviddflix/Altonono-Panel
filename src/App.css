@@ -7,10 +7,17 @@ body{
   padding: 0;
   font-family: 'Raleway', sans-serif;
   font-family: 'Roboto Condensed', sans-serif;
-  background-color: rgb(233,236,239)
+  background-color: rgb(233,236,239);
+  max-height: 100vh;
+}
+
+html{
+  max-height: 100vh;
+  color: #282828;
 }
 
 *{
   margin: 0;
   padding: 0;
+  max-height: 100vh;
 }

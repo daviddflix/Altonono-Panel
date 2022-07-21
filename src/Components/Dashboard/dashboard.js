@@ -1,65 +1,20 @@
 import s from './dashboard.module.css'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect} from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
 import Logout from '../Navbar/Button';
-import { addOrder } from '../../Redux/actions';
-import Swal from 'sweetalert2'
-import sound from '../Order/Sounds/SD_ALERT_27.mp3'
-import { SocketContext } from '../../context/socketContext';
-import io from "socket.io-client"; 
 
 export default function Dashboard(){
 
-   const dispatch = useDispatch()
-  const pedidos = useSelector(state => state.pedidos)
-
-  const socket = useContext(SocketContext)
-
-useEffect(() => {
-   socket.on('order', data => {
-      console.log('data:', data)
-   })
-}, [socket])
-  
-
+  const dispatch = useDispatch();
+  const pedidos = useSelector(state => state.confirmOrder);
   const amount = pedidos? pedidos.map(p => p.monto): 0;
   const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
 
 useEffect(() => {
      document.title = 'Dashboard'
 })
-
-const [response, setResponse] = useState("");
-const ref = useRef(new Audio(sound))
-
-useEffect(() => {  
-  let isMounted = true  
-    socket.on('payment', data => {
-       if (isMounted) setResponse(data)
-     
-      if(data){
-        const notificcation = ref.current;
-       const onPlay = () => notificcation.play()
-       notificcation.addEventListener('canplaythrough', onPlay)
-       Swal.fire({
-         title: 'Nuevo Pedido',
-         confirmButtonText: 'Confirmar',
-       }).then((result) => {
-         /* Read more about isConfirmed, isDenied below */
-         if (result.isConfirmed) {
-           Swal.fire('Confirmado!', '', 'success')
-          dispatch(addOrder(data))
-         } 
-       })
-     }
-    })
-    return ()=> { isMounted = false}
-   })
-
-   
- 
 
    return(
         <div className={s.main}>
@@ -90,7 +45,7 @@ useEffect(() => {
                   </div>
                </div>
 
-               <div className={s.box2}>
+               {/* <div className={s.box2}>
                     <h3 className={s.box_title}>Pedidos recientes</h3>
                     <div style={{ height: 230, width: '100%' }}>
                     <div className={s.grid}>
@@ -119,7 +74,7 @@ useEffect(() => {
                      }
                       
                     </div>
-               </div>   
+               </div>    */}
         
             </div>
         </div>

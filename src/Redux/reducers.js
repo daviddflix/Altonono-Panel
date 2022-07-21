@@ -4,10 +4,11 @@ import {ADD_ORDERS, CANCEL, CREDENTIAL, GET_DETAILS, RESET, SET_STATUS_FOOD, STA
 
 const InicialState ={
     admin: false,
-    pedidos: [],
+    queue: [],
+    confirmOrder: [],
+    cancelOrder: [],
     detalle : {},
     status: 'offline',
-    statusFood: ''
 }
 
 
@@ -16,12 +17,14 @@ const InicialState ={
      switch (action.type) {
 
          case ADD_ORDERS:
+
              return{
                  ...state,
-                 pedidos: !state.pedidos ?[ action.payload] : state.pedidos.concat(action.payload)
+                 queue: [...state.queue, action.payload]
              }
+
         case CREDENTIAL:
-            console.log('key', Object.values(window.localStorage))
+           
         return{
             ...state,
             admin: action.payload
@@ -32,7 +35,11 @@ const InicialState ={
             storage.removeItem('persist:root')
             return{
                 admin: false,
-                status: 'offline'
+                status: 'offline',
+                queue: [],
+                confirmOrder: [],
+                cancelOrder: [],
+                detalle : {},
             }
             case STATUS:
             
@@ -49,17 +56,39 @@ const InicialState ={
             }
 
         case CANCEL:
-            const filter = state.pedidos.filter(p => p.id !== action.payload)
-                return{
-                    ...state,
-                    pedidos: filter,
-                }
-
-        case SET_STATUS_FOOD:
+           
           
+            const uno = state.queue.filter(p => p.id === action.payload)
+            const dos = state.confirmOrder.filter(p => p.id === action.payload)
+
+            console.log('uno', uno)
+            console.log('dos', dos)
+        if(uno.length>0){
+            return{
+                ...state,
+                queue: state.queue.filter(p => p.id !== action.payload),
+                cancelOrder: [...state.queue, action.payload]
+              
+            }
+        } 
+        if(dos.length>0){
+            console.log('here')
+            return{
+                ...state,
+                confirmOrder: state.confirmOrder.filter(p => p.id !== action.payload),
+                cancelOrder: [...state.queue, action.payload]
+            }
+        }
+        break
+
+        case SET_STATUS_FOOD: 
+
+        const remove = state.queue.filter(p => p.id !== action.payload.id);
+
                 return{
                     ...state,
-                    statusFood: action.payload,
+                    confirmOrder: [...state.confirmOrder, action.payload],
+                    queue: remove
                 }
         
 

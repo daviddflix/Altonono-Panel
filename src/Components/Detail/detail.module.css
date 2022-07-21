@@ -86,26 +86,29 @@
     height: 25px;
 }
 
-
-.cancel{
-    background-color: #ff595a;
-    color:#fff;
-    padding: 10px 20px;
+.acceptbutton{
     position: absolute;
-    right: 0;
     bottom: 0;
-    border-radius: 5px 0;
+    right: 0;
+    background-color: #29d884;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 5px 0 5px 0;
 
 }
+
+
+
 
 .arrow2{
     position: absolute;
     top: 0;
     right: 0;
-    width: 28px;
-    height: 28px;
-    color: #282828;
-    margin: 10px;
+    background-color: #ff595a;
+    color:#fff;
+    padding: 10px 25px;
+    border-radius: 0 5px 0 5px;
+    border: none;
 
 }
 
@@ -136,7 +139,7 @@
     height: 90%;
     position: relative;
     top: 3.1rem;
-    overflow-y: auto;
+ 
 }
 
 .iconPerson{
@@ -164,7 +167,6 @@
     justify-content: space-between;
     padding: 10px;
     margin: 1rem;
-    background-color: #04e762;
     border-radius: 5px;
 }
 
@@ -193,5 +195,11 @@
     display: grid;
     place-content: center;
     
+}
+
+.containerSpinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 

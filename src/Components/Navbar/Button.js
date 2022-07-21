@@ -33,7 +33,7 @@ export default function Logout () {
     if(status === 'online'){
       socket.emit('online', {status: 'online' })
        }
-   }, [status])
+   }, [status, socket])
 
     const handleTienda = () => {
         if(status ==='offline'){

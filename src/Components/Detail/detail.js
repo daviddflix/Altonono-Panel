@@ -19,46 +19,65 @@ export default function Detail (){
 
     const dispatch = useDispatch();
     const {id} = useParams();
-    const history = useHistory()
-    // const {statusFood, setStatusFood} = useContext(ModalContext)
-    const detalle = useSelector(state => state.detalle)
-    const statusFood = useSelector(state => state.statusFood)
-  
+    const history = useHistory();
+    const detalle = useSelector(state => state.detalle);
+
 
     useEffect( () => {
        dispatch(getDetails(id))
     }, [id, dispatch])
 
-    const back = () => {
-        history.push('/search')
-    }
-
     const cancel = () => {
+      return(
         Swal.fire({
-            title: 'Confirmar cancelacion?',
-            showDenyButton: true,
-            confirmButtonText: 'Cancelar',
-            denyButtonText: `No Cancelar`,
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              Swal.fire('Cancelado!', '', 'success')
-              dispatch(cancelar(id))
-              history.push('/search')
-            } else if (result.isDenied) {
-              Swal.fire('Pedido no cancelado', '', 'info')
+          title: 'Confirmar cancelacion',
+          input: 'text',
+          inputPlaceholder: 'Razon de cancelacion',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          confirmButtonText: 'Cancelar',
+          confirmButtonColor: '#ff595a',
+          showLoaderOnConfirm: true,
+          preConfirm: (login) => {
+        
+            if(!login){
+              Swal.showValidationMessage(
+                `Especificar motivo de cancelacion`
+              )
             }
-          })
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Cancelado!',
+              'Pedido cancelado.',
+              'success'
+            )
+            dispatch(cancelar(id))
+            history.push('/orders')
+          }
+        })
+      )
     }
    
-    const handleCheck = (e) => {
-      dispatch(setStatusFood(e.target.value))
+
+    const handleStatus = (e) => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Pedido Aceptado',
+        showConfirmButton: false,
+        timer: 1500
+      })
+       dispatch(setStatusFood(detalle))
+       history.push('/orders')
     }
    
     return(
        <div className={s.main}>
            <div className={s.submain}>
-         <BsArrowLeft className={s.arrow} onClick={back}/>
+         <BsArrowLeft className={s.arrow} onClick={history.goBack}/>
 
          
             <div className={s.container}>
@@ -104,48 +123,34 @@ export default function Detail (){
       
                   </div>
                   </div>
-                  <BsArrowLeft onClick={back} className={s.arrow2}/>
-               <div className={s.subcontainer2}>
-                 
-                     <div >
-                         {
-                            detalle.items ? detalle.items.map((item,i) => {
-                                return(
-                                  <div key={i} className={s.items}>
-                                  <h4 className={s.title}>{item.quantity} x</h4>
-                                  <h4>{item.title}</h4>
-                                  <h4>ARS{item.unit_price}</h4>
-                              </div>
-                                )
-                             }) : <Spinner/>
-                         }
-      
-                     </div>
-                     {
-                         detalle.comentarios && <div className={s.boxItems}>
-                         <h4>{detalle.comentarios}</h4>
-                     </div>
-                     }
-        <div className={s.radio}>
-        <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        onChange={handleCheck}
-        value={statusFood}
-       
-      >
-        <FormControlLabel value="Entregado"     control={<Radio />} label="Entregado" />
-        <FormControlLabel value="En Prep..."    control={<Radio />} label="En Preparacion" />
-      </RadioGroup>
-        </div>
-                   
+                  <button className={s.arrow2} onClick={cancel}>Cancelar</button>
+              <div className={s.subcontainer2}>
+                
+            <div >
+                {
+                  detalle.items ? detalle.items.map((item,i) => {
+                      return(
+                        <div key={i} className={s.items}>
+                        <h4 className={s.title}>{item.quantity} x</h4>
+                        <h4>{item.title}</h4>
+                        <h4>ARS{item.unit_price}</h4>
+                    </div>
+                      )
+                    }) : <div className={s.containerSpinner}><Spinner/></div>
+                }
 
-      <div className={s.boxTotal}>
+              </div>
+              {
+                  detalle.comentarios && <div className={s.boxItems}>
+                  <h4>{detalle.comentarios}</h4>
+              </div>
+              }
+                  
+       <div className={s.boxTotal}>
           <h3>Total</h3>
           <h4><CurrencyFormat value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
       </div>
-      <h4 className={s.cancel} onClick={cancel}>Cancelar</h4>
+      <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button>
     </div>
   </div>
     
@@ -155,3 +160,6 @@ export default function Detail (){
 </div>
     )
 }
+
+
+
