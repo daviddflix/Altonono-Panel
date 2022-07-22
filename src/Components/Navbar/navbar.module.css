@@ -1,11 +1,8 @@
 .navbar{
    
-    background-color: #009ee3;
-    border-radius: 0 0 5px 5px;
+    background-color: #448aff;
     height: 50px;
-    width: 100%;
-    box-shadow:  6px 6px 12px #bebebe,
-             -6px -6px 12px #ffffff;
+    width: 100%; 
 }
 
 .ul{
@@ -17,10 +14,10 @@
 
 .link{
     text-decoration: none;
-    color: #282828;
+    color: #fff;
     padding: 10px;
     font-size:20px;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 .link:hover{

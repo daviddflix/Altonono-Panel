@@ -59,7 +59,7 @@ export default function Logout () {
      }
 
     return(
-        <div style={{position: 'relative', right: '1rem', bottom: '1rem'}}>
+        <div style={{position: 'relative', right: '1rem', top: '.5rem'}}>
         <Button
           id="demo-positioned-button"
           aria-controls={open ? 'demo-positioned-menu' : undefined}

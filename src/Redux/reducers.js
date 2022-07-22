@@ -61,8 +61,7 @@ const InicialState ={
             const uno = state.queue.filter(p => p.id === action.payload)
             const dos = state.confirmOrder.filter(p => p.id === action.payload)
 
-            console.log('uno', uno)
-            console.log('dos', dos)
+          
         if(uno.length>0){
             return{
                 ...state,

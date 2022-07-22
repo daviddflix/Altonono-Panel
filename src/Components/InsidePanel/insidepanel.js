@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {BsCartX} from 'react-icons/bs'
 import {MdOutlineWbTwilight} from 'react-icons/md'
 import {GiConfirmed} from 'react-icons/gi'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { SocketContext } from '../../context/socketContext';
 
 export default function IncomingOrders() {
@@ -24,7 +24,7 @@ export default function IncomingOrders() {
                 newOrder.length>0? newOrder.map((p, i) => {
                   return(
                   <Card
-                  key={i}
+                  key={p.id}
                   name={p.name}
                   id={p.id}
                   />
@@ -80,15 +80,26 @@ function Card2({id, method, name}){
   const [crono, setCrono] = React.useState(0)
   const [entrega, setEntrega] = React.useState(false);
 
+
   React.useEffect(() => {
     if(entrega === false){
       setInterval(() => {
         setCrono((crono) => crono + 1)
         }, 60000);
     }
-   
+   if(entrega === true){
+    clearInterval()
+   }
 
   }, [entrega])
+
+  React.useEffect(() => {
+    setCrono(JSON.parse(window.sessionStorage.getItem("crono")))
+  }, [])
+
+  React.useEffect(() => {
+    window.sessionStorage.setItem("crono", crono)
+  }, [crono])
 
 
   const handleEntrega = (e) => {
@@ -105,20 +116,26 @@ function Card2({id, method, name}){
     }
   }, [entrega])
 
+  const history = useHistory();
+
+  const handleDetail = () => {
+    history.push(`/detail/${id}`)
+  }
+
   return(
-    <NavLink to={`/detail/${id}`} className={s.card2MainBox}>
+    <div onClick={handleDetail} className={s.card2MainBox}>
       <div className={s.subcard2box}>
         <div>
           <h3 className={s.font}>#{id}</h3>
           <h3 className={s.font}>{name}</h3>
         </div>
         <h4 className={s.method}>{method}</h4>
-        <button id='readyto' className={s.readyto} onClick={handleEntrega}>{entrega === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button>
+          <button id='readyto' className={s.readyto} onClick={handleEntrega}>{entrega === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button>
       </div>
       <div className={s.subcard2boxtime}>
         <h4 className={s.font}>Tiempo de preparacion</h4>
         <h4 className={s.font}>{crono} minutos</h4>
       </div>
-    </NavLink>
+    </div>
   )
 }

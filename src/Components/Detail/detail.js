@@ -6,13 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import {BsArrowLeft} from 'react-icons/bs'
 import {BsPersonPlus} from 'react-icons/bs'
 import {GiRoundTable} from 'react-icons/gi'
-import {BsTelephonePlus} from 'react-icons/bs'
+import {FaWhatsapp} from 'react-icons/fa'
 import CurrencyFormat from 'react-currency-format'
 import Swal from 'sweetalert2'
-import ModalContext from '../../context/modalContext';
-import { FormControlLabel } from '@mui/material';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import Spinner from '../spinner/spinner'
 
 export default function Detail (){
@@ -73,59 +69,73 @@ export default function Detail (){
        dispatch(setStatusFood(detalle))
        history.push('/orders')
     }
+
+    const check = useSelector(state => state.confirmOrder)
+
+    const [checkIfExist, setCheckIfExist] = useState(false)
+
+  
+    useEffect(() => {
+      if(check.filter(p => p.id === id).length>0){
+        setCheckIfExist(true)
+      }
+    }, [check])
+
+   const link = `https://wa.me/${detalle.telefono}?text=Hola%20`
    
     return(
        <div className={s.main}>
            <div className={s.submain}>
          <BsArrowLeft className={s.arrow} onClick={history.goBack}/>
 
-         
-            <div className={s.container}>
-               <div className={s.mainContainer}>
-      
-               <div className={s.subcontainer}>
-      
-                  <div className={s.boxNumeroPedido}>
-                  <h4>Altonono</h4>
-                  <div>
-                      <h2>Pedido n. {detalle.id}</h2>
-                  </div>
-                  <h4 style={{color: 'green'}}>{detalle.method}</h4>
-                  </div>
-      
-                  <div className={s.boxClientAndTable}>
-      
-                  <div style={{display: 'flex', width: '90%'}}>
-                  <div className={s.boxClient}>
-                  <BsPersonPlus className={s.iconPerson}/>
-                  <div>
-                  <h4 className={s.title}>Cliente</h4>
-                  <h3>{detalle.name}</h3>
-                  </div>
-                  </div>
-      
-                  <div className={s.boxClient} >
-                  <GiRoundTable className={s.iconPerson}/>
-                  <div className={s.boxTable}>
-                      <h4 className={s.title}>N. Mesa</h4>
-                      <h3>{detalle.table}</h3>
-                  </div>
-                  </div>
-                  </div>
-      
-                  <div className={s.boxClient}>
-                  <BsTelephonePlus className={s.iconPerson}/>
-                  <div >
-                      <h4 className={s.title}>Telefono</h4>
-                      <h3>{detalle.telefono}</h3>
-                  </div>
-                  </div>
-      
-                  </div>
-                  </div>
-                  <button className={s.arrow2} onClick={cancel}>Cancelar</button>
-              <div className={s.subcontainer2}>
-                
+    <div className={s.mainContainer}>  
+      <div className={s.subcontainer}>
+        <div className={s.boxNumeroPedido}>
+            <h4>Altonono</h4>
+            <div>
+              <h2>Pedido n. {detalle.id}</h2>
+            </div>
+            <h4 style={{color: 'green'}}>{detalle.method}</h4>
+        </div>
+        <div className={s.boxClientAndTable}>
+
+        <div style={{display: 'flex', width: '90%'}}>
+        <div className={s.boxClient}>
+        <BsPersonPlus className={s.iconPerson}/>
+        <div>
+        <h4 className={s.title}>Cliente</h4>
+        <h3>{detalle.name}</h3>
+        </div>
+        </div>
+
+        <div className={s.boxClient} >
+        <GiRoundTable className={s.iconPerson}/>
+        <div className={s.boxTable}>
+            <h4 className={s.title}>N. Mesa</h4>
+            <h3>{detalle.table}</h3>
+        </div>
+        </div>
+        </div>
+
+        <div className={s.boxClient}>
+        <FaWhatsapp className={s.iconwhatsapp}/>
+        <div>
+           <a style={{textDecoration: 'none'}} href={link}>
+           <h4 className={s.title}>Telefono</h4>
+            <h3 style={{color: '#292929'}}>{detalle.telefono}</h3>
+           </a>
+        </div>
+        </div>
+        {
+         checkIfExist === false?
+          <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button> :
+          <button className={s.acceptbutton}  >Pedido Listo</button> 
+
+        }
+        </div>
+        </div>
+           <button className={s.arrow2} onClick={cancel}>Cancelar</button>
+        <div className={s.subcontainer2}>    
             <div >
                 {
                   detalle.items ? detalle.items.map((item,i) => {
@@ -150,11 +160,11 @@ export default function Detail (){
           <h3>Total</h3>
           <h4><CurrencyFormat value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
       </div>
-      <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button>
+     
     </div>
   </div>
     
-  </div> 
+  
           
 </div>
 </div>
