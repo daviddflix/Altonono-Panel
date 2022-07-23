@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { accessAdmin } from '../Redux/actions';
 import { useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-
+import img from '../Assets/logo.png'
+import background from '../Assets/login back.jpg'
 
 const MainPanel = () => {
 
@@ -23,12 +24,17 @@ const MainPanel = () => {
  
    const history = useHistory()
   const admin = useSelector(state => state.admin)
- 
+ console.log('is', history)
 
   const submit = async () => {
    dispatch(accessAdmin(formValues))
     setFormValues({ mail: "", password: "" });
+    if(admin === false){
+      history.push('/')
+    } 
+    if(admin === true){
       history.push('/dashboard')
+    }
   };
 
 
@@ -43,6 +49,9 @@ const MainPanel = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmitting(true);
+    if(admin === true){
+      history.push('/dashboard')
+    }
   };
 
   //form validation handler
@@ -76,13 +85,14 @@ const MainPanel = () => {
     <div className={s.container}>
        
       <div className={s.box1}>
-      <h2 style={{color:'rgb(47,69,80)', margin: '1rem'}}>Enter your Admin Credential</h2>
+      <img src={img} alt='logo' className={s.logo} />
+      <h2 style={{color:'#fff', margin: '1rem'}}>Enter your Admin Credential</h2>
 
    <form onSubmit={handleSubmit} noValidate> 
      <div className={s.boxInput}>
-       <label htmlFor="mail">Email</label>
+       <label className={s.label} htmlFor="mail">Email</label>
        <input
-         className={s.input}
+         className={s.input} 
          type="mail"
          name="mail"
          id="mail"
@@ -94,7 +104,7 @@ const MainPanel = () => {
      </div>
 
      <div className={s.boxInput}>
-       <label htmlFor="password">Password</label>
+       <label className={s.label} htmlFor="password">Password</label>
        <input
          className={s.input}
          type="password"
@@ -107,7 +117,7 @@ const MainPanel = () => {
        {formErrors.password && <span>{formErrors.password}</span>}
      </div>
 
-     <button className={s.button} type="submit">Sign In</button>
+     <button className={s.button} type="submit">Log In</button>
    </form>
       </div>
     </div>

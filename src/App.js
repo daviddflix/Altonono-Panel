@@ -7,20 +7,22 @@ import PrivateRoutes from './Privateroutes';
 import Order from './Components/Order/order'
 import Detail from './Components/Detail/detail';
 import { SocketContext, socket } from './context/socketContext';
-import ModalContext from './context/modalContext';
-import { useEffect ,useState } from 'react';
+import  ModalContext  from './context/modalContext'
+import { useEffect, useState } from 'react';
 import Spinner from './Components/spinner/spinner';
 import CacheBuster from 'react-cache-buster';
 import { version } from '../package.json';
 import IncomingOrders from './Components/InsidePanel/insidepanel';
 import VerticalNavbar from './Components/Vertical Navbar/verticalNavbar';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addOrder } from './Redux/actions';
 
 function App() {
 
   
   const dispatch = useDispatch();
+  const admin = useSelector(state => state.admin)
+  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {  
     let isMounted = true
@@ -30,7 +32,6 @@ function App() {
       return ()=> { isMounted = false}
      })
 
-const [statusFood, setStatusFood] = useState('En Prep...')
 const isProduction = process.env.NODE_ENV === 'production';
 
   return (
@@ -40,17 +41,20 @@ const isProduction = process.env.NODE_ENV === 'production';
     isVerboseMode={false} //If true, the library writes verbose logs to console.
     loadingComponent={<Spinner />} //If not pass, nothing appears at the time of new version check.
     >
-    <div> 
+      {
+        admin === false?
+         <Route exact path='/'>
+         <MainPanel/>
+         </Route>:
+
+<div> 
 <SocketContext.Provider value={socket}>
-<ModalContext.Provider value={{statusFood, setStatusFood}}>
+<ModalContext.Provider value={{toggle, setToggle}} >
     <Navbar/>
     <VerticalNavbar/>
       <Switch>
-        <Route exact path='/'>
-        <MainPanel/>
-        </Route>
     
-        <PrivateRoutes exact path='/dashboard'>
+        <PrivateRoutes exact path='/'>
         <Dashboard/>
         </PrivateRoutes>
 
@@ -66,9 +70,11 @@ const isProduction = process.env.NODE_ENV === 'production';
         <Detail/>
         </PrivateRoutes>
  </Switch>
-</ModalContext.Provider>
+ </ModalContext.Provider>
 </SocketContext.Provider>
 </div>
+      }
+
 </CacheBuster>
   );
 }

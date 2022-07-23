@@ -9,14 +9,16 @@ import {RiRadioButtonLine} from 'react-icons/ri'
 import {BiLogOut} from 'react-icons/bi'
 import s from './navbar.module.css'
 import { SocketContext } from '../../context/socketContext';
+import { useHistory } from 'react-router-dom';
 
 export default function Logout () {
 
     const cookies = new Cookies() 
-    const status = useSelector(state => state.status)
-    const socket = React.useContext(SocketContext)
-
-    const dispatch = useDispatch()
+    const status = useSelector(state => state.status);
+    const socket = React.useContext(SocketContext);
+    const history = useHistory();
+    const dispatch = useDispatch();
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -56,10 +58,11 @@ export default function Logout () {
         cookies.remove('mail', {path:'/'})
         cookies.remove('password', {path:'/'})
          setAnchorEl(null);
+         history.push('/')
      }
 
     return(
-        <div style={{position: 'relative', right: '1rem', top: '.5rem'}}>
+        <div style={{position: 'relative', right: '1rem'}}>
         <Button
           id="demo-positioned-button"
           aria-controls={open ? 'demo-positioned-menu' : undefined}
