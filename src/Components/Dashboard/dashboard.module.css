@@ -1,8 +1,10 @@
 .main{
-    /* width: 82%; */
-    position: relative;
-    /* left: 18%; */
-    background-color: #f6f8fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ;
+    height: calc(100vh - 50px);
+    background-color: #f5f7f8
 } 
 
 .maincontainer{

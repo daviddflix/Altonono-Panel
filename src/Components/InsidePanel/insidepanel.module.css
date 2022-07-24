@@ -1,9 +1,10 @@
 .main{
-    width: 82%;
-    height: 100%;
-    position: relative;
-    left: 18%;
-    background-color: #f5f7f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ;
+    height: calc(100vh - 50px);
+    background-color: #f5f7f8
 } 
 
 .submain{
@@ -11,6 +12,7 @@
     justify-content: space-around;
     align-items: center;
     height: 100%;
+    width: 100%;
 } 
 
 .new{
@@ -18,10 +20,8 @@
     justify-content: flex-start;
     align-items: center;
     width: 49%;
-    height: 89vh;
+    height: 100%;
     overflow-y: scroll;
-    position: relative;
-    top: 1rem;
     display: flex;
     flex-direction: column;
 }

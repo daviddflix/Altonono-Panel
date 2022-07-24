@@ -11,14 +11,31 @@ export default function Dashboard(){
   const pedidos = useSelector(state => state.confirmOrder);
   const amount = pedidos? pedidos.map(p => p.monto): 0;
   const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
-  const {toggle, setToggle} = useContext(ModalContext)
+  const {variables} = useContext(ModalContext);
+  const windowlength = window.matchMedia("(max-width:600px)")
 
 useEffect(() => {
      document.title = 'Dashboard'
 })
 
+const styles = {
+   length : {
+       width: 'calc(100vw - 80px)',
+       position: 'relative',
+       left: '80px'
+   },
+   moreLength: {
+       width: 'calc(100vw - 200px)',
+       position: 'relative',
+       left: '200px'
+   },
+   less: {
+      width : '100vw'
+   }
+ }
+
    return(
-        <div style={toggle === false? {width: '82%', left: '18%'}: {width: '92.8%', left: '7%' }} className={s.main}>
+        <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
              
               <div className={s.maincontainer}> 
               <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>

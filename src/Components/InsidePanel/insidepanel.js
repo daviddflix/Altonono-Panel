@@ -6,6 +6,7 @@ import {MdOutlineWbTwilight} from 'react-icons/md'
 import {GiConfirmed} from 'react-icons/gi'
 import { NavLink, useHistory } from 'react-router-dom';
 import { SocketContext } from '../../context/socketContext';
+import ModalContext from '../../context/modalContext';
 
 export default function IncomingOrders() {
 
@@ -13,9 +14,33 @@ export default function IncomingOrders() {
   const newOrder = useSelector(state => state.queue);
   const confirmOrder = useSelector(state => state.confirmOrder);
 
+  const {variables} = React.useContext(ModalContext);
+  const windowlength = window.matchMedia("(max-width:600px)")
+
+  React.useEffect(() => {
+      document.title = 'Pedidos'
+ })
+
+ const styles = {
+  length : {
+      width: 'calc(100vw - 80px)',
+      position: 'relative',
+      left: '80px'
+  },
+  moreLength: {
+      width: 'calc(100vw - 200px)',
+      position: 'relative',
+      left: '200px'
+  },
+  less: {
+     width : '100vw'
+  }
+}
+
+
 
   return (
-    <div className={s.main}>
+    <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
       <div className={s.submain}>
         <div className={s.new}>
             <h2 className={s.title}>Nuevos</h2>
@@ -77,8 +102,9 @@ function Card({name, id}){
 function Card2({id, method, name}){
 
   const socket = React.useContext(SocketContext);
-  const [crono, setCrono] = React.useState(0)
+  const [crono, setCrono] = React.useState(0);
   const [entrega, setEntrega] = React.useState(false);
+  
 
 
   React.useEffect(() => {
