@@ -4,8 +4,7 @@ import { useDispatch } from 'react-redux';
 import { accessAdmin } from '../Redux/actions';
 import { useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import img from '../Assets/logo.png'
-import background from '../Assets/login back.jpg'
+import img from '../Assets/descarga-removebg-preview.png'
 
 const MainPanel = () => {
 
@@ -86,7 +85,7 @@ const MainPanel = () => {
        
       <div className={s.box1}>
       <img src={img} alt='logo' className={s.logo} />
-      <h2 style={{color:'#fff', margin: '1rem'}}>Enter your Admin Credential</h2>
+      <h2 style={{color:'#fff', margin: '1rem'}}>Altonono</h2>
 
    <form onSubmit={handleSubmit} noValidate> 
      <div className={s.boxInput}>

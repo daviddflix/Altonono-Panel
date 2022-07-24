@@ -1,0 +1,9 @@
+.maincontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ;
+    height: calc(100vh - 50px);
+    background-color: #f5f7f8;
+   
+}

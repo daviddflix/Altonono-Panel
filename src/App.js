@@ -16,13 +16,17 @@ import IncomingOrders from './Components/InsidePanel/insidepanel';
 import VerticalNavbar from './Components/Vertical Navbar/verticalNavbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrder } from './Redux/actions';
+import Menu from './Components/Menu/menu';
 
 function App() {
 
   
   const dispatch = useDispatch();
   const admin = useSelector(state => state.admin)
-  const [toggle, setToggle] = useState(false);
+  const [variables, setVariables] = useState({
+    toggle: false,
+    sidebarWidth: '200px'
+  });
 
   useEffect(() => {  
     let isMounted = true
@@ -49,7 +53,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 <div> 
 <SocketContext.Provider value={socket}>
-<ModalContext.Provider value={{toggle, setToggle}} >
+<ModalContext.Provider value={{variables, setVariables}} >
     <Navbar/>
     <VerticalNavbar/>
       <Switch>
@@ -69,6 +73,10 @@ const isProduction = process.env.NODE_ENV === 'production';
         <PrivateRoutes exact  path='/detail/:id'>
         <Detail/>
         </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/menu'>
+        <Menu/>
+        </PrivateRoutes>
  </Switch>
  </ModalContext.Provider>
 </SocketContext.Provider>
@@ -83,18 +91,3 @@ export default App;
 
 
      
-// if(data){
-//   const notificcation = ref.current;
-//    const onPlay = () => notificcation.play()
-//   notificcation.addEventListener('canplaythrough', onPlay)
-//  Swal.fire({
-//    title: 'Nuevo Pedido',
-//    confirmButtonText: 'Confirmar',
-//  }).then((result) => {
-//    /* Read more about isConfirmed, isDenied below */
-//    if (result.isConfirmed) {
-//      Swal.fire('Confirmado!', '', 'success')
-//     dispatch(addOrder(data))
-//    } 
-//  })
-// }

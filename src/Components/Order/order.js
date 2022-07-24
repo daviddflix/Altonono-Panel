@@ -3,6 +3,8 @@ import s from './order.module.css'
 import {  useSelector } from 'react-redux';
 import CurrencyFormat from 'react-currency-format'
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import ModalContext from '../../context/modalContext';
 
 
 
@@ -13,9 +15,29 @@ export default function Pedidos(){
     useEffect(() => {
         document.title = 'Resumen Pedidos'
    })
+
+   const {variables} = useContext(ModalContext);
+   const windowlength = window.matchMedia("(max-width:600px)")
+
+   const styles = {
+    length : {
+        width: 'calc(100vw - 80px)',
+        position: 'relative',
+        left: '80px'
+    },
+    moreLength: {
+        width: 'calc(100vw - 200px)',
+        position: 'relative',
+        left: '200px'
+    },
+    less: {
+       width : '100vw'
+    }
+}
+
   
     return(
-        <div  className={s.main}>
+        <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
           <div className={s.container}>
               <h1 className={s.title}>Resumen del Pedido</h1>
               <div className={s.grid}>

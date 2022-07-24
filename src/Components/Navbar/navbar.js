@@ -9,13 +9,13 @@ import { Button } from '@mui/material';
 
 export default function Navbar (){
 
-    const {toggle, setToggle} = useContext(ModalContext)
+    const {variables, setVariables} = useContext(ModalContext);
 
     return(
        <nav  className={s.navbar}> 
            <ul className={s.ul}>
                
-               <div onClick={() => setToggle(!toggle)} className={s.link}>
+               <div onClick={() => setVariables(prev => ({...prev, toggle: !variables.toggle})) } className={s.link}>
               < FaBars className={s.icon}/>
                </div>
                <div>

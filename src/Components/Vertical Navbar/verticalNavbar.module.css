@@ -1,8 +1,8 @@
 .navbar{
     background-color: #fff;
-    height: 91.9%;
+    height: calc(100vh - 50px);
     position: absolute;
-    top: 8.1%;
+    top: 50px;
     margin: 0;
     padding: 0;
     transition: 0.3s ease;
