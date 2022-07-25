@@ -18,7 +18,7 @@ export default function Menu(){
     const unicProducts = []
 
 
-    const unique = products.filter(p => {
+    const unique = products && products.filter(p => {
         const isduplicate = unicProducts.includes(p.category_id)
 
         if(!isduplicate){
@@ -34,7 +34,7 @@ export default function Menu(){
 
    useEffect(() => {
      dispatch(getProducts())
-   }, [])
+   })
 
     const styles = {
         length : {
@@ -53,7 +53,7 @@ export default function Menu(){
     }
 
     const [category, setCategory] = useState('Comidas')
-    const productsToShow = products.filter(p => p.category_id === category);
+    const productsToShow = products && products.filter(p => p.category_id === category);
     const handleCategory = (value) => {
         setCategory(value)
     }
@@ -91,7 +91,7 @@ export default function Menu(){
            <div className={s.container2}>
                 <div className={s.subcontainer2}>
                     <h2>{category}</h2>
-                    <span>{productsToShow.length} Productos</span>
+                    <span>{productsToShow && productsToShow.length} Productos</span>
                 </div>
                 <div className={s.containerproducts}>
                 {
