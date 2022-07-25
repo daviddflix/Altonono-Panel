@@ -70,7 +70,7 @@ export function getDetails(id){
        const res = await fetch(`${url}`)
        const info = await res.json()
        return dispatch({ type: PRODUCTS, payload: info })
-    }        
+    }         
  }
 
  

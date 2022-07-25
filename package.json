@@ -12,7 +12,7 @@
     "@mui/x-data-grid-pro": "^5.9.0",
     "axios": "^0.26.0",
     "react": "^17.0.1",
-    "react-cache-buster": "^0.1.6",
+    "react-cache-buster": "^0.1.7",
     "react-currency-format": "^1.1.0",
     "react-dom": "^17.0.1",
     "react-icons": "^4.3.1",
