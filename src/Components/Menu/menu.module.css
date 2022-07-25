@@ -1,9 +1,135 @@
 .maincontainer{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     transition: 0.3s ;
     height: calc(100vh - 50px);
     background-color: #f5f7f8;
    
 }
+
+.container1{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.containertitle{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    
+}
+
+.subcontainertitle{
+    position: relative;
+    left: 1rem;
+    top: 1rem;
+}
+
+.containersection{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.subcontainersection{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    padding-left: 1rem;
+    color: #009ee3;
+}
+
+.iconsection{
+    width: 25px;
+    height: 25px;
+    padding-right: 1rem;
+    color: #009ee3;
+}
+
+.cardsection{
+    width: 100%;
+    height: 90%;
+    overflow: scroll;
+}
+
+.section{
+    display: flex;
+    align-items: center;
+    width: 95%;
+    cursor: pointer;
+    padding: .5rem;
+   
+}
+
+.section:hover{
+    background-color: rgba(0,0,0,0.1);
+    color: #009ee3;
+}
+
+.container2{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-left: #c1c1c1 solid 1px;
+}
+
+.subcontainer2{
+    margin: 1rem;
+    width: 95%;
+    height: 20%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.containerproducts{
+    overflow-y: scroll;
+    width: 95%;
+    height: 80%;
+    margin: 1rem;
+}
+
+.containercard{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+    margin: 1rem 0 0 0;
+    transition: .2s ease;
+}
+
+.cardtitle{
+    width: 50%;
+    transition: .2s ease;
+}
+
+.subcontainercard{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    justify-content: flex-end;
+    margin-right: 1rem;
+}
+
+.togglebtn{
+    height: 100%;
+    margin-left: 1rem;
+    transition: .2s ease;
+}
+
+.dot{
+    color: #10c15b;
+    width: 30px;
+    height: 30px;
+}
+

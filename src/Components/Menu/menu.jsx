@@ -3,7 +3,11 @@ import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ModalContext from '../../context/modalContext'
 import { getProducts } from '../../Redux/actions';
-import s from './menu.module.css'
+import s from './menu.module.css';
+import {AiOutlineOrderedList} from 'react-icons/ai'
+import {GoPrimitiveDot} from 'react-icons/go'
+import ToggleButton from 'react-toggle-button'
+import { useState } from 'react';
 
 export default function Menu(){
 
@@ -11,7 +15,18 @@ export default function Menu(){
     const windowlength = window.matchMedia("(max-width:600px)");
     const products = useSelector(state => state.products)
     const dispatch = useDispatch()
-    console.log(products)
+    const unicProducts = []
+
+
+    const unique = products.filter(p => {
+        const isduplicate = unicProducts.includes(p.category_id)
+
+        if(!isduplicate){
+            unicProducts.push(p.category_id)
+            return true
+        }
+        return false
+    })
   
     useEffect(() => {
         document.title = 'Menu'
@@ -37,51 +52,82 @@ export default function Menu(){
         }
     }
 
+    const [category, setCategory] = useState('Comidas')
+    const productsToShow = products.filter(p => p.category_id === category);
+    const handleCategory = (value) => {
+        setCategory(value)
+    }
+
+  
+
     return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.maincontainer}>
-            <div>
-                Hola
-            </div>
+           <div className={s.container1}>
+                <div className={s.containertitle}>
+                    <div className={s.subcontainertitle}>
+                        <h1 style={{fontWeight: 800}}>Productos</h1>
+                        <h4>Altonono</h4>
+                    </div>
+                </div>
+                <div className={s.containersection}>
+                    <div className={s.subcontainersection}>
+                      <AiOutlineOrderedList className={s.iconsection}/>
+                      <h3>Secciones</h3>
+                    </div>
+                    <div className={s.cardsection}>
+                        {
+                            unicProducts && unicProducts.map(p => {
+                                return(
+                                    <div className={s.section} key={p} onClick={() => handleCategory(p)}>
+                                    <GoPrimitiveDot className={s.dot}/>
+                                    <h3 className={s.titlesection}>{p}</h3>
+                                  </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+           </div>
+           <div className={s.container2}>
+                <div className={s.subcontainer2}>
+                    <h2>{category}</h2>
+                    <span>{productsToShow.length} Productos</span>
+                </div>
+                <div className={s.containerproducts}>
+                {
+                    productsToShow && productsToShow.map(p => {
+                        return(
+                            <Card key={p.id} title={p.title} unit_price={p.unit_price}/>
+                        )
+                    })
+                }
+                </div>
+           </div>
         </div>
     )
 }
 
 
-function Categories() {
+function Card({title, unit_price}){
 
-    const products = useSelector(state => state.products)
-    const dispatch = useDispatch()
+    const [state, setState] = useState(true)
 
-    const unicProducts = []
-    console.log(unicProducts)
+    const handleToggle = () => {
+        setState(!state)
+    }
 
-
-    const unique = products.filter(p => {
-        const isduplicate = unicProducts.includes(p.category_id)
-
-        if(!isduplicate){
-            unicProducts.push(p.category_id)
-            return true
-        }
-    })
-
-    useEffect(() => {
-      if(products){
-        products.filter(p => {
-            const isduplicate = unicProducts.includes(p.category_id)
-    
-            if(!isduplicate){
-                unicProducts.push(p.category_id)
-                return true
-            }
-        })
-      }
-    }, [products])
-
-    console.log(unique)
     return(
-       <div>
-
-       </div>
+        <div className={s.containercard}>
+        <h3 className={s.cardtitle}>{title}</h3>
+        <div className={s.subcontainercard}>
+            <h3>${unit_price}</h3>
+            <div className={s.togglebtn}>
+                <ToggleButton
+                value={ state }
+                onToggle={handleToggle}
+                />
+            </div>
+        </div>
+    </div>
     )
 }
