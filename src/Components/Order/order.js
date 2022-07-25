@@ -33,7 +33,7 @@ export default function Pedidos(){
     less: {
        width : '100vw'
     }
-}
+} 
 
   
     return(
@@ -41,13 +41,13 @@ export default function Pedidos(){
           <div className={s.container}>
               <h1 className={s.title}>Resumen del Pedido</h1>
               <div className={s.grid}>
-                <h4>Hora</h4>
-                <h4 >Cliente</h4>
-                <h4 >Mesa</h4>
-                <h4 >Metodo de Pago</h4>
-                <h4>Telefono</h4>
-                <h4>Total</h4>
-                <h4>Status</h4> 
+                <h4 className={s.width}>Hora</h4>
+                <h4 className={s.width}>Cliente</h4>
+                <h4 className={s.width}>Mesa</h4>
+                <h4 className={s.width}>Metodo de Pago</h4>
+                <h4 className={s.width}>Telefono</h4>
+                <h4 className={s.width}>Total</h4>
+                <h4 className={s.width}>Status</h4> 
               </div>
    
               <div className={s.subcontainer}>
@@ -81,13 +81,13 @@ function Card({id, name, table, method, telefono, monto, statusFood}){
   return( 
     <NavLink id='boxpedido'  className={s.boxpedido}  to={`/detail/${id}`}>
    
-  <h4>{`${date.getHours()}:${date.getMinutes()}`}</h4>
-  <h4>{name}</h4>
-  <h4>{table}</h4>
-  <h4>{method}</h4>
-  <h4>{telefono}</h4>
-  <h4><CurrencyFormat value={monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
-  <h4>Nuevo</h4>
+  <h4 className={s.width}>{`${date.getHours()}:${date.getMinutes()}`}</h4>
+  <h4 className={s.width}>{name}</h4>
+  <h4 className={s.width}>{table}</h4>
+  <h4 className={s.width}>{method}</h4>
+  <h4 className={s.width}>{telefono}</h4>
+  <h4 className={s.width}><CurrencyFormat value={monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
+  <h4 className={s.width}>Nuevo</h4>
 
   </NavLink>
   )

@@ -1,13 +1,17 @@
 import s from './dashboard.module.css'
 import { useContext, useEffect} from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
-import { NavLink, useHistory } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
 import ModalContext from '../../context/modalContext'
+import {BsReceiptCutoff} from 'react-icons/bs'
+import {IoCloseCircleSharp} from 'react-icons/io5'
+import {GiReceiveMoney} from 'react-icons/gi'
+import {FaAward} from 'react-icons/fa'
 
 export default function Dashboard(){
 
   const dispatch = useDispatch();
+  const rejected = useSelector(state => state.cancelOrder);
   const pedidos = useSelector(state => state.confirmOrder);
   const amount = pedidos? pedidos.map(p => p.monto): 0;
   const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
@@ -36,32 +40,38 @@ const styles = {
 
    return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
-             
-              <div className={s.maincontainer}> 
-              <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <div className={s.maincontainer}> 
               <h1 className={s.title}>Dashboard</h1>
-              
-              </div>     
-                
-               <div className={s.box1}>
-               <h3 className={s.box_title}>At a Glance</h3>
-                  <div className={s.insidebox}>
-
-
-                  <div className={s.graphbox}>
-                     <div className={s.graph}>
-                     <span className={s.graphTitle}>Total</span>
-                    <CurrencyFormat className={s.index} value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                    </div>
-
-                     <div className={s.graph}>
-                     <span className={s.graphTitle}>Total Pedidos</span>
-                     <p className={s.index}>{pedidos? pedidos.length : 0}</p>
-                    </div>
-
+              <div className={s.box1}>
+                  <div className={s.box2}>
+                     <BsReceiptCutoff className={s.iconOrder}/>
+                     <div className={s.subBox}>
+                       <h1>{pedidos.length}</h1>
+                       <h4>Pedidos del dia</h4>
+                     </div>
                   </div>
+                  <div className={s.box2}>
+                  <IoCloseCircleSharp className={s.iconRechazados}/>
+                     <div className={s.subBox}>
+                       <h1>{rejected.length}</h1>
+                       <h4>Pedidos Rechazados</h4>
+                     </div>
                   </div>
-               </div>
+                  <div className={s.box2}>
+                     <GiReceiveMoney className={s.iconRecaudacion}/>
+                     <div className={s.subBox}>
+                       <h1>${total}</h1>
+                       <h4>Recaudacion</h4>
+                     </div>
+                  </div>
+                  <div className={s.box2}>
+                  <FaAward className={s.iconOrder}/>
+                     <div className={s.subBox}>
+                       <h1>Sin datos</h1>
+                       <h4>Producto mas vendido</h4>
+                     </div>
+                  </div>
+              </div>
             </div>
         </div>
       )

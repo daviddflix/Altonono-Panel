@@ -6,6 +6,7 @@ export const  RESET = 'RESET'
 export const  GET_DETAILS = 'GET_DETAILS'
 export const  STATUS = 'STATUS'
 export const  CANCEL = 'CANCEL'
+export const  PRODUCTS = 'PRODUCTS'
 export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
 
 const axios = require('axios').default;
@@ -61,6 +62,14 @@ export function getDetails(id){
        const res = await fetch(`${url}details/${id}`)
        const info = await res.json()
        return dispatch({ type: GET_DETAILS, payload: info })
+    }        
+ }
+
+ export function getProducts(){
+    return async function (dispatch){  
+       const res = await fetch(`${url}`)
+       const info = await res.json()
+       return dispatch({ type: PRODUCTS, payload: info })
     }        
  }
 

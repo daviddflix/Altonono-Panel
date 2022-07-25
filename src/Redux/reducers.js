@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_ORDERS, CANCEL, CREDENTIAL, GET_DETAILS, RESET, SET_STATUS_FOOD, STATUS } from "./actions"
+import {ADD_ORDERS, CANCEL, CREDENTIAL, GET_DETAILS, PRODUCTS, RESET, STATUS } from "./actions"
 
 
 const InicialState ={
@@ -9,6 +9,7 @@ const InicialState ={
     cancelOrder: [],
     detalle : {},
     status: 'offline',
+    products: []
 }
 
 
@@ -80,14 +81,11 @@ const InicialState ={
         }
         break
 
-        case SET_STATUS_FOOD: 
-
-        const remove = state.queue.filter(p => p.id !== action.payload.id);
+        case PRODUCTS: 
 
                 return{
                     ...state,
-                    confirmOrder: [...state.confirmOrder, action.payload],
-                    queue: remove
+                    products: action.payload,
                 }
         
 

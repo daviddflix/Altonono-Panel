@@ -7,9 +7,12 @@ import {BsArrowLeft} from 'react-icons/bs'
 import {BsPersonPlus} from 'react-icons/bs'
 import {GiRoundTable} from 'react-icons/gi'
 import {FaWhatsapp} from 'react-icons/fa'
+import {IoIosArrowForward} from 'react-icons/io'
 import CurrencyFormat from 'react-currency-format'
 import Swal from 'sweetalert2'
 import Spinner from '../spinner/spinner'
+import ModalContext from '../../context/modalContext'
+import {GiConfirmed} from 'react-icons/gi'
 
 export default function Detail (){
 
@@ -70,9 +73,35 @@ export default function Detail (){
        history.push('/orders')
     }
 
-    const check = useSelector(state => state.confirmOrder)
-
-    const [checkIfExist, setCheckIfExist] = useState(false)
+    const check = useSelector(state => state.confirmOrder);
+    const [checkIfExist, setCheckIfExist] = useState(false);
+    const {variables} = useContext(ModalContext);
+    const windowlength = window.matchMedia("(max-width:600px)")
+  
+  useEffect(() => {
+       document.title = 'Detalle'
+  })
+  
+  const styles = {
+     length : {
+         width: 'calc(100vw - 80px)',
+         position: 'relative',
+         left: '80px'
+     },
+     moreLength: {
+         width: 'calc(100vw - 200px)',
+         position: 'relative',
+         left: '200px'
+     },
+     less: {
+        width : '100vw'
+     }
+   }
+  const [entrega, setEntrega] = useState(false);
+  console.log(entrega)
+  useEffect(() => {
+    setEntrega(JSON.parse(window.sessionStorage.getItem("delivery")))
+  }, [])
 
   
     useEffect(() => {
@@ -84,8 +113,8 @@ export default function Detail (){
    const link = `https://wa.me/${detalle.telefono}?text=Hola%20`
    
     return(
-       <div className={s.main}>
-           <div className={s.submain}>
+  <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
+      <div className={s.submain}>
          <BsArrowLeft className={s.arrow} onClick={history.goBack}/>
 
     <div className={s.mainContainer}>  
@@ -99,7 +128,7 @@ export default function Detail (){
         </div>
         <div className={s.boxClientAndTable}>
 
-        <div style={{display: 'flex', width: '90%'}}>
+        <div className={s.subboxClientAndTable}>
         <div className={s.boxClient}>
         <BsPersonPlus className={s.iconPerson}/>
         <div>
@@ -110,14 +139,12 @@ export default function Detail (){
 
         <div className={s.boxClient} >
         <GiRoundTable className={s.iconPerson}/>
-        <div className={s.boxTable}>
+        <div>
             <h4 className={s.title}>N. Mesa</h4>
             <h3>{detalle.table}</h3>
         </div>
         </div>
-        </div>
-
-        <div className={s.boxClient}>
+        <div className={s.boxClientWhatsapp}>
         <FaWhatsapp className={s.iconwhatsapp}/>
         <div>
            <a style={{textDecoration: 'none'}} href={link}>
@@ -125,18 +152,24 @@ export default function Detail (){
             <h3 style={{color: '#292929'}}>{detalle.telefono}</h3>
            </a>
         </div>
+        <IoIosArrowForward className={s.arrowForward}/>
         </div>
+        </div>
+
+     
+        <div className={s.btns}>
         {
          checkIfExist === false?
           <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button> :
-          <button className={s.acceptbutton}  >Pedido Listo</button> 
+          <button className={s.acceptbutton}  >{entrega===true? <GiConfirmed/>: 'Pedido Listo'}</button> 
 
-        }
+         }
         </div>
         </div>
-           <button className={s.arrow2} onClick={cancel}>Cancelar</button>
+        </div>
+           <button disabled={entrega===true} className={entrega === true ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
         <div className={s.subcontainer2}>    
-            <div >
+            <div className={s.container2}>
                 {
                   detalle.items ? detalle.items.map((item,i) => {
                       return(
@@ -162,10 +195,7 @@ export default function Detail (){
       </div>
      
     </div>
-  </div>
-    
-  
-          
+  </div>    
 </div>
 </div>
     )
