@@ -8,7 +8,7 @@ const InicialState ={
     confirmOrder: [],
     cancelOrder: [],
     detalle : {},
-    status: 'offline',
+    status: 'Offline',
     products: []
 }
 

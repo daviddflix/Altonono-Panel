@@ -12,7 +12,32 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    height: 100%;
    
+}
+
+.subul{
+    display: flex;
+    
+    width: 50%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.btnStatusTienda{
+    padding: 5px  20px;
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 5px;
+    height: 80%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
 }
 
 .link{
@@ -44,13 +69,17 @@
 }
 
 .iconOnline{
-    color: green;
+    color: #10c15b;
     margin-right:5px ;
+    width: 25px;
+    height: 25px;
 }
 
 .iconOffline{
     color: red;
     margin-right:5px ;
+    width: 25px;
+    height: 25px;
 }
 
 .log{

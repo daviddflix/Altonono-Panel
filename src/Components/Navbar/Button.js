@@ -13,9 +13,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function Logout () {
 
-    const cookies = new Cookies() 
-    const status = useSelector(state => state.status);
-    const socket = React.useContext(SocketContext);
+    const cookies = new Cookies();
     const history = useHistory();
     const dispatch = useDispatch();
     
@@ -27,27 +25,8 @@ export default function Logout () {
     };
 
 
-// emite a cada momento el status de la tienda
-   React.useEffect(() => {
-    if(status === 'offline'){
-   socket.emit('offline', {status: 'offline' })
-    }
-    if(status === 'online'){
-      socket.emit('online', {status: 'online' })
-       }
-   }, [status, socket])
 
-    const handleTienda = () => {
-        if(status ==='offline'){
-            dispatch(getTienda('online'))
-          
-        }
-        if(status === 'online'){
-            dispatch(getTienda('offline'))
-        }
-      
-      setAnchorEl(null);
-    };
+
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -89,7 +68,6 @@ export default function Logout () {
           }}
         >
          
-          <MenuItem onClick={handleTienda}><RiRadioButtonLine className={status==='offline'? s.iconOffline: s.iconOnline}/> {status}</MenuItem>
           <MenuItem onClick={handleLogOut}><BiLogOut className={s.log}/>Logout</MenuItem>
         </Menu>
       </div>

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import s from './insidepanel.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {BsFillCartXFill} from 'react-icons/bs'
+import {BsCartX} from 'react-icons/bs'
 import {MdOutlineWbTwilight} from 'react-icons/md'
 import {GiConfirmed} from 'react-icons/gi'
-import {BsCartCheckFill} from 'react-icons/bs'
+import {BsCartCheck} from 'react-icons/bs'
 import { NavLink, useHistory } from 'react-router-dom';
 import { SocketContext } from '../../context/socketContext';
 import ModalContext from '../../context/modalContext';
@@ -16,7 +16,7 @@ export default function IncomingOrders() {
   const confirmOrder = useSelector(state => state.confirmOrder);
 
   const {variables} = React.useContext(ModalContext);
-  const windowlength = window.matchMedia("(max-width:600px)")
+  const windowlength = window.matchMedia("(max-width:700px)")
 
   React.useEffect(() => {
       document.title = 'Pedidos'
@@ -45,7 +45,7 @@ export default function IncomingOrders() {
       <div className={s.submain}>
         <div className={s.new}>
             <h2 className={s.title}>Nuevos</h2>
-            <div style={{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', overflow: 'scroll'}}>
+            <div className={s.subnew}>
               {
                 newOrder.length>0? newOrder.map((p, i) => {
                   return(
@@ -56,7 +56,7 @@ export default function IncomingOrders() {
                   />
                   )
                 }): <div className={s.noOrder}>
-                  <BsFillCartXFill className={s.iconNoOrder}/>
+                  <BsCartX className={s.iconNoOrder}/>
                   <h3>Aun no tienes pedidos</h3>
                 </div>
               }
@@ -64,7 +64,7 @@ export default function IncomingOrders() {
         </div>
         <div className={s.new}>
             <h2 className={s.title}>Confirmados</h2>
-            <div style={{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', margin: '1.4rem 0 0 0', overflow: 'scroll' }}>
+            <div className={s.subnew}>
             {
               confirmOrder.length>0 ? confirmOrder.map((p, i) => {
                 return(
@@ -76,7 +76,7 @@ export default function IncomingOrders() {
                   />
                 )
               }): <div className={s.noOrder}>
-              <BsCartCheckFill className={s.iconNoOrder}/>
+              <BsCartCheck className={s.iconNoOrder}/>
               <h3>Pedidos sin confirmar</h3>
             </div>
             }

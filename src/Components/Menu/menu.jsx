@@ -12,7 +12,7 @@ import { useState } from 'react';
 export default function Menu(){
 
     const {variables} = useContext(ModalContext);
-    const windowlength = window.matchMedia("(max-width:600px)");
+    const windowlength = window.matchMedia("(max-width:700px)");
     const products = useSelector(state => state.products)
     const dispatch = useDispatch()
     const unicProducts = []

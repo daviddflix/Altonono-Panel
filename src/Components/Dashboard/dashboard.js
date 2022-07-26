@@ -16,7 +16,7 @@ export default function Dashboard(){
   const amount = pedidos? pedidos.map(p => p.monto): 0;
   const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
   const {variables} = useContext(ModalContext);
-  const windowlength = window.matchMedia("(max-width:600px)")
+  const windowlength = window.matchMedia("(max-width:700px)")
 
 useEffect(() => {
      document.title = 'Dashboard'

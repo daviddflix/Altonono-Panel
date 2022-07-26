@@ -17,7 +17,7 @@ export default function Pedidos(){
    })
 
    const {variables} = useContext(ModalContext);
-   const windowlength = window.matchMedia("(max-width:600px)")
+   const windowlength = window.matchMedia("(max-width:700px)")
 
    const styles = {
     length : {
@@ -44,7 +44,7 @@ export default function Pedidos(){
                 <h4 className={s.width}>Hora</h4>
                 <h4 className={s.width}>Cliente</h4>
                 <h4 className={s.width}>Mesa</h4>
-                <h4 className={s.width}>Metodo de Pago</h4>
+                <h4 className={s.width}>Metodo</h4>
                 <h4 className={s.width}>Telefono</h4>
                 <h4 className={s.width}>Total</h4>
                 <h4 className={s.width}>Status</h4> 
