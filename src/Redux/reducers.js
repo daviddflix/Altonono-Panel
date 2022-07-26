@@ -59,24 +59,24 @@ const InicialState ={
         case CANCEL:
            
           
-            const uno = state.queue.filter(p => p.id === action.payload)
-            const dos = state.confirmOrder.filter(p => p.id === action.payload)
+            const itemInQueue = state.queue.filter(p => p.id === action.payload)
+            const itemInConfirm = state.confirmOrder.filter(p => p.id === action.payload)
 
           
-        if(uno.length>0){
+        if(itemInQueue.length>0){
             return{
                 ...state,
                 queue: state.queue.filter(p => p.id !== action.payload),
-                cancelOrder: [...state.queue, action.payload]
+                cancelOrder: [...state.cancelOrder, itemInQueue[0]]
               
             }
         } 
-        if(dos.length>0){
+        if(itemInConfirm.length>0){
             console.log('here')
             return{
                 ...state,
                 confirmOrder: state.confirmOrder.filter(p => p.id !== action.payload),
-                cancelOrder: [...state.queue, action.payload]
+                cancelOrder: [...state.cancelOrder, itemInConfirm[0]]
             }
         }
         break

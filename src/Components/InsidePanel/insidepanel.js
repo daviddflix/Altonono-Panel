@@ -57,7 +57,7 @@ export default function IncomingOrders() {
                   )
                 }): <div className={s.noOrder}>
                   <BsFillCartXFill className={s.iconNoOrder}/>
-                  <h3>No hay pedidos aun</h3>
+                  <h3>Aun no tienes pedidos</h3>
                 </div>
               }
             </div>
