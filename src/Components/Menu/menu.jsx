@@ -78,7 +78,7 @@ export default function Menu(){
                         {
                             unicProducts && unicProducts.map(p => {
                                 return(
-                                    <div className={s.section} key={p} onClick={() => handleCategory(p)}>
+                                    <div  className={s.section} key={p} onClick={() => handleCategory(p)}>
                                     <GoPrimitiveDot className={s.dot}/>
                                     <h3 className={s.titlesection}>{p}</h3>
                                   </div>
