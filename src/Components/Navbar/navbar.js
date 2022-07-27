@@ -37,7 +37,7 @@ export default function Navbar (){
       socket.emit('online', {status: 'online' })
        }
    }, [status, socket])
-
+console.log(status)
 
     return(
        <nav  className={s.navbar}> 
@@ -47,7 +47,7 @@ export default function Navbar (){
               < FaBars className={s.icon}/>
                </div>
                <div className={s.subul}>
-              <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status==='Offline'? s.iconOffline: s.iconOnline}/>{status}</button>
+              <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status==='offline'? s.iconOffline: s.iconOnline}/>{status}</button>
                <div className={s.btnLogout}><Logout/></div>
               </div>
            </ul>

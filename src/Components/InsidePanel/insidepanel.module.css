@@ -147,7 +147,7 @@
     height: 8%;
     display: grid;
     place-content: center;
-    border-bottom: #10c15b solid 1px;
+    
 }
 
 .sendConfirm{

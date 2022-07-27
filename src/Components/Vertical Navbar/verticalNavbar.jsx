@@ -14,8 +14,7 @@ export default function VerticalNavbar (){
 
   const {variables, setVariables} = useContext(ModalContext);
   const windowlength = window.matchMedia("(max-width:700px)")
-  console.log('variables', variables)
-  console.log('windowlength', windowlength)
+ 
   const wrapperRef = useRef(null);
 
   useEffect(() => {

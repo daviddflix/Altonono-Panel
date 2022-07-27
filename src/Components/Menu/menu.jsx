@@ -34,7 +34,7 @@ export default function Menu(){
 
    useEffect(() => {
      dispatch(getProducts())
-   })
+   }, [])
 
     const styles = {
         length : {
@@ -116,6 +116,13 @@ function Card({title, unit_price}){
         setState(!state)
     }
 
+    const styles = {
+        thumbStyle:{
+            width: "30px",
+            height: "30px"
+        }
+    }
+
     return(
         <div className={s.containercard}>
         <h3 className={s.cardtitle}>{title}</h3>
@@ -123,23 +130,12 @@ function Card({title, unit_price}){
             <h3>${unit_price}</h3>
             <div className={s.togglebtn}>
                 <ToggleButton
-                 colors={{
-                    activeThumb: {
-                      base: 'rgb(250,250,250)',
-                    },
-                    inactiveThumb: {
-                      base: 'rgb(62,130,247)',
-                    },
-                    active: {
-                      base: 'rgb(207,221,245)',
-                      hover: 'rgb(177, 191, 215)',
-                    },
-                    inactive: {
-                      base: 'rgb(65,66,68)',
-                      hover: 'rgb(95,96,98)',
-                    }
-                  }}
                 value={ state }
+                thumbStyle={styles.thumbStyle}
+                animateThumbStyleHover={(n) => {
+                    return {
+                      boxShadow: `0 0 ${2 + 4*n}px rgba(0,0,0,.16),0 ${2 + 3*n}px ${4 + 8*n}px rgba(0,0,0,.32)`,
+                    }}}
                 onToggle={handleToggle}
                 />
             </div>

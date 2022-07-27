@@ -72,8 +72,9 @@
 }
 
 .section:hover{
-    background-color: rgba(0,0,0,0.1);
+    background-color: #fff;
     color: #009ee3;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .container2{
@@ -96,7 +97,7 @@
     overflow-y: scroll;
     width: 95%;
     height: 80%;
-    margin: 1rem;
+    margin: 0;
 }
 
 .containercard{
@@ -104,13 +105,25 @@
     align-items: center;
     width: 100%;
     justify-content: space-around;
-    margin: 1rem 0 0 0;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
     transition: .2s ease;
+    height: 20px;
+    cursor: pointer;
+   
+}
+
+.containercard:hover{
+    background-color: #fff;
+    color: #009ee3;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .cardtitle{
     width: 50%;
     transition: .2s ease;
+    position: relative;
+    left: .5rem;
 }
 
 .subcontainercard{
