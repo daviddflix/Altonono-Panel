@@ -15,6 +15,7 @@ export default function Navbar (){
     const dispatch = useDispatch();
     const socket = useContext(SocketContext);
 
+
     const handleTienda = () => {
         if(status ==='offline'){
             dispatch(getTienda('online'))
@@ -35,14 +36,20 @@ export default function Navbar (){
         }
     };
 
+    function sendOffline(){  // plantilla para enviar mensaje
+        setInterval(sendOffline, 2000);
+        socket.emit('offline', 'offline')
+      }
+
+      function sendOnline(){  // plantilla para enviar mensaje
+       const uno = setInterval(sendOnline, 2000);
+        socket.emit('online', {data: 'online'})
+        clearInterval(sendOnline)
+      }
+console.log('status', status)
     // emite a cada momento el status de la tienda
    useEffect(() => {
-    if(status === 'offline'){
-   socket.emit('offline', {status: 'offline' })
-    }
-    if(status === 'online'){
-      socket.emit('online', {status: 'online' })
-       }
+        status === 'offline'? setInterval(sendOffline, 2000) :  setInterval(sendOnline, 2000)
    }, [status, socket])
 
 
