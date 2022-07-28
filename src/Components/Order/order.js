@@ -10,14 +10,15 @@ import ModalContext from '../../context/modalContext';
 
 export default function Pedidos(){
 
-    const pedidos = useSelector(state => state.confirmOrder)
+    const pedidos = useSelector(state => state.allOrders);
+   
       
     useEffect(() => {
         document.title = 'Resumen Pedidos'
    })
 
    const {variables} = useContext(ModalContext);
-   const windowlength = window.matchMedia("(max-width:600px)")
+   const windowlength = window.matchMedia("(max-width:700px)")
 
    const styles = {
     length : {
@@ -44,7 +45,7 @@ export default function Pedidos(){
                 <h4 className={s.width}>Hora</h4>
                 <h4 className={s.width}>Cliente</h4>
                 <h4 className={s.width}>Mesa</h4>
-                <h4 className={s.width}>Metodo de Pago</h4>
+                <h4 className={s.width}>Metodo</h4>
                 <h4 className={s.width}>Telefono</h4>
                 <h4 className={s.width}>Total</h4>
                 <h4 className={s.width}>Status</h4> 
@@ -52,17 +53,18 @@ export default function Pedidos(){
    
               <div className={s.subcontainer}>
               {
+                
               pedidos?.map((p, i) => {
                 return(
                   <Card
                   key={i}
-                  id={p.id}
-                  name={p.name}
-                  table={p.table}
-                  method={p.method}
-                  telefono={p.telefono}
-                  monto={p.monto}
-                 
+                  id={p.detalle.id}
+                  name={p.detalle.name}
+                  table={p.detalle.table}
+                  method={p.status === 'cancelado'? p.razon.value :p.detalle.method}
+                  telefono={p.detalle.telefono}
+                  monto={p.detalle.monto}
+                 statusFood={p.status}
                   />
                 )
               })    
@@ -87,7 +89,7 @@ function Card({id, name, table, method, telefono, monto, statusFood}){
   <h4 className={s.width}>{method}</h4>
   <h4 className={s.width}>{telefono}</h4>
   <h4 className={s.width}><CurrencyFormat value={monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
-  <h4 className={s.width}>Nuevo</h4>
+  <h4 className={s.width}>{statusFood}</h4>
 
   </NavLink>
   )

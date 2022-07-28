@@ -1,6 +1,6 @@
 import s from './dashboard.module.css'
 import { useContext, useEffect} from 'react'
-import {  useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import CurrencyFormat from 'react-currency-format';
 import ModalContext from '../../context/modalContext'
 import {BsReceiptCutoff} from 'react-icons/bs'
@@ -10,13 +10,17 @@ import {FaAward} from 'react-icons/fa'
 
 export default function Dashboard(){
 
-  const dispatch = useDispatch();
+
   const rejected = useSelector(state => state.cancelOrder);
-  const pedidos = useSelector(state => state.confirmOrder);
-  const amount = pedidos? pedidos.map(p => p.monto): 0;
-  const total = amount.length? amount.reduce((a,b) => a + b, 0) : 0;
+  const pedidos = useSelector(state => state.allOrders);
+
+  const totalCompletedOrders = pedidos.length > 0 && pedidos.filter(p => p.status === 'completada')
+  const findTotal = totalCompletedOrders.length > 0 && totalCompletedOrders.map(p => p.detalle.monto)
+  
+  const total = findTotal.length > 0? findTotal.reduce((a,b) => a + b, 0) : 0;
+ 
   const {variables} = useContext(ModalContext);
-  const windowlength = window.matchMedia("(max-width:600px)")
+  const windowlength = window.matchMedia("(max-width:700px)")
 
 useEffect(() => {
      document.title = 'Dashboard'
@@ -46,7 +50,7 @@ const styles = {
                   <div className={s.box2}>
                      <BsReceiptCutoff className={s.iconOrder}/>
                      <div className={s.subBox}>
-                       <h1>{pedidos.length}</h1>
+                       <h1>{totalCompletedOrders.length}</h1>
                        <h4>Pedidos del dia</h4>
                      </div>
                   </div>
@@ -60,7 +64,7 @@ const styles = {
                   <div className={s.box2}>
                      <GiReceiveMoney className={s.iconRecaudacion}/>
                      <div className={s.subBox}>
-                       <h1>${total}</h1>
+                       <h1><CurrencyFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h1>
                        <h4>Recaudacion</h4>
                      </div>
                   </div>

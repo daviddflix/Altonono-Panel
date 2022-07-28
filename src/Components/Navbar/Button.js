@@ -2,20 +2,16 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { getTienda, reset } from '../../Redux/actions';
-import {RiRadioButtonLine} from 'react-icons/ri'
+import { reset } from '../../Redux/actions';
 import {BiLogOut} from 'react-icons/bi'
 import s from './navbar.module.css'
-import { SocketContext } from '../../context/socketContext';
 import { useHistory } from 'react-router-dom';
 
 export default function Logout () {
 
-    const cookies = new Cookies() 
-    const status = useSelector(state => state.status);
-    const socket = React.useContext(SocketContext);
+    const cookies = new Cookies();
     const history = useHistory();
     const dispatch = useDispatch();
     
@@ -27,27 +23,8 @@ export default function Logout () {
     };
 
 
-// emite a cada momento el status de la tienda
-   React.useEffect(() => {
-    if(status === 'offline'){
-   socket.emit('offline', {status: 'offline' })
-    }
-    if(status === 'online'){
-      socket.emit('online', {status: 'online' })
-       }
-   }, [status, socket])
 
-    const handleTienda = () => {
-        if(status ==='offline'){
-            dispatch(getTienda('online'))
-          
-        }
-        if(status === 'online'){
-            dispatch(getTienda('offline'))
-        }
-      
-      setAnchorEl(null);
-    };
+
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -89,7 +66,6 @@ export default function Logout () {
           }}
         >
          
-          <MenuItem onClick={handleTienda}><RiRadioButtonLine className={status==='offline'? s.iconOffline: s.iconOnline}/> {status}</MenuItem>
           <MenuItem onClick={handleLogOut}><BiLogOut className={s.log}/>Logout</MenuItem>
         </Menu>
       </div>

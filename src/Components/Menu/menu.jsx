@@ -12,13 +12,13 @@ import { useState } from 'react';
 export default function Menu(){
 
     const {variables} = useContext(ModalContext);
-    const windowlength = window.matchMedia("(max-width:600px)");
+    const windowlength = window.matchMedia("(max-width:700px)");
     const products = useSelector(state => state.products)
     const dispatch = useDispatch()
     const unicProducts = []
+ 
 
-
-    const unique = products.filter(p => {
+    const unique = products && products.filter(p => {
         const isduplicate = unicProducts.includes(p.category_id)
 
         if(!isduplicate){
@@ -53,7 +53,7 @@ export default function Menu(){
     }
 
     const [category, setCategory] = useState('Comidas')
-    const productsToShow = products.filter(p => p.category_id === category);
+    const productsToShow = products && products.filter(p => p.category_id === category);
     const handleCategory = (value) => {
         setCategory(value)
     }
@@ -65,7 +65,7 @@ export default function Menu(){
            <div className={s.container1}>
                 <div className={s.containertitle}>
                     <div className={s.subcontainertitle}>
-                        <h1 style={{fontWeight: 800}}>Productos</h1>
+                        <h1 className={s.maintitle}>Productos</h1>
                         <h4>Altonono</h4>
                     </div>
                 </div>
@@ -90,8 +90,10 @@ export default function Menu(){
            </div>
            <div className={s.container2}>
                 <div className={s.subcontainer2}>
+                    <div style={{position: 'relative', top: '1rem', left: '1rem'}}>
                     <h2>{category}</h2>
-                    <span>{productsToShow.length} Productos</span>
+                    <span>{productsToShow && productsToShow.length} Productos</span>
+                    </div>
                 </div>
                 <div className={s.containerproducts}>
                 {
@@ -116,6 +118,13 @@ function Card({title, unit_price}){
         setState(!state)
     }
 
+    const styles = {
+        thumbStyle:{
+            width: "30px",
+            height: "30px"
+        }
+    }
+
     return(
         <div className={s.containercard}>
         <h3 className={s.cardtitle}>{title}</h3>
@@ -124,6 +133,11 @@ function Card({title, unit_price}){
             <div className={s.togglebtn}>
                 <ToggleButton
                 value={ state }
+                thumbStyle={styles.thumbStyle}
+                animateThumbStyleHover={(n) => {
+                    return {
+                      boxShadow: `0 0 ${2 + 4*n}px rgba(0,0,0,.16),0 ${2 + 3*n}px ${4 + 8*n}px rgba(0,0,0,.32)`,
+                    }}}
                 onToggle={handleToggle}
                 />
             </div>

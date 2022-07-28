@@ -7,6 +7,8 @@ export const  GET_DETAILS = 'GET_DETAILS'
 export const  STATUS = 'STATUS'
 export const  CANCEL = 'CANCEL'
 export const  PRODUCTS = 'PRODUCTS'
+export const  ALL_ORDERS = 'ALL_ORDERS'
+export const  CARD_STATUS_DELIVERY = 'CARD_STATUS_DELIVERY'
 export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
 
 const axios = require('axios').default;
@@ -70,7 +72,7 @@ export function getDetails(id){
        const res = await fetch(`${url}`)
        const info = await res.json()
        return dispatch({ type: PRODUCTS, payload: info })
-    }        
+    }         
  }
 
  
@@ -92,6 +94,20 @@ export function cancelar (value){
 export function setStatusFood (value){
     return{
         type: SET_STATUS_FOOD,
+        payload: value
+    }
+}
+
+export function getCardStatus (value){
+    return{
+        type: CARD_STATUS_DELIVERY,
+        payload: value
+    }
+}
+
+export function completedOrder (value){
+    return{
+        type: ALL_ORDERS,
         payload: value
     }
 }

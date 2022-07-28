@@ -20,11 +20,38 @@ export default function Detail (){
     const {id} = useParams();
     const history = useHistory();
     const detalle = useSelector(state => state.detalle);
-
+    const cardStatus = useSelector(state => state.cardStatusDelivery);
+    const confirmOrder = useSelector(state => state.confirmOrder);
+    const allOrders = useSelector(state => state.allOrders);
+    const {variables} = useContext(ModalContext);
+    const windowlength = window.matchMedia("(max-width:700px)");
 
     useEffect( () => {
-       dispatch(getDetails(id))
-    }, [id, dispatch])
+      dispatch(getDetails(id))
+   }, [id, dispatch])
+
+    const changeBtn =  confirmOrder.length > 0 && confirmOrder.filter(p => p.id === id)
+    const completedOrder = allOrders.length > 0 && allOrders.filter(p => p.detalle.id === id)
+
+    
+  const [findCardStatusById, setFindCardStatusById] = useState(false)
+ 
+
+  useEffect(() => {
+
+    const found = cardStatus.length > 0 && cardStatus.find(p => p.id === id);
+
+    if(cardStatus.length > 0 && found){
+    
+      if(found.delivery === true){
+          setFindCardStatusById(true)
+    }
+}
+    
+  }, [cardStatus, id])
+
+
+   
 
     const cancel = () => {
       return(
@@ -54,7 +81,7 @@ export default function Detail (){
               'Pedido cancelado.',
               'success'
             )
-            dispatch(cancelar(id))
+            dispatch(cancelar({detalle, status : 'cancelado', razon: result}))
             history.push('/orders')
           }
         })
@@ -73,10 +100,6 @@ export default function Detail (){
        history.push('/orders')
     }
 
-    const check = useSelector(state => state.confirmOrder);
-    const [checkIfExist, setCheckIfExist] = useState(false);
-    const {variables} = useContext(ModalContext);
-    const windowlength = window.matchMedia("(max-width:600px)")
   
   useEffect(() => {
        document.title = 'Detalle'
@@ -97,18 +120,6 @@ export default function Detail (){
         width : '100vw'
      }
    }
-  const [entrega, setEntrega] = useState(false);
-  console.log(entrega)
-  useEffect(() => {
-    setEntrega(JSON.parse(window.sessionStorage.getItem("delivery")))
-  }, [])
-
-  
-    useEffect(() => {
-      if(check.filter(p => p.id === id).length>0){
-        setCheckIfExist(true)
-      }
-    }, [check])
 
    const link = `https://wa.me/${detalle.telefono}?text=Hola%20`
    
@@ -159,15 +170,16 @@ export default function Detail (){
      
         <div className={s.btns}>
         {
-         checkIfExist === false?
-          <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button> :
-          <button className={s.acceptbutton}  >{entrega===true? <GiConfirmed/>: 'Pedido Listo'}</button> 
+        completedOrder.length > 0 ? <button className={s.completedOrder}>Orden Finalizada</button> :
+       changeBtn.length > 0?  
+       <button className={s.acceptbutton}  >{ findCardStatusById === true? <GiConfirmed/>: 'Pedido Listo'}</button> :
+          <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button> 
 
          }
         </div>
         </div>
         </div>
-           <button disabled={entrega===true} className={entrega === true ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
+           <button disabled={ findCardStatusById === true} className={ findCardStatusById === true ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
         <div className={s.subcontainer2}>    
             <div className={s.container2}>
                 {

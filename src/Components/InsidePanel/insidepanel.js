@@ -1,13 +1,14 @@
 import * as React from 'react';
 import s from './insidepanel.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {BsFillCartXFill} from 'react-icons/bs'
+import {BsCartX} from 'react-icons/bs'
 import {MdOutlineWbTwilight} from 'react-icons/md'
 import {GiConfirmed} from 'react-icons/gi'
-import {BsCartCheckFill} from 'react-icons/bs'
+import {BsCartCheck} from 'react-icons/bs'
 import { NavLink, useHistory } from 'react-router-dom';
 import { SocketContext } from '../../context/socketContext';
 import ModalContext from '../../context/modalContext';
+import {  completedOrder, getCardStatus } from '../../Redux/actions';
 
 export default function IncomingOrders() {
 
@@ -16,7 +17,7 @@ export default function IncomingOrders() {
   const confirmOrder = useSelector(state => state.confirmOrder);
 
   const {variables} = React.useContext(ModalContext);
-  const windowlength = window.matchMedia("(max-width:600px)")
+  const windowlength = window.matchMedia("(max-width:700px)")
 
   React.useEffect(() => {
       document.title = 'Pedidos'
@@ -40,12 +41,13 @@ export default function IncomingOrders() {
 
 
 
+
   return (
     <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
       <div className={s.submain}>
         <div className={s.new}>
             <h2 className={s.title}>Nuevos</h2>
-            <div style={{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', overflow: 'scroll'}}>
+            <div className={s.subnew}>
               {
                 newOrder.length>0? newOrder.map((p, i) => {
                   return(
@@ -56,15 +58,15 @@ export default function IncomingOrders() {
                   />
                   )
                 }): <div className={s.noOrder}>
-                  <BsFillCartXFill className={s.iconNoOrder}/>
-                  <h3>No hay pedidos aun</h3>
+                  <BsCartX className={s.iconNoOrder}/>
+                  <h3>Aun no tienes pedidos</h3>
                 </div>
               }
             </div>
         </div>
         <div className={s.new}>
             <h2 className={s.title}>Confirmados</h2>
-            <div style={{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', margin: '1.4rem 0 0 0', overflow: 'scroll' }}>
+            <div className={s.subnew}>
             {
               confirmOrder.length>0 ? confirmOrder.map((p, i) => {
                 return(
@@ -73,10 +75,13 @@ export default function IncomingOrders() {
                   name={p.name}
                   method={p.method}
                   id={p.id}
+                  table={p.table}
+                  monto={p.monto}
+                  telefono={p.telefono}
                   />
                 )
               }): <div className={s.noOrder}>
-              <BsCartCheckFill className={s.iconNoOrder}/>
+              <BsCartCheck className={s.iconNoOrder}/>
               <h3>Pedidos sin confirmar</h3>
             </div>
             }
@@ -103,45 +108,39 @@ function Card({name, id}){
 }
 
 
-function Card2({id, method, name}){
+function Card2({id, method, name, table, telefono, monto}){
 
-  const socket = React.useContext(SocketContext);
+  const cardStatus = useSelector(state => state.cardStatusDelivery);
   const [crono, setCrono] = React.useState(0);
-  const [entrega, setEntrega] = React.useState(false);
-  console.log('entregaInsidePanel', entrega)
+  const [detalle] = React.useState({
+    id: id,
+    name: name,
+    table: table,
+    method: method,
+    telefono: telefono,
+    monto: monto,
+  });
+  const dispatch = useDispatch();
 
-
-  React.useEffect(() => {
-    if(entrega === false){
-      setInterval(() => {
-        setCrono((crono) => crono + 1)
-        }, 60000);
-    }
-   if(entrega === true){
-    clearInterval()
-   }
-
-  }, [entrega])
-
-  React.useEffect(() => {
-    setCrono(JSON.parse(window.sessionStorage.getItem("crono")))
-    setEntrega(JSON.parse(window.sessionStorage.getItem("delivery")))
-  }, [])
-
-  React.useEffect(() => {
-    window.sessionStorage.setItem("crono", crono)
-    window.sessionStorage.setItem("delivery", entrega)
-  }, [crono])
-
-
-  const handleEntrega = (e) => {
+  const handleDelivery = (e) => {  // onclick en  btn pedido listo cambia el icono y setea su estado en true
     e.stopPropagation()
-    setEntrega(true)
-    socket.emit('pedidoListo', {status: 'Pedido Listo'})
+    dispatch(getCardStatus({delivery: true, id}))
+    dispatch(completedOrder({status: 'completada', detalle}))
   }
 
-  const history = useHistory();
+  const [findCardStatusById, setFindCardStatusById] = React.useState(false);
+  console.log('findCardStatusById',findCardStatusById)
+  React.useEffect(() => {
+    const find = cardStatus.length > 0 && cardStatus.find(p => p.id === id);
+    if(cardStatus.length > 0 && find){
+      console.log('find',find)
+      if(find.delivery === true)
+          setFindCardStatusById(true)
+    }
+   
+  }, [ cardStatus ])
 
+  const history = useHistory();
   const handleDetail = () => {
     history.push(`/detail/${id}`)
   }
@@ -154,7 +153,7 @@ function Card2({id, method, name}){
           <h3 className={s.font}>{name}</h3>
         </div>
         <h4 className={s.method}>{method}</h4>
-        <button id='readyto' className={s.readyto} onClick={handleEntrega}>{entrega === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button>
+        <button id='readyto' className={s.readyto} onClick={handleDelivery}>{findCardStatusById === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button>
       </div>
       <div className={s.subcard2boxtime}>
         <h4 className={s.font}>Tiempo de preparacion</h4>
@@ -163,3 +162,27 @@ function Card2({id, method, name}){
     </div>
   )
 }
+
+
+// React.useEffect(() => {
+//   if(delivery === false){
+//     setInterval(() => {
+//       setCrono((crono) => crono + 1)
+//       }, 60000);
+//   }
+
+//  if(delivery === true){
+//   clearInterval()
+//  }
+
+// }, [delivery])
+
+// React.useEffect(() => {  // useEffect para guardar su estado en localStorage
+//   setCrono(JSON.parse(window.sessionStorage.getItem("crono")))
+//   // setDelivery(JSON.parse(window.sessionStorage.getItem("delivery")))
+// }, [])
+
+// React.useEffect(() => {  // useEffect para traer el estado en localStorage
+//   window.sessionStorage.setItem("crono", crono)
+//   // window.sessionStorage.setItem("delivery", delivery)
+// }, [crono])

@@ -92,6 +92,16 @@
    transition: .2s;
 }
 
+.completedOrder{
+    width: 100%;
+    background-color: #c1c1c1;
+    height: 100%;
+    border: none;
+    font-size: 1.4rem;
+    font-weight: 800;
+   transition: .2s;
+}
+
 .boxClient{
     display: flex;
     align-items: center;
