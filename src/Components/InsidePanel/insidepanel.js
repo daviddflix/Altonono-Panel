@@ -8,7 +8,7 @@ import {BsCartCheck} from 'react-icons/bs'
 import { NavLink, useHistory } from 'react-router-dom';
 import { SocketContext } from '../../context/socketContext';
 import ModalContext from '../../context/modalContext';
-import {  completedOrder, getCardStatus } from '../../Redux/actions';
+import {  completedOrder, getCardStatus, setCrono } from '../../Redux/actions';
 
 export default function IncomingOrders() {
 
@@ -111,7 +111,10 @@ function Card({name, id}){
 function Card2({id, method, name, table, telefono, monto}){
 
   const cardStatus = useSelector(state => state.cardStatusDelivery);
-  const [crono, setCrono] = React.useState(0);
+  const valueCrono = useSelector(state => state.crono);
+
+  const getValue = valueCrono && valueCrono.find(p => p.id === id);
+ 
   const [detalle] = React.useState({
     id: id,
     name: name,
@@ -129,21 +132,35 @@ function Card2({id, method, name, table, telefono, monto}){
   }
 
   const [findCardStatusById, setFindCardStatusById] = React.useState(false);
-  console.log('findCardStatusById',findCardStatusById)
+ 
   React.useEffect(() => {
     const find = cardStatus.length > 0 && cardStatus.find(p => p.id === id);
     if(cardStatus.length > 0 && find){
-      console.log('find',find)
+   
       if(find.delivery === true)
           setFindCardStatusById(true)
     }
    
-  }, [ cardStatus ])
+  }, [ cardStatus, id ])
 
   const history = useHistory();
   const handleDetail = () => {
     history.push(`/detail/${id}`)
   }
+
+  
+React.useEffect(() => {
+  if(findCardStatusById === false){
+    setInterval(() => {
+      dispatch(setCrono({id, timer: 1}))
+      }, 3000);
+  }
+
+ if(findCardStatusById === true){
+  clearInterval()
+ }
+
+}, [findCardStatusById, id, dispatch])
 
   return(
     <div onClick={handleDetail} className={s.card2MainBox}>
@@ -157,32 +174,9 @@ function Card2({id, method, name, table, telefono, monto}){
       </div>
       <div className={s.subcard2boxtime}>
         <h4 className={s.font}>Tiempo de preparacion</h4>
-        <h4 className={s.font}>{crono} minutos</h4>
+        <h4 className={s.font}>{getValue? getValue.timer : 0} minutos</h4>
       </div>
     </div>
   )
 }
 
-
-// React.useEffect(() => {
-//   if(delivery === false){
-//     setInterval(() => {
-//       setCrono((crono) => crono + 1)
-//       }, 60000);
-//   }
-
-//  if(delivery === true){
-//   clearInterval()
-//  }
-
-// }, [delivery])
-
-// React.useEffect(() => {  // useEffect para guardar su estado en localStorage
-//   setCrono(JSON.parse(window.sessionStorage.getItem("crono")))
-//   // setDelivery(JSON.parse(window.sessionStorage.getItem("delivery")))
-// }, [])
-
-// React.useEffect(() => {  // useEffect para traer el estado en localStorage
-//   window.sessionStorage.setItem("crono", crono)
-//   // window.sessionStorage.setItem("delivery", delivery)
-// }, [crono])

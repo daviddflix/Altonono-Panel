@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, GET_DETAILS, PRODUCTS, RESET, SET_STATUS_FOOD, STATUS } from "./actions"
+import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, GET_DETAILS, PRODUCTS, RESET, SET_CRONO, SET_STATUS_FOOD, STATUS } from "./actions"
 
 
 const InicialState = {
@@ -11,7 +11,8 @@ const InicialState = {
     detalle : {},
     status: 'offline',
     products: [],
-    cardStatusDelivery: []
+    cardStatusDelivery: [],
+    crono: []
 }
 
 
@@ -45,7 +46,8 @@ const InicialState = {
                 detalle : {},
                 cardStatusDelivery: [],
                 allOrders: [],
-                products: []
+                products: [],
+                crono: []
             }
             case STATUS:
             
@@ -122,7 +124,26 @@ const InicialState = {
                allOrders: [...state.allOrders, action.payload],
 
             }
-     
+
+       case SET_CRONO: 
+         
+        const obj = state.crono.find(p => p.id === action.payload.id)
+
+        if(obj){
+            return{
+              ...state,
+              crono: state.crono.map(item => item.id === action.payload.id? {
+                ...item,
+                timer: item.timer + 1
+              }: item)
+            }
+          }
+
+          return{
+            ...state,
+            crono: [...state.crono, action.payload]
+            
+          }
          default:
              return {...state};
      }

@@ -25,6 +25,16 @@ export default function Navbar (){
         }
     };
 
+    const handleOpen = () => {
+        if(variables.toggle === false){
+            setVariables(prev => ({...prev, toggle: true}))
+          
+        }
+        if(variables.toggle === true){
+            setVariables(prev => ({...prev, toggle: false}))
+        }
+    };
+
     // emite a cada momento el status de la tienda
    useEffect(() => {
     if(status === 'offline'){
@@ -36,11 +46,13 @@ export default function Navbar (){
    }, [status, socket])
 
 
+
+
     return(
        <nav  className={s.navbar}> 
            <ul className={s.ul}>
                
-               <div onClick={() => setVariables(prev => ({...prev, toggle: !variables.toggle})) } className={s.link}>
+               <div onClick={handleOpen} className={s.link}>
               < FaBars className={s.icon}/>
                </div>
                <div className={s.subul}>

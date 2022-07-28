@@ -14,7 +14,7 @@ export default function Dashboard(){
   const rejected = useSelector(state => state.cancelOrder);
   const pedidos = useSelector(state => state.allOrders);
 
-  const totalCompletedOrders = pedidos.length > 0 && pedidos.filter(p => p.status === 'completada')
+  const totalCompletedOrders = pedidos.length > 0 && pedidos.filter(p => p.status === 'completada') 
   const findTotal = totalCompletedOrders.length > 0 && totalCompletedOrders.map(p => p.detalle.monto)
   
   const total = findTotal.length > 0? findTotal.reduce((a,b) => a + b, 0) : 0;
@@ -50,7 +50,7 @@ const styles = {
                   <div className={s.box2}>
                      <BsReceiptCutoff className={s.iconOrder}/>
                      <div className={s.subBox}>
-                       <h1>{totalCompletedOrders.length}</h1>
+                       <h1>{totalCompletedOrders.length > 0 ? totalCompletedOrders.length : 0}</h1>
                        <h4>Pedidos del dia</h4>
                      </div>
                   </div>

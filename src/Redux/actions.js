@@ -10,6 +10,7 @@ export const  PRODUCTS = 'PRODUCTS'
 export const  ALL_ORDERS = 'ALL_ORDERS'
 export const  CARD_STATUS_DELIVERY = 'CARD_STATUS_DELIVERY'
 export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
+export const  SET_CRONO = 'SET_CRONO'
 
 const axios = require('axios').default;
 
@@ -108,6 +109,13 @@ export function getCardStatus (value){
 export function completedOrder (value){
     return{
         type: ALL_ORDERS,
+        payload: value
+    }
+}
+
+export function setCrono (value){
+    return{
+        type: SET_CRONO,
         payload: value
     }
 }

@@ -34,7 +34,7 @@ export default function Menu(){
 
    useEffect(() => {
      dispatch(getProducts())
-   }, [])
+   }, [dispatch])
 
     const styles = {
         length : {

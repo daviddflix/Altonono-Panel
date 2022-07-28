@@ -13,21 +13,13 @@ import React, { useRef, useEffect } from "react";
 export default function VerticalNavbar (){
 
   const {variables, setVariables} = useContext(ModalContext);
-  const windowlength = window.matchMedia("(max-width:700px)")
- 
+  const windowlength = window.matchMedia("(max-width:700px)");
   const wrapperRef = useRef(null);
 
   useEffect(() => {
-
-    if(windowlength.matches === true){
-      setVariables(prev => ({...prev, toggle: true}))
-    }
-    /**
-     * Alert if clicked on outside of element
-     */
     function handleClickOutside(event) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-         if(windowlength.matches === true && variables.toggle === false){
+      if (windowlength.matches === true && variables.toggle === false) {
+         if(wrapperRef.current && !wrapperRef.current.contains(event.target)){
           setVariables(prev => ({...prev, toggle: true}))
          }
       }
@@ -38,12 +30,12 @@ export default function VerticalNavbar (){
      }
     }
     // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside, true);
     return () => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [wrapperRef, setVariables, variables.toggle, windowlength.matches]);
+  });
 
     return(
 <nav ref={wrapperRef}  className={s.navbar}>
