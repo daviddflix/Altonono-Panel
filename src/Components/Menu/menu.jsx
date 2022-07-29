@@ -147,7 +147,7 @@ function Card({title, id, unit_price, available}){
             height: "30px"
         },
         track: {
-            height: '25px',
+            height: '26px',
         }
     }
 
