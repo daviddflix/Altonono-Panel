@@ -11,6 +11,9 @@ export const  ALL_ORDERS = 'ALL_ORDERS'
 export const  CARD_STATUS_DELIVERY = 'CARD_STATUS_DELIVERY'
 export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
 export const  SET_CRONO = 'SET_CRONO'
+export const  UPDATE_STATUS_STORE = 'UPDATE_STATUS_STORE'
+export const  UPDATE_ITEM = 'UPDATE_ITEM'
+
 
 const axios = require('axios').default;
 
@@ -78,12 +81,26 @@ export function getDetails(id){
 
  
 
- export function getTienda(data){
+ export function getStatus(){
      return async function(dispatch){
-       const res = await axios.post(`${url}online?status=${data}`)
-       return dispatch({ type: STATUS, payload: data})
+       const res = await axios.get(`${url}getStatus`)
+       return dispatch({ type: STATUS, payload: res.data})
      }
  }
+
+ export function updateStatus(stat){
+    return async function(dispatch){
+      const res = await axios.post(`${url}status/${stat}`)
+      return dispatch({ type: UPDATE_STATUS_STORE, payload: res.data})
+    }
+}
+
+export function updateItem(item){
+    return async function(dispatch){
+      const res = await axios.post(`${url}updateItem`, item)
+      console.log('res', res)
+    }
+}
 
 export function cancelar (value){
     return{

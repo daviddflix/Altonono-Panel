@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ModalContext from '../../context/modalContext'
-import { getProducts } from '../../Redux/actions';
+import { getProducts, updateItem } from '../../Redux/actions';
 import s from './menu.module.css';
 import {AiOutlineOrderedList} from 'react-icons/ai'
 import {GoPrimitiveDot} from 'react-icons/go'
@@ -16,7 +16,7 @@ export default function Menu(){
     const products = useSelector(state => state.products)
     const dispatch = useDispatch()
     const unicProducts = []
- 
+
 
     const unique = products && products.filter(p => {
         const isduplicate = unicProducts.includes(p.category_id)
@@ -57,6 +57,8 @@ export default function Menu(){
     const handleCategory = (value) => {
         setCategory(value)
     }
+
+    console.log('products', productsToShow)
 
   
 
@@ -99,7 +101,7 @@ export default function Menu(){
                 {
                     productsToShow && productsToShow.map(p => {
                         return(
-                            <Card key={p.id} title={p.title} unit_price={p.unit_price}/>
+                            <Card available={p.available} key={p.id} id={p.id} title={p.title} unit_price={p.unit_price}/>
                         )
                     })
                 }
@@ -110,18 +112,42 @@ export default function Menu(){
 }
 
 
-function Card({title, unit_price}){
+function Card({title, id, unit_price, available}){
 
-    const [state, setState] = useState(true)
+   const dispatch = useDispatch()
+   const products = useSelector(state => state.products)
+   const filterItem = products.filter(p => p.id === id)
+   console.log('filterItem', filterItem[0].available)
 
     const handleToggle = () => {
-        setState(!state)
+        if(filterItem[0].available === true){
+            const obj = {
+                available: false,
+                id: id
+            }
+            dispatch(updateItem(obj))
+        }
+
+        if(filterItem[0].available === false){
+            const obj = {
+                available: true,
+                id: id
+            }
+            dispatch(updateItem(obj))
+        }
     }
+
+    useEffect(() => {
+        dispatch(getProducts())
+    }, [])
 
     const styles = {
         thumbStyle:{
             width: "30px",
             height: "30px"
+        },
+        track: {
+            height: '25px',
         }
     }
 
@@ -132,8 +158,9 @@ function Card({title, unit_price}){
             <h3>${unit_price}</h3>
             <div className={s.togglebtn}>
                 <ToggleButton
-                value={ state }
-                thumbStyle={styles.thumbStyle}
+                value={ available }
+                trackStyle={styles.track}
+                // thumbStyle={styles.thumbStyle}
                 animateThumbStyleHover={(n) => {
                     return {
                       boxShadow: `0 0 ${2 + 4*n}px rgba(0,0,0,.16),0 ${2 + 3*n}px ${4 + 8*n}px rgba(0,0,0,.32)`,

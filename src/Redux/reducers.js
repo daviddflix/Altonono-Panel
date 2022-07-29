@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, GET_DETAILS, PRODUCTS, RESET, SET_CRONO, SET_STATUS_FOOD, STATUS } from "./actions"
+import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, GET_DETAILS, PRODUCTS, RESET, SET_CRONO, SET_STATUS_FOOD, STATUS, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
@@ -55,6 +55,13 @@ const InicialState = {
                 ...state,
                 status: action.payload
             }
+
+            case UPDATE_STATUS_STORE:
+            
+                return{
+                    ...state,
+                    status: action.payload
+                }
 
         case GET_DETAILS:
             
