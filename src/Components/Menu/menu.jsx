@@ -116,11 +116,9 @@ function Card({title, id, unit_price, available}){
 
    const dispatch = useDispatch()
    const products = useSelector(state => state.products)
-   const filterItem = products.filter(p => p.id === id)
-   console.log('filterItem', filterItem[0].available)
-
+  
     const handleToggle = () => {
-        if(filterItem[0].available === true){
+        if(available === true){
             const obj = {
                 available: false,
                 id: id
@@ -128,7 +126,7 @@ function Card({title, id, unit_price, available}){
             dispatch(updateItem(obj))
         }
 
-        if(filterItem[0].available === false){
+        if(available === false){
             const obj = {
                 available: true,
                 id: id
@@ -138,7 +136,9 @@ function Card({title, id, unit_price, available}){
     }
 
     useEffect(() => {
-        dispatch(getProducts())
+        if(dispatch){
+            dispatch(getProducts())
+        }
     }, [])
 
     const styles = {

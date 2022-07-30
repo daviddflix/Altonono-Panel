@@ -25,7 +25,7 @@ export default function Detail (){
     const allOrders = useSelector(state => state.allOrders);
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
-console.log('details', detalle)
+
     useEffect( () => {
       dispatch(getDetails(id))
    }, [id, dispatch])
