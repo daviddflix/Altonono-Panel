@@ -1,9 +1,9 @@
 import { Route, Switch } from 'react-router-dom'
-import './App.css'
+import './App.css';
+import PrivateRoutes from './Privateroutes'
 import Navbar from './Components/Navbar/navbar';
 import Dashboard from './Components/Dashboard/dashboard';
 import MainPanel from './MainPanel/mainpanel';
-import PrivateRoutes from './Privateroutes';
 import Order from './Components/Order/order'
 import Detail from './Components/Detail/detail';
 import { SocketContext, socket } from './context/socketContext';
@@ -17,12 +17,14 @@ import VerticalNavbar from './Components/Vertical Navbar/verticalNavbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrder } from './Redux/actions';
 import Menu from './Components/Menu/menu';
+import Restore from './Components/Restore/restore';
 
 function App() {
 
   
   const dispatch = useDispatch();
-  const admin = useSelector(state => state.admin)
+  const isLogin = useSelector(state => state.isLogin);
+  console.log('admin', isLogin)
   const [variables, setVariables] = useState({
     toggle: false,
     sidebarWidth: '200px'
@@ -46,10 +48,16 @@ const isProduction = process.env.NODE_ENV === 'production';
     loadingComponent={<Spinner />} //If not pass, nothing appears at the time of new version check.
     >
       {
-        admin === false?
+        isLogin === false?
+        <div>
+          <Route exact path='/restore'>
+         <Restore/>
+         </Route>
+         
          <Route exact path='/'>
          <MainPanel/>
-         </Route>:
+         </Route>
+        </div>:
 
 <div> 
 <SocketContext.Provider value={socket}>

@@ -89,7 +89,6 @@
 }
 
 .subcontainer2{
-    margin: 1rem;
     width: 95%;
     height: 20%;
     border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -107,8 +106,8 @@
     align-items: center;
     width: 100%;
     justify-content: space-around;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
     transition: .2s ease;
     height: 20px;
     cursor: pointer;

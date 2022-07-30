@@ -1,6 +1,5 @@
-import Swal from 'sweetalert2'
-import Cookies from 'universal-cookie';
 export const CREDENTIAL = 'CREDENTIAL'
+export const UPDATE_LOGIN = 'UPDATE_LOGIN'
 export const  ADD_ORDERS = 'ADD_ORDER'
 export const  RESET = 'RESET'
 export const  GET_DETAILS = 'GET_DETAILS'
@@ -19,33 +18,48 @@ const axios = require('axios').default;
 
 const url = process.env.REACT_APP_URL
 
+export function accessAdmin(payload){
+    return async function (dispatch){  
+       const res = await fetch(`${url}getAdmin`)
+       const info = await res.json()
+       return dispatch({ type: CREDENTIAL, payload: info })
+    }        
+ }
+
+ export function updatePassword(newPassword){
+    return async function (dispatch){  
+       const res = await axios.post(`${url}admin/${newPassword}`)
+       
+    }        
+ }
 
 
-export function accessAdmin (payload){
+
+// export function accessAdmin (payload){
     
-     const admin = {mail: 'altonono@gmail.com', password: '234567' }
-     const dataAdmin = Object.values(admin) 
-     const dataPayload = Object.values(payload)
-     const cookies = new Cookies()
-    return function(dispatch){
-          try {
-            if(JSON.stringify(dataAdmin) === JSON.stringify(dataPayload)){
-                                dispatch({ type: CREDENTIAL, payload: true});
-                                cookies.set('mail', payload.mail, {path: '/'})
-                                cookies.set('password', payload.password, {path: '/'})
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Something went wrong!',
+//      const admin = {mail: 'altonono@gmail.com', password: '234567' }
+//      const dataAdmin = Object.values(admin) 
+//      const dataPayload = Object.values(payload)
+//      const cookies = new Cookies()
+//     return function(dispatch){
+//           try {
+//             if(JSON.stringify(dataAdmin) === JSON.stringify(dataPayload)){
+//                                 dispatch({ type: CREDENTIAL, payload: true});
+//                                 cookies.set('mail', payload.mail, {path: '/'})
+//                                 cookies.set('password', payload.password, {path: '/'})
+//                             } else {
+//                                 Swal.fire({
+//                                     icon: 'error',
+//                                     title: 'Oops...',
+//                                     text: 'Something went wrong!',
                                   
-                                  })
-                            }
-          } catch (error) {
-              console.log('errorAdmin', error)
-          }
-    }
-}
+//                                   })
+//                             }
+//           } catch (error) {
+//               console.log('errorAdmin', error)
+//           }
+//     }
+// }
 
 
 export const addOrder = (payload) => {
@@ -99,6 +113,7 @@ export function updateItem(item){
     return async function(dispatch){
       const res = await axios.post(`${url}updateItem`, item)
       console.log('res', res)
+    //   return dispatch({ type: UPDATE_ITEM, payload: res.data})
     }
 }
 
@@ -133,6 +148,13 @@ export function completedOrder (value){
 export function setCrono (value){
     return{
         type: SET_CRONO,
+        payload: value
+    }
+}
+
+export function updateLogin (value){
+    return{
+        type: UPDATE_LOGIN,
         payload: value
     }
 }

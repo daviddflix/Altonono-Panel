@@ -144,7 +144,7 @@ export default function Detail (){
         <BsPersonPlus className={s.iconPerson}/>
         <div>
         <h4 className={s.title}>Cliente</h4>
-        <h3>{detalle.name}</h3>
+        <h3 style={{margin: 0}}>{detalle.name}</h3>
         </div>
         </div>
 
@@ -152,7 +152,7 @@ export default function Detail (){
         <GiRoundTable className={s.iconPerson}/>
         <div>
             <h4 className={s.title}>N. Mesa</h4>
-            <h3>{detalle.table}</h3>
+            <h3  style={{margin: 0}}>{detalle.table}</h3>
         </div>
         </div>
         <div className={s.boxClientWhatsapp}>
@@ -160,7 +160,7 @@ export default function Detail (){
         <div>
            <a style={{textDecoration: 'none'}} href={link}>
            <h4 className={s.title}>Telefono</h4>
-            <h3 style={{color: '#292929'}}>{detalle.telefono}</h3>
+            <h3 style={{color: '#292929', margin: 0}}>{detalle.telefono}</h3>
            </a>
         </div>
         <IoIosArrowForward className={s.arrowForward}/>
@@ -179,7 +179,7 @@ export default function Detail (){
         </div>
         </div>
         </div>
-           <button disabled={ findCardStatusById === true} className={ findCardStatusById === true ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
+           <button disabled={ completedOrder.length > 0} className={ completedOrder.length > 0 ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
         <div className={s.subcontainer2}>    
             <div className={s.container2}>
                 {

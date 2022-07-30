@@ -68,13 +68,23 @@
 }
 
 .subboxClientAndTable{
-    display: flex;
     width: 100%;
-    flex-wrap: wrap;
-    justify-content: flex-start;
     height: 80%;
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; */
    
-    margin: 0;
+}
+
+.boxClient{
+    display: flex;
+    align-items: center;
+    min-width: 40%;
+    height: 20%;
+    text-decoration: none;
+    margin: 1rem;  
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
 }
 
 .btns{
@@ -102,15 +112,7 @@
    transition: .2s;
 }
 
-.boxClient{
-    display: flex;
-    align-items: center;
-    min-width: 40%;
-    height: 20%;
-    text-decoration: none;
-    padding: 0;
-    margin: 1rem;  
-}
+
 
 .boxClientWhatsapp{
     display: flex;
@@ -141,7 +143,6 @@
     flex-direction: column;
     background-color: #e3d5ca;
     border-radius: 40px 0px 5px 0px; 
-   
     align-items: center;
 }
 
@@ -150,15 +151,13 @@
     width: 100%;
     align-items: center;
     flex-direction: column;
-   
-   
+    overflow-y: scroll;
 }
 
 .items{
     width: 90%;
     display: flex;
-    padding: 10px;
-    margin: 1rem;
+    margin: 1.5rem 0 0 0;
     align-items: center;
     justify-content: space-between;
     color: #282828;

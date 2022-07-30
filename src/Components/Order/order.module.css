@@ -127,12 +127,70 @@
 }
 
 .boxpedido:hover{
-  
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-
- 
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+
+.maincontainer2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.card2MainBox{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 98%;
+    height: 100%;
+    margin: .5rem 0 .5rem 0;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.card2Container{
+    color: #282828;;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 14%;
+    padding: 1rem 0 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.card2Title{
+    position: relative;
+    left: .8rem;
+}
+
+.card2Data{
+    position: relative;
+    right: .8rem;
+}
+
+.status{
+    position: relative;
+    right: .8rem;
+    text-transform: uppercase;
+    background-color: #29d884;
+    color: #282828;
+    padding: 2%;
+    border-radius: 3px;
+}
+
+.statuscancel{
+    position: relative;
+    right: .8rem;
+    text-transform: uppercase;
+    background-color: #ff595a;
+    color: #fff;
+    padding: 2%;
+    border-radius: 3px;
+}
 
 
 

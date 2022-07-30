@@ -22,10 +22,6 @@ export default function Logout () {
       setAnchorEl(event.currentTarget);
     };
 
-
-
-
-
     const handleClose = () => {
         setAnchorEl(null);
     }

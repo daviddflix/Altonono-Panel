@@ -1,38 +1,50 @@
 import s from './mainpanel.module.css'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { accessAdmin } from '../Redux/actions';
+import { accessAdmin, updateLogin } from '../Redux/actions';
 import { useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import img from '../Assets/descarga-removebg-preview.png'
+import Swal from 'sweetalert2'
+import Cookies from 'universal-cookie';
+import Button from '@mui/material/Button'
 
 const MainPanel = () => {
 
-   const dispatch= useDispatch()
+   const history = useHistory();
+   const dispatch = useDispatch();
+   const admin = useSelector(state => state.admin)
+   
+
     useEffect(()=> {
         document.title='Panel Admin'
     })
+
+    useEffect(() => {
+         dispatch(accessAdmin())
+    }, [dispatch])
+
   const intialValues = { mail: "", password: "" };
  
-
-  
 
   const [formValues, setFormValues] = useState(intialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
  
-   const history = useHistory()
-  const admin = useSelector(state => state.admin)
 
 
   const submit = async () => {
-   dispatch(accessAdmin(formValues))
     setFormValues({ mail: "", password: "" });
-    if(admin === false){
+    if(formValues.mail === admin[0].email && formValues.password === admin[0].password){
+      dispatch(updateLogin(true))
       history.push('/')
-    } 
-    if(admin === true){
-      history.push('/dashboard')
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Usuario o contraseña incorrecta!',
+      
+      })
     }
   };
 
@@ -48,9 +60,6 @@ const MainPanel = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmitting(true);
-    if(admin === true){
-      history.push('/dashboard')
-    }
   };
 
   //form validation handler
@@ -59,15 +68,15 @@ const MainPanel = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
     if (!values.mail) {
-      errors.mail = "Cannot be blank";
+      errors.mail = "No puede estar vacio";
     } else if (!regex.test(values.mail)) {
-      errors.mail = "Invalid mail format";
+      errors.mail = "Formato Invalido";
     }
 
     if (!values.password) {
-      errors.password = "Cannot be blank";
+      errors.password = "No puede estar vacio";
     } else if (values.password.length < 4) {
-      errors.password = "Password must be more than 4 characters";
+      errors.password = "contraseña debe ser mayor a 4 caracteres";
     }
 
     return errors;
@@ -76,6 +85,7 @@ const MainPanel = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmitting) {
       submit()
+
     }
   }, [formErrors, isSubmitting]);
 
@@ -99,7 +109,7 @@ const MainPanel = () => {
          onChange={handleChange}
          placeholder='Ingresa tu email'
        />
-       {formErrors.mail && <span>{formErrors.mail}</span>}
+       {formErrors.mail && <span className={s.span}>{formErrors.mail}</span>}
      </div>
 
      <div className={s.boxInput}>
@@ -113,11 +123,12 @@ const MainPanel = () => {
          onChange={handleChange}
          placeholder='Ingresa tu contraseña'
        />
-       {formErrors.password && <span>{formErrors.password}</span>}
+       {formErrors.password && <span className={s.span}>{formErrors.password}</span>}
      </div>
 
-     <button className={s.button} type="submit">Log In</button>
+     <Button variant='contained' style={{width: '98%'}} type='submit'>Iniciar sesion</Button>
    </form>
+    <NavLink to={'/restore'} className={s.restore}>Recuperar contraseña</NavLink>
       </div>
     </div>
  </div>

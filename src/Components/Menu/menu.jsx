@@ -8,6 +8,8 @@ import {AiOutlineOrderedList} from 'react-icons/ai'
 import {GoPrimitiveDot} from 'react-icons/go'
 import ToggleButton from 'react-toggle-button'
 import { useState } from 'react';
+import {SpinnerTiny} from '../spinner/spinner'
+import { useCallback } from 'react';
 
 export default function Menu(){
 
@@ -16,7 +18,7 @@ export default function Menu(){
     const products = useSelector(state => state.products)
     const dispatch = useDispatch()
     const unicProducts = []
-
+    
 
     const unique = products && products.filter(p => {
         const isduplicate = unicProducts.includes(p.category_id)
@@ -57,8 +59,7 @@ export default function Menu(){
     const handleCategory = (value) => {
         setCategory(value)
     }
-
-    console.log('products', productsToShow)
+console.log('productsToShow', productsToShow)
 
   
 
@@ -116,30 +117,36 @@ function Card({title, id, unit_price, available}){
 
    const dispatch = useDispatch()
    const products = useSelector(state => state.products)
-   const filterItem = products.filter(p => p.id === id)
-   console.log('filterItem', filterItem[0].available)
+   const [isSending, setIsSending] = useState(false)
 
-    const handleToggle = () => {
-        if(filterItem[0].available === true){
+
+    const handleToggle = useCallback(() => {
+      
+
+        if(available === true){
+            setIsSending(true)
             const obj = {
                 available: false,
                 id: id
             }
             dispatch(updateItem(obj))
+            setIsSending(false)
         }
 
-        if(filterItem[0].available === false){
+        if(available === false){
+            setIsSending(true)
             const obj = {
                 available: true,
                 id: id
             }
-            dispatch(updateItem(obj))
+            dispatch(updateItem(obj))   
+            setIsSending(false)
         }
-    }
+    }, [products]) 
 
     useEffect(() => {
-        dispatch(getProducts())
-    }, [])
+      dispatch(getProducts())
+    }, [isSending])
 
     const styles = {
         thumbStyle:{
@@ -157,7 +164,7 @@ function Card({title, id, unit_price, available}){
         <div className={s.subcontainercard}>
             <h3>${unit_price}</h3>
             <div className={s.togglebtn}>
-                <ToggleButton
+                    <ToggleButton
                 value={ available }
                 trackStyle={styles.track}
                 // thumbStyle={styles.thumbStyle}
@@ -166,7 +173,8 @@ function Card({title, id, unit_price, available}){
                       boxShadow: `0 0 ${2 + 4*n}px rgba(0,0,0,.16),0 ${2 + 3*n}px ${4 + 8*n}px rgba(0,0,0,.32)`,
                     }}}
                 onToggle={handleToggle}
-                />
+                    />
+                  
             </div>
         </div>
     </div>

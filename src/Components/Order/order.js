@@ -39,38 +39,65 @@ export default function Pedidos(){
   
     return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
+         {
+          windowlength.matches === false?
           <div className={s.container}>
-              <h1 className={s.title}>Resumen del Pedido</h1>
-              <div className={s.grid}>
-                <h4 className={s.width}>Hora</h4>
-                <h4 className={s.width}>Cliente</h4>
-                <h4 className={s.width}>Mesa</h4>
-                <h4 className={s.width}>Metodo</h4>
-                <h4 className={s.width}>Telefono</h4>
-                <h4 className={s.width}>Total</h4>
-                <h4 className={s.width}>Status</h4> 
-              </div>
-   
-              <div className={s.subcontainer}>
-              {
-                
-              pedidos?.map((p, i) => {
-                return(
-                  <Card
-                  key={i}
-                  id={p.detalle.id}
-                  name={p.detalle.name}
-                  table={p.detalle.table}
-                  method={p.status === 'cancelado'? p.razon.value :p.detalle.method}
-                  telefono={p.detalle.telefono}
-                  monto={p.detalle.monto}
-                 statusFood={p.status}
-                  />
-                )
-              })    
-            } 
-              </div>      
+          <h1 className={s.title}>Resumen del Pedido</h1>
+          <div className={s.grid}>
+            <h4 className={s.width}>Hora</h4>
+            <h4 className={s.width}>Cliente</h4>
+            <h4 className={s.width}>Mesa</h4>
+            <h4 className={s.width}>Metodo</h4>
+            <h4 className={s.width}>Telefono</h4>
+            <h4 className={s.width}>Total</h4>
+            <h4 className={s.width}>Status</h4> 
           </div>
+
+          <div className={s.subcontainer}>
+          {
+            
+          pedidos?.map((p, i) => {
+            return(
+              <Card
+              key={i}
+              id={p.detalle.id}
+              name={p.detalle.name}
+              table={p.detalle.table}
+              method={p.status === 'cancelado'? p.razon.value :p.detalle.method}
+              telefono={p.detalle.telefono}
+              monto={p.detalle.monto}
+             statusFood={p.status}
+              />
+            )
+          })    
+        } 
+          </div>      
+      </div>:
+      <div className={s.container}>
+      {
+        <div className={s.maincontainer2}>
+        {
+          
+        pedidos?.map((p, i) => {
+          return(
+            <Card2
+            key={i}
+            id={p.detalle.id}
+            name={p.detalle.name}
+            table={p.detalle.table}
+            method={p.status === 'cancelado'? p.razon.value :p.detalle.method}
+            telefono={p.detalle.telefono}
+            monto={p.detalle.monto}
+           statusFood={p.status}
+            />
+          )
+        })    
+      } 
+        </div>  
+      }
+      </div>
+
+         }
         </div>
     )
 }
@@ -94,6 +121,44 @@ function Card({id, name, table, method, telefono, monto, statusFood}){
   </NavLink>
   )
  
+}
+
+function Card2({id, name, table, method, telefono, monto, statusFood}){
+
+  const date = new Date();
+
+   return(
+    <div className={s.card2MainBox}>
+      <di className={s.card2Container}>
+       <h4 className={s.card2Title}>Hora</h4>
+       <h4 className={s.card2Data}>{`${date.getHours()}:${date.getMinutes()}`}</h4>
+      </di>
+      <di className={s.card2Container}>
+       <h4 className={s.card2Title}>Cliente</h4>
+       <h4 className={s.card2Data}>{name}</h4>
+      </di>
+      <di className={s.card2Container}>
+       <h4 className={s.card2Title}>Mesa</h4>
+       <h4 className={s.card2Data}>{table}</h4>
+      </di>
+      <di className={s.card2Container}>
+       <h4 className={s.card2Title}>Metodo</h4>
+       <h4 className={s.card2Data}>{method}</h4>
+      </di>
+      <di className={s.card2Container}>
+       <h4 className={s.card2Title}>Telefono</h4>
+       <h4 className={s.card2Data}>{telefono}</h4>
+      </di>
+      <di className={s.card2Container}>
+       <h4 className={s.card2Title}>Total</h4>
+       <h4 className={s.card2Data}>{monto}</h4>
+      </di>
+      <di className={s.card2Container}>
+       <h4 className={s.card2Title}>Status</h4> 
+       <h4 className={statusFood=== 'cancelado'?s.statuscancel :s.status}>{statusFood}</h4>
+      </di>   
+    </div>
+   )
 }
 
 

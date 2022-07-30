@@ -153,7 +153,7 @@ React.useEffect(() => {
   if(findCardStatusById === false){
     setInterval(() => {
       dispatch(setCrono({id, timer: 1}))
-      }, 3000);
+      }, 60000);
   }
 
  if(findCardStatusById === true){

@@ -6,17 +6,13 @@ import Logout from './Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStatus, updateStatus } from '../../Redux/actions';
 import {RiRadioButtonLine} from 'react-icons/ri'
-import { SocketContext } from '../../context/socketContext';
-import { CircularProgress } from '@mui/material';
-import Box from '@mui/material/Box';
-import Spinner, { SpinnerTiny } from '../spinner/spinner';
+import  { SpinnerTiny } from '../spinner/spinner';
 
 export default function Navbar (){
 
     const {variables, setVariables} = useContext(ModalContext);
     const status = useSelector(state => state.status);
     const dispatch = useDispatch();
-    const socket = useContext(SocketContext);
 
    
     const getStoreStatus = status && status.map(p => p.status)

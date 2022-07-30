@@ -1,18 +1,20 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, GET_DETAILS, PRODUCTS, RESET, SET_CRONO, SET_STATUS_FOOD, STATUS, UPDATE_STATUS_STORE } from "./actions"
+import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, GET_DETAILS, PRODUCTS, RESET, SET_CRONO, SET_STATUS_FOOD, STATUS, UPDATE_ITEM, UPDATE_LOGIN, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
-    admin: false,
+    isLogin: false,
+    admin: [],
     queue: [],
     confirmOrder: [],
     cancelOrder: [],
     allOrders: [],
     detalle : {},
-    status: 'offline',
+    status: [],
     products: [],
     cardStatusDelivery: [],
-    crono: []
+    crono: [],
+    statusbtn: []
 }
 
 
@@ -33,13 +35,20 @@ const InicialState = {
             ...state,
             admin: action.payload
         }
+
+        case UPDATE_LOGIN:
+            return{
+                ...state,
+                isLogin: action.payload
+            }
     
         case RESET:
            
             storage.removeItem('persist:root')
             return{
-                admin: false,
-                status: 'offline',
+                isLogin: false,
+                admin: [],
+                status: [],
                 queue: [],
                 confirmOrder: [],
                 cancelOrder: [],
@@ -47,7 +56,8 @@ const InicialState = {
                 cardStatusDelivery: [],
                 allOrders: [],
                 products: [],
-                crono: []
+                crono: [],
+                statusbtn: []
             }
             case STATUS:
             
@@ -62,6 +72,13 @@ const InicialState = {
                     ...state,
                     status: action.payload
                 }
+
+            case UPDATE_ITEM: 
+
+             return{
+                ...state,
+                statusbtn: [...state, action.payload]
+             }
 
         case GET_DETAILS:
             
