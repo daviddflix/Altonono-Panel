@@ -24,7 +24,7 @@ function App() {
   
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.isLogin);
-  console.log('admin', isLogin)
+ 
   const [variables, setVariables] = useState({
     toggle: false,
     sidebarWidth: '200px'

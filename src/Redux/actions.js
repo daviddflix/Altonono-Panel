@@ -12,13 +12,15 @@ export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
 export const  SET_CRONO = 'SET_CRONO'
 export const  UPDATE_STATUS_STORE = 'UPDATE_STATUS_STORE'
 export const  UPDATE_ITEM = 'UPDATE_ITEM'
+export const  EMPTY_DETAILS = 'EMPTY_DETAILS'
 
 
 const axios = require('axios').default;
+// process.env.REACT_APP_URL
 
-const url = process.env.REACT_APP_URL
+const url = "https://altonono.herokuapp.com/"
 
-export function accessAdmin(payload){
+export function accessAdmin(){
     return async function (dispatch){  
        const res = await fetch(`${url}getAdmin`)
        const info = await res.json()
@@ -32,34 +34,6 @@ export function accessAdmin(payload){
        
     }        
  }
-
-
-
-// export function accessAdmin (payload){
-    
-//      const admin = {mail: 'altonono@gmail.com', password: '234567' }
-//      const dataAdmin = Object.values(admin) 
-//      const dataPayload = Object.values(payload)
-//      const cookies = new Cookies()
-//     return function(dispatch){
-//           try {
-//             if(JSON.stringify(dataAdmin) === JSON.stringify(dataPayload)){
-//                                 dispatch({ type: CREDENTIAL, payload: true});
-//                                 cookies.set('mail', payload.mail, {path: '/'})
-//                                 cookies.set('password', payload.password, {path: '/'})
-//                             } else {
-//                                 Swal.fire({
-//                                     icon: 'error',
-//                                     title: 'Oops...',
-//                                     text: 'Something went wrong!',
-                                  
-//                                   })
-//                             }
-//           } catch (error) {
-//               console.log('errorAdmin', error)
-//           }
-//     }
-// }
 
 
 export const addOrder = (payload) => {
@@ -112,8 +86,6 @@ export function getDetails(id){
 export function updateItem(item){
     return async function(dispatch){
       const res = await axios.post(`${url}updateItem`, item)
-      console.log('res', res)
-    //   return dispatch({ type: UPDATE_ITEM, payload: res.data})
     }
 }
 
@@ -156,5 +128,12 @@ export function updateLogin (value){
     return{
         type: UPDATE_LOGIN,
         payload: value
+    }
+}
+
+
+export function emptyDetails (){
+    return{
+        type: EMPTY_DETAILS,
     }
 }

@@ -1,10 +1,11 @@
 import { useEffect} from 'react'
 import s from './order.module.css'
-import {  useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import CurrencyFormat from 'react-currency-format'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import ModalContext from '../../context/modalContext';
+import { emptyDetails } from '../../Redux/actions';
 
 
 
@@ -106,9 +107,16 @@ export default function Pedidos(){
 function Card({id, name, table, method, telefono, monto, statusFood}){
 
   const date = new Date();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleDetails = () => {
+    dispatch(emptyDetails())
+    history.push(`/detail/${id}`)
+  }
 
   return( 
-    <NavLink id='boxpedido'  className={s.boxpedido}  to={`/detail/${id}`}>
+    <div id='boxpedido' onClick={handleDetails}  className={s.boxpedido}  >
    
   <h4 className={s.width}>{`${date.getHours()}:${date.getMinutes()}`}</h4>
   <h4 className={s.width}>{name}</h4>
@@ -118,7 +126,7 @@ function Card({id, name, table, method, telefono, monto, statusFood}){
   <h4 className={s.width}><CurrencyFormat value={monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
   <h4 className={s.width}>{statusFood}</h4>
 
-  </NavLink>
+  </div>
   )
  
 }
@@ -126,9 +134,16 @@ function Card({id, name, table, method, telefono, monto, statusFood}){
 function Card2({id, name, table, method, telefono, monto, statusFood}){
 
   const date = new Date();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleDetails = () => {
+    dispatch(emptyDetails())
+    history.push(`/detail/${id}`)
+  }
 
    return(
-    <div className={s.card2MainBox}>
+    <div onClick={handleDetails}  className={s.card2MainBox}>
       <di className={s.card2Container}>
        <h4 className={s.card2Title}>Hora</h4>
        <h4 className={s.card2Data}>{`${date.getHours()}:${date.getMinutes()}`}</h4>

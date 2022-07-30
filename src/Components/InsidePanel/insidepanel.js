@@ -8,7 +8,7 @@ import {BsCartCheck} from 'react-icons/bs'
 import { NavLink, useHistory } from 'react-router-dom';
 import { SocketContext } from '../../context/socketContext';
 import ModalContext from '../../context/modalContext';
-import {  completedOrder, getCardStatus, setCrono } from '../../Redux/actions';
+import {  completedOrder, emptyDetails, getCardStatus, setCrono } from '../../Redux/actions';
 
 export default function IncomingOrders() {
 
@@ -95,15 +95,23 @@ export default function IncomingOrders() {
 
 function Card({name, id}){
 
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleDetails = () => {
+    dispatch(emptyDetails())
+    history.push(`/detail/${id}`)
+  }
+
   
   return(
-    <NavLink to={`/detail/${id}`} className={s.cardMainBox}>
+    <div onClick={handleDetails} className={s.cardMainBox}>
       <div style={{display: 'flex', position: 'relative', right: '1rem'}}>
        <MdOutlineWbTwilight className={s.iconCircle}/>
        <h4 style={{margin: '0px'}}>Nuevo pedido</h4>
       </div>
       <h4>{name}</h4>
-    </NavLink>
+    </div>
   )
 }
 
@@ -145,6 +153,7 @@ function Card2({id, method, name, table, telefono, monto}){
 
   const history = useHistory();
   const handleDetail = () => {
+    dispatch(emptyDetails())
     history.push(`/detail/${id}`)
   }
 
