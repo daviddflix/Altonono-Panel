@@ -8,6 +8,7 @@ import {AiOutlineOrderedList} from 'react-icons/ai'
 import {GoPrimitiveDot} from 'react-icons/go'
 import ToggleButton from 'react-toggle-button'
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function Menu(){
 
@@ -118,7 +119,7 @@ function Card({title, id, unit_price, available}){
    const products = useSelector(state => state.products);
    const statusBtn = useSelector(state => state.statusbtn);
    const thisBtn = statusBtn && statusBtn.find(p => p.id === id);
-
+   const history = useHistory();
   
     const handleToggle = () => {
         if(available === true){
@@ -153,8 +154,13 @@ function Card({title, id, unit_price, available}){
         }
     }
 
+    const handleModify = (e) => {
+        e.stopPropagation()
+        history.push(`/modify/${id}`)
+    }
+
     return(
-        <div className={s.containercard}>
+        <div onClick={handleModify} className={s.containercard}>
         <h3 className={s.cardtitle}>{title}</h3>
         <div className={s.subcontainercard}>
             <h3>${unit_price}</h3>

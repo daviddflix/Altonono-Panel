@@ -5,10 +5,10 @@ import {BsCartX} from 'react-icons/bs'
 import {MdOutlineWbTwilight} from 'react-icons/md'
 import {GiConfirmed} from 'react-icons/gi'
 import {BsCartCheck} from 'react-icons/bs'
-import { NavLink, useHistory } from 'react-router-dom';
-import { SocketContext } from '../../context/socketContext';
+import { useHistory } from 'react-router-dom';
 import ModalContext from '../../context/modalContext';
 import {  completedOrder, emptyDetails, getCardStatus, setCrono } from '../../Redux/actions';
+
 
 export default function IncomingOrders() {
 

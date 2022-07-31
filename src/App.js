@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addOrder } from './Redux/actions';
 import Menu from './Components/Menu/menu';
 import Restore from './Components/Restore/restore';
+import ModifyItem from './Components/InsidePanel/modifyItem';
 
 function App() {
 
@@ -84,6 +85,10 @@ const isProduction = process.env.NODE_ENV === 'production';
 
         <PrivateRoutes exact  path='/menu'>
         <Menu/>
+        </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/modify/:id'>
+        <ModifyItem/>
         </PrivateRoutes>
  </Switch>
  </ModalContext.Provider>
