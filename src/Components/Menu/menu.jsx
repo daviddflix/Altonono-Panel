@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ModalContext from '../../context/modalContext'
-import { getProducts, updateItem } from '../../Redux/actions';
+import { emptyDetails, getProducts, updateItem } from '../../Redux/actions';
 import s from './menu.module.css';
 import {AiOutlineOrderedList} from 'react-icons/ai'
 import {GoPrimitiveDot} from 'react-icons/go'
@@ -114,8 +114,12 @@ export default function Menu(){
 
 function Card({title, id, unit_price, available}){
 
-   const dispatch = useDispatch()
-   const products = useSelector(state => state.products)
+   const dispatch = useDispatch();
+   const products = useSelector(state => state.products);
+   const statusBtn = useSelector(state => state.statusbtn);
+   const thisBtn = statusBtn && statusBtn.find(p => p.id === id);
+   console.log('thisBtn', thisBtn)
+   console.log('statusBtn', statusBtn)
   
     const handleToggle = () => {
         if(available === true){
@@ -124,6 +128,7 @@ function Card({title, id, unit_price, available}){
                 id: id
             }
             dispatch(updateItem(obj))
+            dispatch(getProducts())
         }
 
         if(available === false){
@@ -132,14 +137,12 @@ function Card({title, id, unit_price, available}){
                 id: id
             }
             dispatch(updateItem(obj))
+            dispatch(getProducts())
         }
     }
 
-    useEffect(() => {
-        if(dispatch){
-            dispatch(getProducts())
-        }
-    }, [])
+   
+
 
     const styles = {
         thumbStyle:{
@@ -158,7 +161,7 @@ function Card({title, id, unit_price, available}){
             <h3>${unit_price}</h3>
             <div className={s.togglebtn}>
                 <ToggleButton
-                value={ available }
+                value={statusBtn !== undefined && thisBtn !== undefined ? thisBtn.available : available }
                 trackStyle={styles.track}
                 // thumbStyle={styles.thumbStyle}
                 animateThumbStyleHover={(n) => {

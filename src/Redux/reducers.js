@@ -75,11 +75,25 @@ const InicialState = {
 
             case UPDATE_ITEM: 
 
-             return{
+            const ob = state.statusbtn.find(p => p.id === action.payload.id);
+
+            if(ob){
+                return{
+                  ...state,
+                  statusbtn: state.statusbtn.map(item => item.id === action.payload.id? {
+                    ...item,
+                    available: action.payload.available
+                  }: item)
+                }
+              
+              }
+             
+              return{
                 ...state,
-                statusbtn: [...state, action.payload]
+                statusbtn: [...state.statusbtn, action.payload]
              }
 
+            
         case GET_DETAILS:
             
             return{
@@ -96,7 +110,6 @@ const InicialState = {
 
         case CANCEL:
            
-           console.log('action', action.payload)
             const itemInQueue = state.queue.filter(p => p.id === action.payload.detalle.id)
             const itemInConfirm = state.confirmOrder.filter(p => p.id === action.payload.detalle.id)
 

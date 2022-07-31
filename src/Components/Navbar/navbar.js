@@ -34,6 +34,8 @@ export default function Navbar (){
         dispatch(getStatus())
     }, [])
 
+    
+
     const handleOpen = () => {
         if(variables.toggle === false){
             setVariables(prev => ({...prev, toggle: true}))
@@ -59,5 +61,5 @@ export default function Navbar (){
            </ul>
        </nav>
     )
-}
+} 
 
