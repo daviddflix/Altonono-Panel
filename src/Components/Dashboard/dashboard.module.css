@@ -50,12 +50,15 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    position: relative;
 }
 
 .subBox{
     display: flex;
     flex-direction: column;
     width: 80%;
+   
+   
 }
 
 .iconOrder{
@@ -63,6 +66,7 @@
     height: 40px;
     padding: 10px;
     color: #009ee3;
+  
     
 }
 
@@ -71,6 +75,7 @@
     height: 40px;
     padding: 10px;
     color: #29d884;
+    
 }
 
 .iconRechazados{
@@ -78,6 +83,7 @@
     height: 40px;
     padding: 10px;
     color: #ff5252 ;
+    
 }
 
 

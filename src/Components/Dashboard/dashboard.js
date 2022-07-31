@@ -7,10 +7,12 @@ import {BsReceiptCutoff} from 'react-icons/bs'
 import {IoCloseCircleSharp} from 'react-icons/io5'
 import {GiReceiveMoney} from 'react-icons/gi'
 import {FaAward} from 'react-icons/fa'
+import {MdArrowForwardIos} from 'react-icons/md'
+import { useHistory } from 'react-router-dom';
 
 export default function Dashboard(){
 
-
+  const history = useHistory();
   const rejected = useSelector(state => state.cancelOrder);
   const pedidos = useSelector(state => state.allOrders);
 
@@ -47,12 +49,13 @@ const styles = {
             <div className={s.maincontainer}> 
               <h1 className={s.title}>Dashboard</h1>
               <div className={s.box1}>
-                  <div className={s.box2}>
+                  <div onClick={() => history.push('/resume')} className={s.box2}>
                      <BsReceiptCutoff className={s.iconOrder}/>
                      <div className={s.subBox}>
                        <h1>{totalCompletedOrders.length > 0 ? totalCompletedOrders.length : 0}</h1>
                        <h4>Pedidos del dia</h4>
                      </div>
+                     
                   </div>
                   <div className={s.box2}>
                   <IoCloseCircleSharp className={s.iconRechazados}/>

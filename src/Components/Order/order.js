@@ -151,10 +151,10 @@ function Card2({id, name, table, method, telefono, monto, statusFood}){
 
    return(
     <div onClick={handleDetails}  className={s.card2MainBox}>
-      <di className={s.card2Container}>
+      <div className={s.card2Container}>
        <h4 className={s.card2Title}>Hora</h4>
        <h4 className={s.card2Data}>{`${date.getHours()}:${date.getMinutes()}`}</h4>
-      </di>
+      </div>
       <di className={s.card2Container}>
        <h4 className={s.card2Title}>Cliente</h4>
        <h4 className={s.card2Data}>{name}</h4>
