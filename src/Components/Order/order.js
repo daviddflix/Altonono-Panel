@@ -2,10 +2,11 @@ import { useEffect} from 'react'
 import s from './order.module.css'
 import {  useDispatch, useSelector } from 'react-redux';
 import CurrencyFormat from 'react-currency-format'
-import { NavLink, useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import ModalContext from '../../context/modalContext';
 import { emptyDetails } from '../../Redux/actions';
+import {BiTask} from 'react-icons/bi'
 
 
 
@@ -57,7 +58,7 @@ export default function Pedidos(){
           <div className={s.subcontainer}>
           {
             
-          pedidos?.map((p, i) => {
+            pedidos.length > 0 ?  pedidos?.map((p, i) => {
             return(
               <Card
               key={i}
@@ -70,7 +71,10 @@ export default function Pedidos(){
              statusFood={p.status}
               />
             )
-          })    
+          })  : <div className={s.containerNoOrder}>
+          <BiTask className={s.iconCompleted}/>
+          <h3 className={s.message}>Aqui se mostraran los pedidos completados</h3>
+        </div>    
         } 
           </div>      
       </div>:
@@ -79,7 +83,7 @@ export default function Pedidos(){
         <div className={s.maincontainer2}>
         {
           
-        pedidos?.map((p, i) => {
+          pedidos.length > 0 ? pedidos?.map((p, i) => {
           return(
             <Card2
             key={i}
@@ -92,7 +96,10 @@ export default function Pedidos(){
            statusFood={p.status}
             />
           )
-        })    
+        }) : <div className={s.containerNoOrder}>
+          <BiTask className={s.iconCompleted}/>
+          <h3 className={s.message}>Aqui se mostraran los pedidos completados</h3>
+        </div>  
       } 
         </div>  
       }
