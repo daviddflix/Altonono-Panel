@@ -118,8 +118,7 @@ function Card({title, id, unit_price, available}){
    const products = useSelector(state => state.products);
    const statusBtn = useSelector(state => state.statusbtn);
    const thisBtn = statusBtn && statusBtn.find(p => p.id === id);
-   console.log('thisBtn', thisBtn)
-   console.log('statusBtn', statusBtn)
+
   
     const handleToggle = () => {
         if(available === true){

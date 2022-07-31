@@ -1,7 +1,7 @@
 import {  useContext, useEffect, useState } from 'react'
 import s from './detail.module.css'
 import { useHistory, useParams } from 'react-router-dom';
-import { cancelar, getDetails, setStatusFood } from '../../Redux/actions';
+import { cancelar, completedOrder, getCardStatus, getDetails, setStatusFood } from '../../Redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import {BsArrowLeft} from 'react-icons/bs'
 import {BsPersonPlus} from 'react-icons/bs'
@@ -31,7 +31,7 @@ export default function Detail (){
    }, [id, dispatch])
 
     const changeBtn =  confirmOrder.length > 0 && confirmOrder.filter(p => p.id === id)
-    const completedOrder = allOrders.length > 0 && allOrders.filter(p => p.detalle.id === id)
+    const completedOrderList = allOrders.length > 0 && allOrders.filter(p => p.detalle.id === id)
 
     
   const [findCardStatusById, setFindCardStatusById] = useState(false)
@@ -122,6 +122,12 @@ export default function Detail (){
    }
 
    const link = `https://wa.me/${detalle.telefono}?text=Hola%20`
+
+   const handleDelivery = (e) => {  // onclick en  btn pedido listo cambia el icono y setea su estado en true
+    dispatch(getCardStatus({delivery: true, id}))
+    dispatch(completedOrder({status: 'completada', detalle}))
+    history.push('/orders')
+  }
    
     return(
   <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
@@ -170,16 +176,16 @@ export default function Detail (){
      
         <div className={s.btns}>
         {
-        completedOrder.length > 0 ? <button className={s.completedOrder}>Orden Finalizada</button> :
+        completedOrderList.length > 0 ? <button className={s.completedOrder}>Orden Finalizada</button> :
        changeBtn.length > 0?  
-       <button className={s.acceptbutton}  >{ findCardStatusById === true? <GiConfirmed/>: 'Pedido Listo'}</button> :
+       <button className={s.acceptbutton} onClick={handleDelivery}  >{ findCardStatusById === true? <GiConfirmed/>: 'Pedido Listo'}</button> :
           <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button> 
 
          }
         </div>
         </div>
         </div>
-           <button disabled={ completedOrder.length > 0} className={ completedOrder.length > 0 ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
+           <button disabled={ completedOrderList.length > 0} className={ completedOrderList.length > 0 ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
         <div className={s.subcontainer2}>    
             <div className={s.container2}>
                 {

@@ -129,7 +129,7 @@ function Card2({id, method, name, table, telefono, monto}){
     table: table,
     method: method,
     telefono: telefono,
-    monto: monto,
+    monto: monto, 
   });
   const dispatch = useDispatch();
 

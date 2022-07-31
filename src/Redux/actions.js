@@ -86,7 +86,7 @@ export function getDetails(id){
 export function updateItem(item){
     return async function(dispatch){
       const res = await axios.post(`${url}updateItem`, item)
-      console.log(res.data)
+    
       return dispatch({ type: UPDATE_ITEM, payload: res.data[1]})
     }
 }
