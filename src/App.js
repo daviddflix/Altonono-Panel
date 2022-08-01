@@ -16,7 +16,7 @@ import IncomingOrders from './Components/InsidePanel/insidepanel';
 import VerticalNavbar from './Components/Vertical Navbar/verticalNavbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrder } from './Redux/actions';
-import Menu from './Components/Menu/menu';
+import Menus from './Components/Menu/menu';
 import Restore from './Components/Restore/restore';
 import ModifyItem from './Components/InsidePanel/modifyItem';
 
@@ -84,7 +84,7 @@ const isProduction = process.env.NODE_ENV === 'production';
         </PrivateRoutes>
 
         <PrivateRoutes exact  path='/menu'>
-        <Menu/>
+        <Menus/>
         </PrivateRoutes>
 
         <PrivateRoutes exact  path='/modify/:id'>

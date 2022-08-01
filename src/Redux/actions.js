@@ -13,6 +13,7 @@ export const  SET_CRONO = 'SET_CRONO'
 export const  UPDATE_STATUS_STORE = 'UPDATE_STATUS_STORE'
 export const  UPDATE_ITEM = 'UPDATE_ITEM'
 export const  EMPTY_DETAILS = 'EMPTY_DETAILS'
+export const  GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID'
 
 
 const axios = require('axios').default;
@@ -67,6 +68,14 @@ export function getDetails(id){
     }         
  }
 
+ export function getProductDetail(id){
+    return async function (dispatch){  
+       const res = await fetch(`${url}getProduct/${id}`)
+       const info = await res.json()
+       return dispatch({ type: GET_PRODUCT_BY_ID, payload: info })
+    }        
+ }
+
  
 
  export function getStatus(){
@@ -80,6 +89,13 @@ export function getDetails(id){
     return async function(dispatch){
       const res = await axios.post(`${url}status/${stat}`)
       return dispatch({ type: UPDATE_STATUS_STORE, payload: res.data})
+    }
+}
+
+export function updateFullItem(item){
+    return async function(dispatch){
+      const res = await axios.post(`${url}updateTheWholeItem`, item)
+     console.log('res', res)
     }
 }
 

@@ -6,11 +6,16 @@ import { emptyDetails, getProducts, updateItem } from '../../Redux/actions';
 import s from './menu.module.css';
 import {AiOutlineOrderedList} from 'react-icons/ai'
 import {GoPrimitiveDot} from 'react-icons/go'
+import {BsThreeDotsVertical} from 'react-icons/bs'
 import ToggleButton from 'react-toggle-button'
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export default function Menu(){
+export default function Menus(){
 
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
@@ -120,8 +125,11 @@ function Card({title, id, unit_price, available}){
    const statusBtn = useSelector(state => state.statusbtn);
    const thisBtn = statusBtn && statusBtn.find(p => p.id === id);
    const history = useHistory();
+   console.log('statusBtn',statusBtn)
+   console.log('thisBtn',thisBtn)
   
     const handleToggle = () => {
+       
         if(available === true){
             const obj = {
                 available: false,
@@ -154,13 +162,27 @@ function Card({title, id, unit_price, available}){
         }
     }
 
-    const handleModify = (e) => {
-        e.stopPropagation()
-        history.push(`/modify/${id}`)
+        const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+  
+      const handleClose = () => {
+          setAnchorEl(null);
+      }
+
+          const handleModify = (e) => {
+            e.stopPropagation()
+            dispatch(emptyDetails())
+            history.push(`/modify/${id}`)
     }
 
+   
+
     return(
-        <div onClick={handleModify} className={s.containercard}>
+        <div className={s.containercard}>
         <h3 className={s.cardtitle}>{title}</h3>
         <div className={s.subcontainercard}>
             <h3>${unit_price}</h3>
@@ -176,7 +198,97 @@ function Card({title, id, unit_price, available}){
                 onToggle={handleToggle}
                 />
             </div>
+            <div>
+      <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? 'long-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        // PaperProps={{
+        //   style: {
+        //     maxHeight: ITEM_HEIGHT * 4.5,
+        //     width: '20ch',
+        //   },
+        // }}
+      >
+        
+          <MenuItem  onClick={handleModify}>
+            Editar
+          </MenuItem>
+    
+      </Menu>
+    </div>
         </div>
     </div>
     )
 }
+
+// function Dots({id}){
+
+//     const dispatch = useDispatch();
+//     const history = useHistory();
+    
+//     const handleModify = (e) => {
+//         e.stopPropagation()
+//         dispatch(emptyDetails())
+//         history.push(`/modify/${id}`)
+//     }
+
+//     const [anchorEl, setAnchorEl] = useState(null);
+//     const open = Boolean(anchorEl);
+
+//     const handleClick = (event) => {
+//         setAnchorEl(event.currentTarget);
+//       };
+  
+//       const handleClose = () => {
+//           setAnchorEl(null);
+//       }
+
+//     return(
+//          <div>
+//       <IconButton
+//         aria-label="more"
+//         id="long-button"
+//         aria-controls={open ? 'long-menu' : undefined}
+//         aria-expanded={open ? 'true' : undefined}
+//         aria-haspopup="true"
+//         onClick={handleClick}
+//       >
+//         < BsThreeDotsVertical/>
+//       </IconButton>
+//       <Menu
+//         id="long-menu"
+//         MenuListProps={{
+//           'aria-labelledby': 'long-button',
+//         }}
+//         anchorEl={anchorEl}
+//         open={open}
+//         onClose={handleClose}
+//         // PaperProps={{
+//         //   style: {
+//         //     maxHeight: 100,
+//         //     width: '20ch',
+//         //   },
+//         // }}
+//       >
+//          <MenuItem>
+//             Editar
+//           </MenuItem>
+//       </Menu>
+//     </div>
+//     )
+// }
