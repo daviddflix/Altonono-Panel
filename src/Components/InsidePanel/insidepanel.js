@@ -93,7 +93,7 @@ export default function IncomingOrders() {
 }
 
 
-function Card({name, id}){
+export function Card({name, id}){
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -116,7 +116,7 @@ function Card({name, id}){
 }
 
 
-function Card2({id, method, name, table, telefono, monto}){
+export function Card2({id, method, name, table, telefono, monto}){
 
   const cardStatus = useSelector(state => state.cardStatusDelivery);
   const valueCrono = useSelector(state => state.crono);

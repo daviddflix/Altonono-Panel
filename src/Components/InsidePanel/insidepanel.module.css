@@ -68,14 +68,11 @@
     justify-content: space-evenly;
     text-decoration: none;
     color: #fff;
+    
 
 }
 
-@media screen and (max-width: 700px) {
-    .cardMainBox{
-        justify-content: center;
-    }
-}
+
 
 .card2MainBox{
     width: 95%;
@@ -93,6 +90,19 @@
     color: #292929;
     
 
+}
+
+@media screen and (max-width: 700px) {
+    .cardMainBox{
+        justify-content: center;
+        width: 90vw;
+        
+    }
+
+    .card2MainBox{
+        width: 90vw;
+        
+    }
 }
 
 .subcard2box{

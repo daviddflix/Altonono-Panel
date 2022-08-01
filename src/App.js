@@ -19,13 +19,14 @@ import { addOrder } from './Redux/actions';
 import Menus from './Components/Menu/menu';
 import Restore from './Components/Restore/restore';
 import ModifyItem from './Components/InsidePanel/modifyItem';
+import Tabsview from './Components/Menu/littleMenu';
 
 function App() {
 
   
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.isLogin);
- 
+  const windowlength = window.matchMedia("(max-width:700px)")
   const [variables, setVariables] = useState({
     toggle: false,
     sidebarWidth: '200px'
@@ -76,7 +77,11 @@ const isProduction = process.env.NODE_ENV === 'production';
         </PrivateRoutes>
 
         <PrivateRoutes exact  path='/orders'>
-         <IncomingOrders/>
+         {
+          windowlength.matches === true?
+          <Tabsview/> :
+          <IncomingOrders/>
+         }
         </PrivateRoutes>
 
         <PrivateRoutes exact  path='/detail/:id'>
