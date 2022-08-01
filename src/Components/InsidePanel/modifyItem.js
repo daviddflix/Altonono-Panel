@@ -23,8 +23,6 @@ export default function ModifyItem (){
         dispatch(getProductDetail(id))
      }, [id, dispatch])
     
-
-    console.log('productByid', productByid)
   
     const styles = {
         length : {
@@ -78,7 +76,7 @@ export default function ModifyItem (){
         setIsSubmitting(true);
       };
    
-      console.log('formValues', formValues)
+     
     const validate = (values) => {
         let errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
