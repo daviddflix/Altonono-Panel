@@ -14,7 +14,7 @@ export default function Navbar (){
     const status = useSelector(state => state.status);
     const dispatch = useDispatch();
 
-   
+ 
     const getStoreStatus = status && status.map(p => p.status)
    
 

@@ -108,6 +108,7 @@ export function Card({name, id}){
     <div onClick={handleDetails} className={s.cardMainBox}>
       <div style={{display: 'flex', position: 'relative', right: '1rem'}}>
        <MdOutlineWbTwilight className={s.iconCircle}/>
+       <h4 style={{margin: '0 1rem 0 0'}}>#{id}</h4>
        <h4 style={{margin: '0px'}}>Nuevo pedido</h4>
       </div>
       <h4>{name}</h4>
@@ -120,36 +121,38 @@ export function Card2({id, method, name, table, telefono, monto}){
 
   const cardStatus = useSelector(state => state.cardStatusDelivery);
   const valueCrono = useSelector(state => state.crono);
+  const dispatch = useDispatch();
 
   const getValue = valueCrono && valueCrono.find(p => p.id === id);
  
-  const [detalle] = React.useState({
-    id: id,
-    name: name,
-    table: table,
-    method: method,
-    telefono: telefono,
-    monto: monto, 
-  });
-  const dispatch = useDispatch();
+  // const [detalle, setDetalle] = React.useState({
+  //   id: id,
+  //   name: name,
+  //   table: table,
+  //   method: method,
+  //   telefono: telefono,
+  //   monto: monto,  
+  // });
+  // console.log('detalle', detalle)
 
   const handleDelivery = (e) => {  // onclick en  btn pedido listo cambia el icono y setea su estado en true
     e.stopPropagation()
-    dispatch(getCardStatus({delivery: true, id}))
-    dispatch(completedOrder({status: 'completada', detalle}))
+    // dispatch(getCardStatus({delivery: true, id}))
+    dispatch(completedOrder({status: 'completada', detalle: {id, method, name, table, telefono, monto}}))
+   
   }
 
-  const [findCardStatusById, setFindCardStatusById] = React.useState(false);
+  // const [findCardStatusById, setFindCardStatusById] = React.useState(false);
  
-  React.useEffect(() => {
-    const find = cardStatus.length > 0 && cardStatus.find(p => p.id === id);
-    if(cardStatus.length > 0 && find){
+  // React.useEffect(() => {
+  //   const find = cardStatus.length > 0 && cardStatus.find(p => p.id === id);
+  //   if(cardStatus.length > 0 && find){
    
-      if(find.delivery === true)
-          setFindCardStatusById(true)
-    }
+  //     if(find.delivery === true)
+  //         setFindCardStatusById(true)
+  //   }
    
-  }, [ cardStatus, id ])
+  // }, [ cardStatus, id ])
 
   const history = useHistory();
   const handleDetail = () => {
@@ -159,17 +162,16 @@ export function Card2({id, method, name, table, telefono, monto}){
 
   
 React.useEffect(() => {
-  if(findCardStatusById === false){
     setInterval(() => {
       dispatch(setCrono({id, timer: 1}))
       }, 60000);
-  }
+  
 
- if(findCardStatusById === true){
-  clearInterval()
- }
+//  if(findCardStatusById === true){
+//   clearInterval()
+//  }
 
-}, [findCardStatusById, id, dispatch])
+}, [])
 
   return(
     <div onClick={handleDetail} className={s.card2MainBox}>
@@ -179,7 +181,7 @@ React.useEffect(() => {
           <h3 className={s.font}>{name}</h3>
         </div>
         <h4 className={s.method}>{method}</h4>
-        <button id='readyto' className={s.readyto} onClick={handleDelivery}>{findCardStatusById === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button>
+        <button id='readyto' className={s.readyto} onClick={handleDelivery}>Pedido Listo</button>
       </div>
       <div className={s.subcard2boxtime}>
         <h4 className={s.font}>Tiempo de preparacion</h4>
@@ -188,4 +190,7 @@ React.useEffect(() => {
     </div>
   )
 }
+
+
+{/* <button id='readyto' className={s.readyto} onClick={handleDelivery}>{findCardStatusById === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button> */}
 

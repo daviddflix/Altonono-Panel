@@ -172,6 +172,8 @@ const InicialState = {
            }
 
         case ALL_ORDERS: 
+        console.log('order', action.payload)
+        console.log('allOrder', state.allOrders)
             return{
                ...state,
                confirmOrder:  state.confirmOrder.filter(p => p.id !== action.payload.detalle.id),

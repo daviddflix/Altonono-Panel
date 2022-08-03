@@ -16,6 +16,7 @@ export default function VerticalNavbar (){
   const windowlength = window.matchMedia("(max-width:700px)");
   const wrapperRef = useRef(null);
 
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (windowlength.matches === true && variables.toggle === false) {
@@ -26,6 +27,7 @@ export default function VerticalNavbar (){
       if (wrapperRef.current && wrapperRef.current.contains(event.target)) {
         if(windowlength.matches === true && variables.toggle === false){
          setVariables(prev => ({...prev, toggle: true}))
+
         }
      }
     }
@@ -37,8 +39,10 @@ export default function VerticalNavbar (){
     };
   });
 
+
+
     return(
-<nav ref={wrapperRef}  className={s.navbar}>
+<nav ref={wrapperRef} id='nav'  className={s.navbar}>
 <ProSidebar width={variables.sidebarWidth}   collapsedWidth={windowlength.matches=== true? '0px': '80px'} collapsed={variables.toggle} >
   <Menu iconShape="square">
     <MenuItem icon={<MdDashboard />}>Dashboard<NavLink to='/'/></MenuItem>

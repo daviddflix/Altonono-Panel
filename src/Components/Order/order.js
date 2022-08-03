@@ -46,6 +46,7 @@ export default function Pedidos(){
           <div className={s.container}>
           <h1 className={s.title}>Resumen del Pedido</h1>
           <div className={s.grid}>
+            <h4 className={s.width}>ID</h4>
             <h4 className={s.width}>Hora</h4>
             <h4 className={s.width}>Cliente</h4>
             <h4 className={s.width}>Mesa</h4>
@@ -125,6 +126,7 @@ function Card({id, name, table, method, telefono, monto, statusFood}){
   return( 
     <div id='boxpedido' onClick={handleDetails}  className={s.boxpedido}  >
    
+  <h4 className={s.width}>#{id}</h4>
   <h4 className={s.width}>{`${date.getHours()}:${date.getMinutes()}`}</h4>
   <h4 className={s.width}>{name}</h4>
   <h4 className={s.width}>{table}</h4>
@@ -151,6 +153,10 @@ function Card2({id, name, table, method, telefono, monto, statusFood}){
 
    return(
     <div onClick={handleDetails}  className={s.card2MainBox}>
+      <div className={s.card2Container}>
+       <h4 className={s.card2Title}>ID</h4>
+       <h4 className={s.card2Data}>#{id}</h4>
+      </div>
       <div className={s.card2Container}>
        <h4 className={s.card2Title}>Hora</h4>
        <h4 className={s.card2Data}>{`${date.getHours()}:${date.getMinutes()}`}</h4>
