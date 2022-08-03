@@ -158,7 +158,7 @@
 
 
 
-/* @media screen and (max-width: 700px) {
+@media screen and (max-width: 700px) {
 
     .containercard{
         padding-top: 1.4rem;
@@ -186,5 +186,5 @@
         
     }
 
-} */
+}
 
