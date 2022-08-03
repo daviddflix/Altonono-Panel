@@ -128,7 +128,7 @@ export function getCardStatus (value){
 } 
 
 export function completedOrder (value){
-    console.log('value', value)
+   
     return{
         type: ALL_ORDERS,
         payload: value
