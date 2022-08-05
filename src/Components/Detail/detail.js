@@ -128,7 +128,7 @@ export default function Detail (){
     dispatch(completedOrder({status: 'completada', detalle}))
     history.push('/orders')
   }
-   
+   console.log('detalle', detalle)
     return(
   <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
       <div className={s.submain}>

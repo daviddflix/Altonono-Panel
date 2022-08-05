@@ -9,7 +9,6 @@ import { emptyDetails } from '../../Redux/actions';
 import {BiTask} from 'react-icons/bi'
 
 
-
 export default function Pedidos(){
 
     const pedidos = useSelector(state => state.allOrders);
@@ -20,7 +19,8 @@ export default function Pedidos(){
    })
 
    const {variables} = useContext(ModalContext);
-   const windowlength = window.matchMedia("(max-width:700px)")
+   const windowlength = window.matchMedia("(max-width:700px)");
+
 
    const styles = {
     length : {

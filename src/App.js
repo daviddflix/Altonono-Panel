@@ -20,6 +20,7 @@ import Menus from './Components/Menu/menu';
 import Restore from './Components/Restore/restore';
 import ModifyItem from './Components/InsidePanel/modifyItem';
 import Tabsview from './Components/Menu/littleMenu';
+import sound from './Components/Order/Sounds/SD_ALERT_27.mp3'
 
 function App() {
 
@@ -32,9 +33,17 @@ function App() {
     sidebarWidth: '200px'
   });
 
+  const playAudio = new Audio(sound);
+
+  const handlesound = () => {
+    playAudio.play()
+  }
+  
+
   useEffect(() => {  
     let isMounted = true
       socket.on('order', data => {
+        handlesound()
          if (isMounted) dispatch(addOrder(data))
       })
       return ()=> { isMounted = false}
