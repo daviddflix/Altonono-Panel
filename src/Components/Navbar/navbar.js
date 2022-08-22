@@ -10,30 +10,30 @@ import  { SpinnerTiny } from '../spinner/spinner';
 
 export default function Navbar (){
 
+  
+
+
     const {variables, setVariables} = useContext(ModalContext);
     const status = useSelector(state => state.status);
     const dispatch = useDispatch();
-
- 
-    const getStoreStatus = status && status.map(p => p.status)
    
-
-    const handleTienda = () => {
-        if(getStoreStatus[0] ==='offline'){
-            dispatch(updateStatus('online'))
-            dispatch(getStatus())
-          
-        }
-        if(getStoreStatus[0] === 'online'){
-            dispatch(updateStatus('offline'))
-            dispatch(getStatus())
-        }
-    };
 
     useEffect(() => {
         dispatch(getStatus())
     }, [])
 
+
+
+    const handleTienda = () => {
+        if(status[0].status === "Cerrado"){
+            dispatch(updateStatus('Abierto'))
+        }
+        if(status[0].status === 'Abierto'){
+            dispatch(updateStatus('Cerrado'))
+        }
+    };
+
+ 
     
 
     const handleOpen = () => {
@@ -55,7 +55,8 @@ export default function Navbar (){
               < FaBars className={s.icon}/>
                </div>
                <div className={s.subul}>
-              <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={getStoreStatus[0] ==='offline'? s.iconOffline: s.iconOnline}/>{getStoreStatus[0] === undefined? <SpinnerTiny />: getStoreStatus[0]}</button>
+                <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status.length === 0 ? s.iconOffline: status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button>
+                {/* {status.length > 0 ? <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button> :  <button className={s.btnNoStatus}><SpinnerTiny/></button> } */}
                <div className={s.btnLogout}><Logout/></div>
               </div>
            </ul>

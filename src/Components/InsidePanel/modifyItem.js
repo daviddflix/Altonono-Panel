@@ -18,6 +18,7 @@ export default function ModifyItem (){
      const productByid = useSelector(state => state.productByid);
      const {variables} = useContext(ModalContext);
      const windowlength = window.matchMedia("(max-width:700px)");
+     console.log('productByid', productByid)
 
      useEffect( () => {
         dispatch(getProductDetail(id))
@@ -44,8 +45,7 @@ export default function ModifyItem (){
       history.goBack()
     }
 
-    const intialValues = { title: "", unit_price: "", id: id,
-    description: "" };
+    const intialValues = {unit_price: "", id: id};
  
     const [formValues, setFormValues] = useState(intialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -57,7 +57,7 @@ export default function ModifyItem (){
       };
 
       const handleItem = () => {
-        if(formValues.title && formValues.unit_price){
+        if(formValues.unit_price){
             dispatch(updateFullItem(formValues))
             Swal.fire({
             position: 'top-end',
@@ -79,11 +79,8 @@ export default function ModifyItem (){
      
     const validate = (values) => {
         let errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        // const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     
-        if (!values.title) {
-          errors.title = "No puede estar vacio!";
-        } 
     
         if (!values.unit_price) {
           errors.unit_price = "No puede estar vacio!";
@@ -107,14 +104,13 @@ export default function ModifyItem (){
                 <BsArrowLeft onClick={back} className={s.arrowLeft}/>
                 <form onSubmit={handleSubmit} className={s.subcontainer}>
                      <div className={s.containerInput}>
-                    <TextField className={s.input} focused label='Producto' placeholder={productByid.title} onChange={handleChange} name="title" value={formValues.title}/>
-                    {formErrors.title &&  <Alert severity="error">{formErrors.title}</Alert>}
-                    </div>
+                    <TextField className={s.input} readOnly focused label='Producto'name="title" value={productByid.title}/>
+                      </div>
                      <div  className={s.containerInput}>
                      <TextField className={s.input} focused label='Categoria' readOnly value={productByid.category_id}/>
                     </div>
                      <div  className={s.containerInput}>
-                     <TextField className={s.input} focused label='Descripcion' placeholder={productByid.description} onChange={handleChange} name="description" value={formValues.description}/>
+                     <TextField className={s.input} focused label='Descripcion' readOnly  value={productByid.description}/>
                     </div>
                      <div  className={s.containerInput}>
                      <TextField type='number' className={s.input} focused label='Precio' placeholder={`${'$'}${productByid.unit_price}`} onChange={handleChange} name="unit_price" value={formValues.unit_price}/>

@@ -1,6 +1,6 @@
 import s from './dashboard.module.css'
 import { useContext, useEffect} from 'react'
-import {  useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 import CurrencyFormat from 'react-currency-format';
 import ModalContext from '../../context/modalContext'
 import {BsReceiptCutoff} from 'react-icons/bs'
@@ -9,17 +9,24 @@ import {GiReceiveMoney} from 'react-icons/gi'
 import {FaAward} from 'react-icons/fa'
 import {MdArrowForwardIos} from 'react-icons/md'
 import { useHistory } from 'react-router-dom';
+import { getAllOrders } from '../../Redux/actions';
 
 export default function Dashboard(){
 
   const history = useHistory();
-  const rejected = useSelector(state => state.cancelOrder);
+  const dispatch = useDispatch()
   const pedidos = useSelector(state => state.allOrders);
 
-  const totalCompletedOrders = pedidos.length > 0 && pedidos.filter(p => p.status === 'completada') 
-  const findTotal = totalCompletedOrders.length > 0 && totalCompletedOrders.map(p => p.detalle.monto)
+  useEffect(() => {
+    dispatch(getAllOrders())
+  }, [])
+
+  const Orders = pedidos !== 'no hay pedidos' && pedidos.filter(p => p.status !== 'cancelado')
+  const OrdersCancel = pedidos !== 'no hay pedidos' && pedidos.filter(p => p.status === 'cancelado')
+
+  const filterTotal = pedidos === 'no hay pedidos'? 0 : Orders.map(p => p.monto) 
+  const total = filterTotal === 0 ? 0 : filterTotal.reduce((a,b) => a + b, 0);
   
-  const total = findTotal.length > 0? findTotal.reduce((a,b) => a + b, 0) : 0;
  
   const {variables} = useContext(ModalContext);
   const windowlength = window.matchMedia("(max-width:700px)")
@@ -52,7 +59,7 @@ const styles = {
                   <div onClick={() => history.push('/resume')} className={s.box2}>
                      <BsReceiptCutoff className={s.iconOrder}/>
                      <div className={s.subBox}>
-                       <h1>{totalCompletedOrders.length > 0 ? totalCompletedOrders.length : 0}</h1>
+                       <h1>{pedidos === 'no hay pedidos'? 0 : Orders.length}</h1>
                        <h4>Pedidos del dia</h4>
                      </div>
                      
@@ -60,7 +67,7 @@ const styles = {
                   <div className={s.box2}>
                   <IoCloseCircleSharp className={s.iconRechazados}/>
                      <div className={s.subBox}>
-                       <h1>{rejected.length}</h1>
+                       <h1>{pedidos === 'no hay pedidos'? 0 : OrdersCancel.length}</h1>
                        <h4>Pedidos Rechazados</h4>
                      </div>
                   </div>

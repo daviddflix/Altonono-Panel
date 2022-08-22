@@ -97,7 +97,7 @@ const MainPanel = () => {
       <img src={img} alt='logo' className={s.logo} />
       <h2 style={{color:'#fff', margin: '1rem'}}>Altonono</h2>
 
-   <form onSubmit={handleSubmit} noValidate> 
+   <form className={s.form} onSubmit={handleSubmit} noValidate> 
      <div className={s.boxInput}>
        <label className={s.label} htmlFor="mail">Email</label>
        <input
@@ -113,7 +113,7 @@ const MainPanel = () => {
      </div>
 
      <div className={s.boxInput}>
-       <label className={s.label} htmlFor="password">Password</label>
+       <label className={s.label} htmlFor="password">Contraseña</label>
        <input
          className={s.input}
          type="password"
@@ -126,7 +126,7 @@ const MainPanel = () => {
        {formErrors.password && <span className={s.span}>{formErrors.password}</span>}
      </div>
 
-     <Button variant='contained' style={{width: '98%'}} type='submit'>Iniciar sesion</Button>
+     <Button variant='contained' style={{width: '50%'}} type='submit'>Iniciar sesion</Button>
    </form>
     <NavLink to={'/restore'} className={s.restore}>Recuperar contraseña</NavLink>
       </div>

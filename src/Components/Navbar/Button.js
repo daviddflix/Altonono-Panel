@@ -52,17 +52,17 @@ export default function Logout () {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
+          // anchorOrigin={{
+          //   vertical: 'top',
+          //   horizontal: 'left',
+          // }}
+          // transformOrigin={{
+          //   vertical: 'top',
+          //   horizontal: 'left',
+          // }}
         >
          
-          <MenuItem onClick={handleLogOut}><BiLogOut className={s.log}/>Logout</MenuItem>
+          <MenuItem onClick={handleLogOut}><BiLogOut className={s.log}/>Cerrar sesion</MenuItem>
         </Menu>
       </div>
     )

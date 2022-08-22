@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, GET_DETAILS, GET_PRODUCT_BY_ID, PRODUCTS, RESET, SET_CRONO, SET_STATUS_FOOD, STATUS, UPDATE_ITEM, UPDATE_LOGIN, UPDATE_STATUS_STORE } from "./actions"
+import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, GET_ALL_ORDERS, GET_DETAILS, GET_PRODUCT_BY_ID, PRODUCTS, RESET, SET_CRONO, STATUS, UPDATE_LOGIN, UPDATE_STATUS_ORDER, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_ORDER_IN_QUEUE, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
@@ -7,14 +7,12 @@ const InicialState = {
     admin: [],
     queue: [],
     confirmOrder: [],
-    cancelOrder: [],
     allOrders: [],
     detalle : {},
     status: [],
     products: [],
     cardStatusDelivery: [],
     crono: [],
-    statusbtn: [],
     productByid: {}
 }
 
@@ -52,13 +50,11 @@ const InicialState = {
                 status: [],
                 queue: [],
                 confirmOrder: [],
-                cancelOrder: [],
                 detalle : {},
                 cardStatusDelivery: [],
                 allOrders: [],
                 products: [],
                 crono: [],
-                statusbtn: [],
                 productByid: {}
             }
             case STATUS:
@@ -69,39 +65,28 @@ const InicialState = {
             }
 
             case UPDATE_STATUS_STORE:
+
+             const newState = action.payload.filter(p => p != null)
             
                 return{
                     ...state,
-                    status: action.payload
+                    status: newState
                 }
 
-            case UPDATE_ITEM: 
-
-            const ob = state.statusbtn.find(p => p.id === action.payload.id);
-
-            if(ob){
-                return{
-                  ...state,
-                  statusbtn: state.statusbtn.map(item => item.id === action.payload.id? {
-                    ...item,
-                    available: action.payload.available
-                  }: item)
-                }
-              
-              }
-             
-              return{
-                ...state,
-                statusbtn: [...state.statusbtn, action.payload]
-             }
-
-            
+          
         case GET_DETAILS:
             
             return{
                 ...state,
                 detalle: action.payload,
             }
+
+            case GET_ALL_ORDERS:
+            
+                return{
+                    ...state,
+                    allOrders: action.payload
+                }
 
          case GET_PRODUCT_BY_ID:
 
@@ -119,17 +104,18 @@ const InicialState = {
             }
 
         case CANCEL:
+
+            const updatedOrder = action.payload[1]
+
            
-            const itemInQueue = state.queue.filter(p => p.id === action.payload.detalle.id)
-            const itemInConfirm = state.confirmOrder.filter(p => p.id === action.payload.detalle.id)
+            const itemInQueue = state.queue.filter(p => p.id === updatedOrder.id)
+            const itemInConfirm = state.confirmOrder.filter(p => p.id === updatedOrder.id)
 
           
         if(itemInQueue.length>0){
             return{
                 ...state,
-                queue: state.queue.filter(p => p.id !== action.payload.detalle.id),
-                cancelOrder: [...state.cancelOrder, action.payload],
-                allOrders: [...state.allOrders, action.payload]
+                queue: state.queue.filter(p => p.id !== updatedOrder.id),
               
             }
         } 
@@ -137,9 +123,7 @@ const InicialState = {
            
             return{
                 ...state,
-                confirmOrder: state.confirmOrder.filter(p => p.id !== action.payload.detalle.id),
-                cancelOrder: [...state.cancelOrder, action.payload],
-                allOrders: [...state.allOrders, action.payload]
+                confirmOrder: state.confirmOrder.filter(p => p.id !== updatedOrder.id),
             }
         }
         break
@@ -151,15 +135,31 @@ const InicialState = {
                     products: action.payload,
                 }
 
-        case SET_STATUS_FOOD: 
+        case UPDATE_STATUS_ORDER_IN_QUEUE: 
 
-        const found = state.queue.filter(p => p.id === action.payload.id)
+        const updatedOrde = action.payload[1]
+
+        const found = state.queue.filter(p => p.id === updatedOrde.id)
 
         if(found){
             return{
                 ...state,
-                queue: state.queue.filter(p => p.id !== action.payload.id),
-                confirmOrder: [...state.confirmOrder, action.payload]
+                queue: state.queue.filter(p => p.id !== updatedOrde.id),
+                confirmOrder: [...state.confirmOrder, updatedOrde]
+              }
+        }
+        break
+
+        case UPDATE_STATUS_ORDER_IN_CONFIRM: 
+
+        const updatedOrderinConfirm = action.payload[1]
+
+        const foundOrder = state.confirmOrder.filter(p => p.id === updatedOrderinConfirm.id)
+
+        if(foundOrder){
+            return{
+                ...state,
+                confirmOrder: state.confirmOrder.filter(p => p.id !== updatedOrderinConfirm.id),
               }
         }
         break

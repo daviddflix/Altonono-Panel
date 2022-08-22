@@ -5,14 +5,19 @@ import CurrencyFormat from 'react-currency-format'
 import {  useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import ModalContext from '../../context/modalContext';
-import { emptyDetails } from '../../Redux/actions';
+import { emptyDetails, getAllOrders } from '../../Redux/actions';
 import {BiTask} from 'react-icons/bi'
 
 
 export default function Pedidos(){
 
     const pedidos = useSelector(state => state.allOrders);
+    const dispatch = useDispatch();
+    console.log('pedidos', pedidos)
    
+    useEffect(() => {
+      dispatch(getAllOrders())
+    }, [])
       
     useEffect(() => {
         document.title = 'Resumen Pedidos'
@@ -59,16 +64,16 @@ export default function Pedidos(){
           <div className={s.subcontainer}>
           {
             
-            pedidos.length > 0 ?  pedidos?.map((p, i) => {
+            pedidos !== "no hay pedidos" ?  pedidos?.map((p, i) => {
             return(
               <Card
               key={i}
-              id={p.detalle.id}
-              name={p.detalle.name}
-              table={p.detalle.table}
-              method={p.status === 'cancelado'? p.razon.value :p.detalle.method}
-              telefono={p.detalle.telefono}
-              monto={p.detalle.monto}
+              id={p.id}
+              name={p.name}
+              table={p.table}
+              method={p.method}
+              telefono={p.telefono}
+              monto={p.monto}
              statusFood={p.status}
               />
             )
@@ -84,16 +89,16 @@ export default function Pedidos(){
         <div className={s.maincontainer2}>
         {
           
-          pedidos.length > 0 ? pedidos?.map((p, i) => {
+          pedidos !== 'no hay pedidos' ?  pedidos?.map((p, i) => {
           return(
             <Card2
             key={i}
-            id={p.detalle.id}
-            name={p.detalle.name}
-            table={p.detalle.table}
-            method={p.status === 'cancelado'? p.razon.value :p.detalle.method}
-            telefono={p.detalle.telefono}
-            monto={p.detalle.monto}
+            id={p.id}
+            name={p.name}
+            table={p.table}
+            method={p.method}
+            telefono={p.telefono}
+            monto={p.monto}
            statusFood={p.status}
             />
           )
@@ -124,11 +129,11 @@ function Card({id, name, table, method, telefono, monto, statusFood}){
   }
 
   return( 
-    <div id='boxpedido' onClick={handleDetails}  className={s.boxpedido}  >
+    <div id='boxpedido' style={statusFood === 'cancelado' ? {backgroundColor: '#ff595a'} : {backgroundColor: 'transparent'}} onClick={handleDetails}  className={s.boxpedido}  >
    
   <h4 className={s.width}>#{id}</h4>
   <h4 className={s.width}>{`${date.getHours()}:${date.getMinutes()}`}</h4>
-  <h4 className={s.width}>{name}</h4>
+  <h4 className={s.width}>{name}</h4> 
   <h4 className={s.width}>{table}</h4>
   <h4 className={s.width}>{method}</h4>
   <h4 className={s.width}>{telefono}</h4>

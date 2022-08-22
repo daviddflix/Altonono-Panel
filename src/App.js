@@ -15,7 +15,7 @@ import { version } from '../package.json';
 import IncomingOrders from './Components/InsidePanel/insidepanel';
 import VerticalNavbar from './Components/Vertical Navbar/verticalNavbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOrder } from './Redux/actions';
+import { addOrder, getStatus } from './Redux/actions';
 import Menus from './Components/Menu/menu';
 import Restore from './Components/Restore/restore';
 import ModifyItem from './Components/InsidePanel/modifyItem';
@@ -49,7 +49,11 @@ function App() {
       return ()=> { isMounted = false}
      })
 
-const isProduction = process.env.NODE_ENV === 'production';
+     const isProduction = process.env.NODE_ENV === 'production';
+
+     useEffect(() => {
+      dispatch(getStatus())
+     }, [])
 
   return (
     <CacheBuster

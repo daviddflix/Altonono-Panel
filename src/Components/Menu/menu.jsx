@@ -121,9 +121,7 @@ export default function Menus(){
 function Card({title, id, unit_price, available}){
 
    const dispatch = useDispatch();
-   const products = useSelector(state => state.products);
-   const statusBtn = useSelector(state => state.statusbtn);
-   const thisBtn = statusBtn && statusBtn.find(p => p.id === id);
+//    const statusBtn = useSelector(state => state.statusbtn);
    const history = useHistory();
 
   
@@ -187,9 +185,8 @@ function Card({title, id, unit_price, available}){
             <h3>${unit_price}</h3>
             <div className={s.togglebtn}>
                 <ToggleButton
-                value={statusBtn !== undefined && thisBtn !== undefined ? thisBtn.available : available }
+                value={available}
                 trackStyle={styles.track}
-                // thumbStyle={styles.thumbStyle}
                 animateThumbStyleHover={(n) => {
                     return {
                       boxShadow: `0 0 ${2 + 4*n}px rgba(0,0,0,.16),0 ${2 + 3*n}px ${4 + 8*n}px rgba(0,0,0,.32)`,
@@ -229,3 +226,4 @@ function Card({title, id, unit_price, available}){
     )
 }
 
+//statusBtn !== undefined && thisBtn !== undefined ? thisBtn.available : 

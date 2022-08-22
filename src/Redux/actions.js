@@ -8,12 +8,14 @@ export const  CANCEL = 'CANCEL'
 export const  PRODUCTS = 'PRODUCTS'
 export const  ALL_ORDERS = 'ALL_ORDERS'
 export const  CARD_STATUS_DELIVERY = 'CARD_STATUS_DELIVERY'
-export const  SET_STATUS_FOOD = 'SET_STATUS_FOOD'
 export const  SET_CRONO = 'SET_CRONO'
 export const  UPDATE_STATUS_STORE = 'UPDATE_STATUS_STORE'
+export const  UPDATE_STATUS_ORDER_IN_QUEUE = 'UPDATE_STATUS_ORDER_IN_QUEUE'
+export const  UPDATE_STATUS_ORDER_IN_CONFIRM = 'UPDATE_STATUS_ORDER_IN_CONFIRM'
 export const  UPDATE_ITEM = 'UPDATE_ITEM'
 export const  EMPTY_DETAILS = 'EMPTY_DETAILS'
 export const  GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID'
+export const  GET_ALL_ORDERS = 'GET_ALL_ORDERS'
 
 
 const axios = require('axios').default;
@@ -35,21 +37,6 @@ export function accessAdmin(){
     }        
  }
 
-
-export const addOrder = (payload) => {
-    return{
-        type: ADD_ORDERS,
-        payload: payload
-    }
-}
-
-
-
-export const reset = () => {
-    return{
-        type: RESET
-    }
-}
 
 export function getDetails(id){
     return async function (dispatch){  
@@ -75,11 +62,18 @@ export function getDetails(id){
     }        
  }
 
- 
+ export function getAllOrders(){
+    return async function(dispatch){
+      const res = await axios.get(`${url}getAllOrders`)
+      return dispatch({ type: GET_ALL_ORDERS, payload: res.data})
+    }
+}
 
+ 
+ 
  export function getStatus(){
      return async function(dispatch){
-       const res = await axios.get(`${url}getStatus`)
+       const res = await axios.get(`${url}getstatus`)
        return dispatch({ type: STATUS, payload: res.data})
      }
  }
@@ -106,19 +100,28 @@ export function updateItem(item){
     }
 }
 
-export function cancelar (value){
-    return{
-        type: CANCEL,
-        payload: value
+
+export function cancelar(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}updateStatusOrder`, payload)
+      return dispatch({ type: CANCEL, payload: res.data})
     }
 }
 
-export function setStatusFood (value){
-    return{
-        type: SET_STATUS_FOOD,
-        payload: value
+export function updateStatusOrder(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}updateStatusOrder`, payload)
+      return dispatch({ type: UPDATE_STATUS_ORDER_IN_QUEUE, payload: res.data})
     }
 }
+
+export function updateStatusOrderInConfirm(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}updateStatusOrder`, payload)
+      return dispatch({ type: UPDATE_STATUS_ORDER_IN_CONFIRM, payload: res.data})
+    }
+}
+
 
 export function getCardStatus (value){
     return{
@@ -154,5 +157,20 @@ export function emptyDetails (){
 
     return{
         type: EMPTY_DETAILS,
+    }
+}
+
+export const addOrder = (payload) => {
+    return{
+        type: ADD_ORDERS,
+        payload: payload
+    }
+}
+
+
+
+export const reset = () => {
+    return{
+        type: RESET
     }
 }
