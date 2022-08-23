@@ -26,11 +26,12 @@ console.log(pedidos)
 
 
   const totalOrdersLength = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status !== 'cancelado').length
+  const totalOrders = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status !== 'cancelado')
   const OrdersCancel = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status === 'cancelado').length
 
 
-  const totalOrdersLengthByDay = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.date === date).length
-  const totalOrdersByDay = totalOrdersLengthByDay === 0 ? 0 : pedidos.map(p => p.monto)
+  const totalOrdersLengthByDay = totalOrders === 0 ? 0 : totalOrders.filter(p => p.date === date).length
+  const totalOrdersByDay = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
 
   const total = totalOrdersByDay === 0 ? 0 : totalOrdersByDay.reduce((a,b) => a + b, 0);
   
