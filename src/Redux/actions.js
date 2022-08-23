@@ -16,6 +16,8 @@ export const  UPDATE_ITEM = 'UPDATE_ITEM'
 export const  EMPTY_DETAILS = 'EMPTY_DETAILS'
 export const  GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID'
 export const  GET_ALL_ORDERS = 'GET_ALL_ORDERS'
+export const  GET_ORDERS_BY_DATE = 'GET_ORDERS_BY_DATE'
+export const  ALL_ORDERS_DASH = 'ALL_ORDERS_DASH'
 
 
 const axios = require('axios').default;
@@ -68,6 +70,12 @@ export function getDetails(id){
       return dispatch({ type: GET_ALL_ORDERS, payload: res.data})
     }
 }
+ export function getAllOrdersToDash(){
+    return async function(dispatch){
+      const res = await axios.get(`${url}getAllOrders`)
+      return dispatch({ type: ALL_ORDERS_DASH, payload: res.data})
+    }
+}
 
  
  
@@ -88,14 +96,12 @@ export function getDetails(id){
 export function updateFullItem(item){
     return async function(dispatch){
       const res = await axios.post(`${url}updateTheWholeItem`, item)
-     console.log('res', res)
     }
 }
 
 export function updateItem(item){
     return async function(dispatch){
       const res = await axios.post(`${url}updateItem`, item)
-    
       return dispatch({ type: UPDATE_ITEM, payload: res.data[1]})
     }
 }
@@ -112,6 +118,13 @@ export function updateStatusOrder(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateStatusOrder`, payload)
       return dispatch({ type: UPDATE_STATUS_ORDER_IN_QUEUE, payload: res.data})
+    }
+}
+
+export function getOrdersByDate(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}getOrderByDate`, payload)
+      return dispatch({ type: GET_ORDERS_BY_DATE, payload: res.data})
     }
 }
 
@@ -159,6 +172,7 @@ export function emptyDetails (){
         type: EMPTY_DETAILS,
     }
 }
+
 
 export const addOrder = (payload) => {
     return{

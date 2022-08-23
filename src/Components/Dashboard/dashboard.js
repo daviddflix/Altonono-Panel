@@ -7,25 +7,32 @@ import {BsReceiptCutoff} from 'react-icons/bs'
 import {IoCloseCircleSharp} from 'react-icons/io5'
 import {GiReceiveMoney} from 'react-icons/gi'
 import {FaAward} from 'react-icons/fa'
-import {MdArrowForwardIos} from 'react-icons/md'
 import { useHistory } from 'react-router-dom';
-import { getAllOrders } from '../../Redux/actions';
+import {  getAllOrdersToDash } from '../../Redux/actions';
+import moment from 'moment'
 
 export default function Dashboard(){
 
   const history = useHistory();
   const dispatch = useDispatch()
-  const pedidos = useSelector(state => state.allOrders);
+  const pedidos = useSelector(state => state.allOrdersdash);
+  const date = moment().format('l')
+console.log(pedidos)
 
   useEffect(() => {
-    dispatch(getAllOrders())
+    dispatch(getAllOrdersToDash())
   }, [])
 
-  const Orders = pedidos !== 'no hay pedidos' && pedidos.filter(p => p.status !== 'cancelado')
-  const OrdersCancel = pedidos !== 'no hay pedidos' && pedidos.filter(p => p.status === 'cancelado')
 
-  const filterTotal = pedidos === 'no hay pedidos'? 0 : Orders.map(p => p.monto) 
-  const total = filterTotal === 0 ? 0 : filterTotal.reduce((a,b) => a + b, 0);
+
+  const totalOrdersLength = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status !== 'cancelado').length
+  const OrdersCancel = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status === 'cancelado').length
+
+
+  const totalOrdersLengthByDay = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.date === date).length
+  const totalOrdersByDay = totalOrdersLengthByDay === 0 ? 0 : pedidos.map(p => p.monto)
+
+  const total = totalOrdersByDay === 0 ? 0 : totalOrdersByDay.reduce((a,b) => a + b, 0);
   
  
   const {variables} = useContext(ModalContext);
@@ -59,7 +66,7 @@ const styles = {
                   <div onClick={() => history.push('/resume')} className={s.box2}>
                      <BsReceiptCutoff className={s.iconOrder}/>
                      <div className={s.subBox}>
-                       <h1>{pedidos === 'no hay pedidos'? 0 : Orders.length}</h1>
+                       <h1>{totalOrdersLengthByDay}</h1>
                        <h4>Pedidos del dia</h4>
                      </div>
                      
@@ -67,7 +74,7 @@ const styles = {
                   <div className={s.box2}>
                   <IoCloseCircleSharp className={s.iconRechazados}/>
                      <div className={s.subBox}>
-                       <h1>{pedidos === 'no hay pedidos'? 0 : OrdersCancel.length}</h1>
+                       <h1>{OrdersCancel}</h1>
                        <h4>Pedidos Rechazados</h4>
                      </div>
                   </div>
@@ -75,14 +82,14 @@ const styles = {
                      <GiReceiveMoney className={s.iconRecaudacion}/>
                      <div className={s.subBox}>
                        <h1><CurrencyFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} /></h1>
-                       <h4>Recaudacion</h4>
+                       <h4>Recaudacion del dia</h4>
                      </div>
                   </div>
                   <div className={s.box2}>
                   <FaAward className={s.iconOrder}/>
                      <div className={s.subBox}>
-                       <h1>Sin datos</h1>
-                       <h4>Producto mas vendido</h4>
+                       <h1>{totalOrdersLength}</h1>
+                       <h4>Total pedidos</h4>
                      </div>
                   </div>
               </div>

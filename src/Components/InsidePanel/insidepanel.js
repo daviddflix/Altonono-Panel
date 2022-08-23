@@ -7,7 +7,7 @@ import {GiConfirmed} from 'react-icons/gi'
 import {BsCartCheck} from 'react-icons/bs'
 import { useHistory } from 'react-router-dom';
 import ModalContext from '../../context/modalContext';
-import {  completedOrder, emptyDetails, getCardStatus, setCrono } from '../../Redux/actions';
+import {  completedOrder, emptyDetails, getCardStatus, setCrono, updateStatusOrderInConfirm } from '../../Redux/actions';
 
 
 export default function IncomingOrders() {
@@ -117,44 +117,20 @@ export function Card({name, id}){
 }
 
 
-export function Card2({id, method, name, table, telefono, monto}){
+export function Card2({id, method, name}){
 
-  const cardStatus = useSelector(state => state.cardStatusDelivery);
   const valueCrono = useSelector(state => state.crono);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const getValue = valueCrono && valueCrono.find(p => p.id === id);
- 
-  // const [detalle, setDetalle] = React.useState({
-  //   id: id,
-  //   name: name,
-  //   table: table,
-  //   method: method,
-  //   telefono: telefono,
-  //   monto: monto,  
-  // });
-  // console.log('detalle', detalle)
 
   const handleDelivery = (e) => {  // onclick en  btn pedido listo cambia el icono y setea su estado en true
-    e.stopPropagation()
-    // dispatch(getCardStatus({delivery: true, id}))
-    dispatch(completedOrder({status: 'completada', detalle: {id, method, name, table, telefono, monto}}))
-   
+    dispatch(updateStatusOrderInConfirm({status : 'Pedido Listo', id: id}))
+    history.push('/orders')
   }
 
-  // const [findCardStatusById, setFindCardStatusById] = React.useState(false);
- 
-  // React.useEffect(() => {
-  //   const find = cardStatus.length > 0 && cardStatus.find(p => p.id === id);
-  //   if(cardStatus.length > 0 && find){
-   
-  //     if(find.delivery === true)
-  //         setFindCardStatusById(true)
-  //   }
-   
-  // }, [ cardStatus, id ])
 
-  const history = useHistory();
   const handleDetail = () => {
     dispatch(emptyDetails())
     history.push(`/detail/${id}`)
@@ -165,12 +141,6 @@ React.useEffect(() => {
     setInterval(() => {
       dispatch(setCrono({id, timer: 1}))
       }, 60000);
-  
-
-//  if(findCardStatusById === true){
-//   clearInterval()
-//  }
-
 }, [])
 
   return(

@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, GET_ALL_ORDERS, GET_DETAILS, GET_PRODUCT_BY_ID, PRODUCTS, RESET, SET_CRONO, STATUS, UPDATE_LOGIN, UPDATE_STATUS_ORDER, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_ORDER_IN_QUEUE, UPDATE_STATUS_STORE } from "./actions"
+import {ADD_ORDERS, ALL_ORDERS, ALL_ORDERS_DASH, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_ALL_ORDERS, EMPTY_DETAILS, GET_ALL_ORDERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, PRODUCTS, RESET, SET_CRONO, STATUS, UPDATE_LOGIN, UPDATE_STATUS_ORDER, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_ORDER_IN_QUEUE, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
@@ -8,6 +8,7 @@ const InicialState = {
     queue: [],
     confirmOrder: [],
     allOrders: [],
+    allOrdersdash: [],
     detalle : {},
     status: [],
     products: [],
@@ -53,6 +54,7 @@ const InicialState = {
                 detalle : {},
                 cardStatusDelivery: [],
                 allOrders: [],
+                allOrdersdash: [],
                 products: [],
                 crono: [],
                 productByid: {}
@@ -80,6 +82,13 @@ const InicialState = {
                 ...state,
                 detalle: action.payload,
             }
+
+            case ALL_ORDERS_DASH:
+            
+                return{
+                    ...state,
+                    allOrdersdash: action.payload,
+                }
 
             case GET_ALL_ORDERS:
             
@@ -169,6 +178,13 @@ const InicialState = {
            return{
             ...state,
             cardStatusDelivery: [...state.cardStatusDelivery, action.payload]
+           }
+
+           case GET_ORDERS_BY_DATE: 
+
+           return{
+            ...state,
+            allOrders: action.payload
            }
 
         case ALL_ORDERS: 

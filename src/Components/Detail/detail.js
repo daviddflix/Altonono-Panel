@@ -175,10 +175,11 @@ export default function Detail (){
      
         <div className={s.btns}>
         {
+          
         detalle.status === 'cancelado' || detalle.status === 'Pedido Listo'?  <button className={s.completedOrder} >Pedido finalizado</button> :
        changeBtn.length > 0?  
-       <button className={s.acceptbutton} onClick={handleDelivery}  >Pedido Listo</button> :
-          <button className={s.acceptbutton} onClick={handleStatus} >Aceptar</button> 
+       <button className={s.acceptbutton} onClick={handleDelivery}>{detalle.items? "Pedido Listo" : <div className={s.containerSpinner}><Spinner/></div>}</button> :
+          <button className={s.acceptbutton} onClick={handleStatus} >{detalle.items? "Aceptar" : <div className={s.containerSpinner}><Spinner/></div>}</button> 
 
          }
         </div>
