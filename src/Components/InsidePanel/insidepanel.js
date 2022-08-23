@@ -127,7 +127,6 @@ export function Card2({id, method, name}){
 
   const handleDelivery = (e) => {  // onclick en  btn pedido listo cambia el icono y setea su estado en true
     dispatch(updateStatusOrderInConfirm({status : 'Pedido Listo', id: id}))
-    history.push('/orders')
   }
 
 
