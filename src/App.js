@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {  
     let isMounted = true
-      socket.on('pedid', data => {
+      socket.on('pedido', data => {
         handlesound()
          if (isMounted) dispatch(addOrder(data))
       })
