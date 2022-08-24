@@ -51,9 +51,7 @@ function App() {
 
      const isProduction = process.env.NODE_ENV === 'production';
 
-     useEffect(() => {
-      dispatch(getStatus())
-     }, [dispatch])
+    
 
   return (
     <CacheBuster
