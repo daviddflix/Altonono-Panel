@@ -94,7 +94,7 @@ export default function Detail (){
    const link = `https://wa.me/${detalle.telefono}?text=Hola%20`
 
    const handleStatusBtn = () => {
-      if(detalle.status === 'Pedido en curso'){
+      if(detalle.status === 'Aceptar'){
         Swal.fire({
           icon: 'success',
           title: 'Pedido Aceptado',
