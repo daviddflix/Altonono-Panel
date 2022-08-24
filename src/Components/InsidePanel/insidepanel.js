@@ -3,16 +3,15 @@ import s from './insidepanel.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {BsCartX} from 'react-icons/bs'
 import {MdOutlineWbTwilight} from 'react-icons/md'
-import {GiConfirmed} from 'react-icons/gi'
 import {BsCartCheck} from 'react-icons/bs'
 import { useHistory } from 'react-router-dom';
 import ModalContext from '../../context/modalContext';
-import {  completedOrder, emptyDetails, getCardStatus, setCrono, updateStatusOrderInConfirm } from '../../Redux/actions';
+import {  emptyDetails, getStatus, setCrono, updateStatusOrderInConfirm } from '../../Redux/actions';
 
 
 export default function IncomingOrders() {
 
-  
+  const dispatch = useDispatch();
   const newOrder = useSelector(state => state.queue);
   const confirmOrder = useSelector(state => state.confirmOrder);
 
@@ -22,6 +21,10 @@ export default function IncomingOrders() {
   React.useEffect(() => {
       document.title = 'Pedidos'
  })
+
+ React.useEffect(() => {
+  dispatch(getStatus())
+ }, [dispatch])
 
  const styles = {
   length : {
@@ -125,8 +128,9 @@ export function Card2({id, method, name}){
 
   const getValue = valueCrono && valueCrono.find(p => p.id === id);
 
-  const handleDelivery = (e) => {  // onclick en  btn pedido listo cambia el icono y setea su estado en true
-    dispatch(updateStatusOrderInConfirm({status : 'Pedido Listo', id: id}))
+  const handleDelivery = (e) => {
+     e.stopPropagation()
+    dispatch(updateStatusOrderInConfirm({status : 'Pedido Finalizado', id: id}))
   }
 
 
@@ -140,7 +144,7 @@ React.useEffect(() => {
     setInterval(() => {
       dispatch(setCrono({id, timer: 1}))
       }, 60000);
-}, [])
+}, [dispatch, id])
 
   return(
     <div onClick={handleDetail} className={s.card2MainBox}>
@@ -159,7 +163,4 @@ React.useEffect(() => {
     </div>
   )
 }
-
-
-{/* <button id='readyto' className={s.readyto} onClick={handleDelivery}>{findCardStatusById === false? 'Pedido Listo': <GiConfirmed className={s.sendConfirm}/>}</button> */}
 

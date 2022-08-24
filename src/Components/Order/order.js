@@ -5,10 +5,9 @@ import CurrencyFormat from 'react-currency-format'
 import {  useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import ModalContext from '../../context/modalContext';
-import { emptyDetails, getAllOrders, getOrdersByDate } from '../../Redux/actions';
+import { emptyDetails, getAllOrders, getOrdersByDate, getStatus } from '../../Redux/actions';
 import {BiTask} from 'react-icons/bi'
 import moment from 'moment'
-import Spinner from '../spinner/spinner'
 
 export default function Pedidos(){
 
@@ -26,8 +25,12 @@ export default function Pedidos(){
    
     useEffect(() => {
       dispatch(getAllOrders())
-    }, [])
-      
+    }, [dispatch])
+    
+    useEffect(() => {
+      dispatch(getStatus())
+  }, [dispatch])
+
     useEffect(() => {
         document.title = 'Resumen Pedidos'
    })
@@ -146,7 +149,7 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
 
 function Card({id, name, table, method, telefono, monto, statusFood, time}){
 
-  const date = new Date();
+  
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -165,7 +168,7 @@ function Card({id, name, table, method, telefono, monto, statusFood, time}){
   <h4 className={s.width}>{method}</h4>
   <h4 className={s.width}>{telefono}</h4>
   <h4 className={s.width}><CurrencyFormat value={monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
-  <h4 className={s.width}>{statusFood}</h4>
+  <h4 className={s.width}>{statusFood === 'Pedido Listo'? 'En Preparacion': statusFood}</h4>
 
   </div>
   )
@@ -174,7 +177,7 @@ function Card({id, name, table, method, telefono, monto, statusFood, time}){
 
 function Card2({id, name, table, method, telefono, monto, statusFood, time}){
 
-  const date = new Date();
+  
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -215,7 +218,7 @@ function Card2({id, name, table, method, telefono, monto, statusFood, time}){
       </div>
       <div className={s.card2Container}>
        <h4 className={s.card2Title}>Status</h4> 
-       <h4 className={statusFood=== 'cancelado'?s.statuscancel :s.status}>{statusFood}</h4>
+       <h4 className={statusFood=== 'cancelado'?s.statuscancel :s.status}>{statusFood === 'Pedido Listo'? 'En Preparacion': statusFood}</h4>
       </div>   
     </div>
    )

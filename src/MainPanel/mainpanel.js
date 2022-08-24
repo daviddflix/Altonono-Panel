@@ -6,8 +6,9 @@ import { useSelector } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
 import img from '../Assets/descarga-removebg-preview.png'
 import Swal from 'sweetalert2'
-import Cookies from 'universal-cookie';
 import Button from '@mui/material/Button'
+import {GoPerson} from 'react-icons/go'
+import {HiLockClosed} from 'react-icons/hi'
 
 const MainPanel = () => {
 
@@ -99,6 +100,7 @@ const MainPanel = () => {
 
    <form className={s.form} onSubmit={handleSubmit} noValidate> 
      <div className={s.boxInput}>
+      <GoPerson className={s.iconPerson}/>
        <label className={s.label} htmlFor="mail">Email</label>
        <input
          className={s.input} 
@@ -113,6 +115,7 @@ const MainPanel = () => {
      </div>
 
      <div className={s.boxInput}>
+      <HiLockClosed className={s.iconPerson}/>
        <label className={s.label} htmlFor="password">Contraseña</label>
        <input
          className={s.input}

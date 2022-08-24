@@ -29,7 +29,6 @@
     height: 90%;
     background-color: #f5f7f8;
     border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -142,7 +141,7 @@
 
 .graph{
     display: flex;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
     margin: 2rem;
     flex-direction: column;
     padding: 15px;

@@ -53,7 +53,7 @@ function App() {
 
      useEffect(() => {
       dispatch(getStatus())
-     }, [])
+     }, [dispatch])
 
   return (
     <CacheBuster

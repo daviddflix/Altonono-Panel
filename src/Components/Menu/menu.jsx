@@ -6,7 +6,6 @@ import { emptyDetails, getProducts, updateItem } from '../../Redux/actions';
 import s from './menu.module.css';
 import {AiOutlineOrderedList} from 'react-icons/ai'
 import {GoPrimitiveDot} from 'react-icons/go'
-import {BsThreeDotsVertical} from 'react-icons/bs'
 import ToggleButton from 'react-toggle-button'
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -121,10 +120,8 @@ export default function Menus(){
 function Card({title, id, unit_price, available}){
 
    const dispatch = useDispatch();
-//    const statusBtn = useSelector(state => state.statusbtn);
    const history = useHistory();
 
-  
     const handleToggle = () => {
        
         if(available === true){
@@ -159,7 +156,7 @@ function Card({title, id, unit_price, available}){
         }
     }
 
-        const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -225,5 +222,3 @@ function Card({title, id, unit_price, available}){
     </div>
     )
 }
-
-//statusBtn !== undefined && thisBtn !== undefined ? thisBtn.available : 

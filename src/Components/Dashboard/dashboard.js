@@ -8,32 +8,36 @@ import {IoCloseCircleSharp} from 'react-icons/io5'
 import {GiReceiveMoney} from 'react-icons/gi'
 import {FaAward} from 'react-icons/fa'
 import { useHistory } from 'react-router-dom';
-import {  getAllOrdersToDash } from '../../Redux/actions';
+import {  getAllOrdersToDash, getStatus } from '../../Redux/actions';
 import moment from 'moment'
 
 export default function Dashboard(){
 
   const history = useHistory();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const pedidos = useSelector(state => state.allOrdersdash);
-  const date = moment().format('l')
-console.log(pedidos)
+  const date = moment().format('l');
+
 
   useEffect(() => {
     dispatch(getAllOrdersToDash())
-  }, [])
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getStatus())
+  }, [dispatch])
 
 
+  const totalOrdersLength = pedidos === 'no hay pedidos' ? 0 : pedidos.filter(p => p.status !== 'cancelado').length
+  const OrdersCancel = pedidos === 'no hay pedidos' ? 0 : pedidos.filter(p => p.status === 'cancelado').length
+  const totalOrders = pedidos === 'no hay pedidos' ? 0 : pedidos.filter(p => p.status !== 'cancelado'); // total order without cancelations
 
-  const totalOrdersLength = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status !== 'cancelado').length
-  const totalOrders = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status !== 'cancelado')
-  const OrdersCancel = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status === 'cancelado').length
 
+  const totalOrdersLengthByDay = totalOrders === 0 ? 0 : totalOrders.filter(p => p.date === date).length // length of the order of the current day
+  const totalOrdersByDay = totalOrders === 0 ? 0 : totalOrders.filter(p => p.date === date); // orders of the current day
+  const arrayOfTotalOrder = totalOrdersByDay === 0 ? 0 : totalOrdersByDay.map(p => p.monto)
 
-  const totalOrdersLengthByDay = totalOrders === 0 ? 0 : totalOrders.filter(p => p.date === date).length
-  const totalOrdersByDay = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
-
-  const total = totalOrdersByDay === 0 ? 0 : totalOrdersByDay.reduce((a,b) => a + b, 0);
+  const total = arrayOfTotalOrder === 0 ? 0 : arrayOfTotalOrder.reduce((a,b) => a + b, 0);
   
  
   const {variables} = useContext(ModalContext);

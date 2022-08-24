@@ -25,6 +25,7 @@
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
 
 }
 
@@ -74,15 +75,24 @@
     right: 0;
 }
 
-
+.iconPerson{
+    position: absolute;
+    top: 2.3rem;
+    left: .3rem;
+    min-width: 22px;
+    min-height: 22px;
+    color: #448aff;
+    border-right: #009ee3 1px solid;
+    padding: 3px;
+}
 
 .input{
-    width: 98%;
+    width: 90%;
     height: 50px;
     border: none;
     border-radius: 5px;
     font-size: 1rem;
-    padding-left: 10px;
+    padding-left: 40px;
     outline-offset: none;
     outline: none;
 }

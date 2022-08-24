@@ -1,7 +1,7 @@
-import {  useContext, useEffect, useState } from 'react'
+import {  useContext, useEffect } from 'react'
 import s from './detail.module.css'
 import { useHistory, useParams } from 'react-router-dom';
-import { cancelar, completedOrder, getCardStatus, getDetails, updateStatusOrder, updateStatusOrderInConfirm } from '../../Redux/actions';
+import { cancelar, getDetails, getStatus, updateStatusOrder, updateStatusOrderInConfirm } from '../../Redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import {BsArrowLeft} from 'react-icons/bs'
 import {BsPersonPlus} from 'react-icons/bs'
@@ -12,7 +12,6 @@ import CurrencyFormat from 'react-currency-format'
 import Swal from 'sweetalert2'
 import Spinner from '../spinner/spinner'
 import ModalContext from '../../context/modalContext'
-import {GiConfirmed} from 'react-icons/gi'
 
 export default function Detail (){
 
@@ -20,8 +19,7 @@ export default function Detail (){
     const {id} = useParams();
     const history = useHistory();
     const detalle = useSelector(state => state.detalle);
-    const cardStatus = useSelector(state => state.cardStatusDelivery);
-    const confirmOrder = useSelector(state => state.confirmOrder);
+    // const confirmOrder = useSelector(state => state.confirmOrder);
 
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
@@ -30,29 +28,12 @@ export default function Detail (){
       dispatch(getDetails(id))
    }, [id, dispatch])
 
-    const changeBtn =  confirmOrder.length > 0 && confirmOrder.filter(p => p.id === id)
+   useEffect(() => {
+     dispatch(getStatus())
+   }, [dispatch])
+
+    // const changeBtn =  confirmOrder.length > 0 && confirmOrder.filter(p => p.id === id)// find order in confirm array
   
-
-    
-  const [findCardStatusById, setFindCardStatusById] = useState(false)
- 
-
-  useEffect(() => {
-
-    const found = cardStatus.length > 0 && cardStatus.find(p => p.id === id);
-
-    if(cardStatus.length > 0 && found){
-    
-      if(found.delivery === true){
-          setFindCardStatusById(true)
-    }
-}
-    
-  }, [cardStatus, id])
-
-
-   
-
     const cancel = () => {
       return(
         Swal.fire({
@@ -89,17 +70,6 @@ export default function Detail (){
     }
    
 
-    const handleStatus = (e) => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Pedido Aceptado',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      dispatch(updateStatusOrder({status : 'En preparacion', id: id}))
-       history.push('/orders')
-    }
-
   
   useEffect(() => {
        document.title = 'Detalle'
@@ -123,11 +93,25 @@ export default function Detail (){
 
    const link = `https://wa.me/${detalle.telefono}?text=Hola%20`
 
-   const handleDelivery = (e) => {  // onclick en  btn pedido listo cambia el icono y setea su estado en true
-    dispatch(updateStatusOrderInConfirm({status : 'Pedido Listo', id: id}))
-    history.push('/orders')
-  }
-   console.log('detalle', detalle)
+   const handleStatusBtn = () => {
+      if(detalle.status === 'Pedido en curso'){
+        Swal.fire({
+          icon: 'success',
+          title: 'Pedido Aceptado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        dispatch(updateStatusOrder({status : 'Pedido Listo', id: id}))
+         history.push('/orders')
+      }
+
+      if(detalle.status === 'Pedido Listo'){
+        dispatch(updateStatusOrderInConfirm({status : 'Pedido Finalizado', id: id}))
+        history.push('/orders')
+      }
+   }
+
+   
     return(
   <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
       <div className={s.submain}>
@@ -175,17 +159,20 @@ export default function Detail (){
      
         <div className={s.btns}>
         {
-          
-        detalle.status === 'cancelado' || detalle.status === 'Pedido Listo'?  <button className={s.completedOrder} >Pedido finalizado</button> :
-       changeBtn.length > 0?  
-       <button className={s.acceptbutton} onClick={handleDelivery}>{detalle.items? "Pedido Listo" : <div className={s.containerSpinner}><Spinner/></div>}</button> :
-          <button className={s.acceptbutton} onClick={handleStatus} >{detalle.items? "Aceptar" : <div className={s.containerSpinner}><Spinner/></div>}</button> 
+          <button 
+          onClick={handleStatusBtn} 
+          disabled={detalle.status === 'cancelado'|| detalle.status === 'Pedido Finalizado'}
+          className={detalle.status === 'cancelado' || detalle.status === 'Pedido Finaliado'? s.completedOrder : s.acceptbutton}>{detalle.status}</button>
+      //   detalle.status === 'cancelado' || detalle.status === 'Pedido Listo'?  <button className={s.completedOrder} >Pedido finalizado</button> :
+      //  changeBtn.length > 0?  
+      //  <button className={s.acceptbutton} onClick={handleDelivery}>{detalle.items? "Pedido Listo" : <div className={s.containerSpinner}><Spinner/></div>}</button> :
+      //     <button className={s.acceptbutton} onClick={handleStatus} >{detalle.items? "Aceptar" : <div className={s.containerSpinner}><Spinner/></div>}</button> 
 
          }
         </div>
         </div>
         </div>
-           <button disabled={ detalle.status === 'cancelado'|| detalle.status === 'Pedido Listo'} className={ detalle.status === 'cancelado' || detalle.status === 'Pedido Listo' ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
+           <button disabled={ detalle.status === 'cancelado'|| detalle.status === 'Pedido Finalizado'} className={ detalle.status === 'cancelado' || detalle.status === 'Pedido Finalizado' ? s.arrow2disable : s.arrow2} onClick={cancel}>Cancelar</button>
         <div className={s.subcontainer2}>    
             <div className={s.container2}>
                 {

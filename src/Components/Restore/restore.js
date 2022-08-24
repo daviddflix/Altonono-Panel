@@ -1,7 +1,7 @@
 import { useState } from "react"
 import s from './restore.module.css'
 import Button from '@mui/material/Button'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updatePassword } from "../../Redux/actions";
 import { NavLink } from 'react-router-dom';
 import img from '../../Assets/descarga-removebg-preview.png'

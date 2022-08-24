@@ -20,7 +20,7 @@ export default function Navbar (){
 
     useEffect(() => {
         dispatch(getStatus())
-    }, [])
+    }, [dispatch])
 
 
 
