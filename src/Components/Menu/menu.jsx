@@ -12,7 +12,8 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {BsThreeDotsVertical} from 'react-icons/bs';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export default function Menus(){
 
@@ -200,7 +201,7 @@ function Card({title, id, unit_price, available}){
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <MoreVertIcon />
+       <BsThreeDotsVertical/> {/* <MoreVertIcon /> */}
       </IconButton>
       <Menu
         id="long-menu"

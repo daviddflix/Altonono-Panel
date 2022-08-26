@@ -16,6 +16,7 @@ import { addClient, getUserById } from "../../../Redux/actions";
 import { useEffect } from "react";
 import { useState } from "react";
 import userContext from "../../../context/userContext";
+import {BsPlusSquare} from 'react-icons/bs'
 
 export default function CreateComanda(){
 
@@ -28,12 +29,21 @@ export default function CreateComanda(){
 
     useEffect(() => {
         dispatch(getUserById(id))
-      }, [])
+      }, [dispatch, id])
 
       const handleChange = (e) => {
         const { name, value } = e.target;
         setClient({ ...client, [name]: value });
       };
+
+
+      const goToCreate = () => {
+         history.push(`/comanda/${id}`)
+      }
+
+      const goToEncurso = () => {
+         history.push(`/encurso/${id}`)
+      }
     
 
     const {client, setClient} = useContext(userContext);
@@ -74,13 +84,14 @@ export default function CreateComanda(){
     return(
       <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
          <div className={s.submain}>
-              <Header user={user[0].name}/>
-              <div className={s.dialog}>
-                    <Button variant="contained" onClick={handleClickOpen}>
-                crear comanda
+              <Header user={!user.length ? "cargando" : user[0].name}/>
+              <div className={s.containerbtns}>
+              <div className={s.btnmiscomandas}>
+                  <Button variant="contained" className={s.dialog}  onClick={handleClickOpen}>
+                  Crear Cliente
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Crear comanda</DialogTitle>
+                <DialogTitle>Crear Cliente</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
                     Ingresar nombre y mesa del cliente
@@ -115,6 +126,10 @@ export default function CreateComanda(){
                 <Button onClick={create}>Crear</Button>
                 </DialogActions>
             </Dialog>
+              </div>
+              <button onClick={goToEncurso} className={s.btnmiscomandas}>En curso</button>
+            <button  className={s.btnmiscomandas}>Mis Comandas</button>
+            <BsPlusSquare onClick={goToCreate} className={s.btncrearcliente}/>
               </div>
          </div>
       </div>
