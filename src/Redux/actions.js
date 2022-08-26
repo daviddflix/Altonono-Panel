@@ -18,6 +18,8 @@ export const  GET_PRODUCT_BY_ID = 'GET_PRODUCT_BY_ID'
 export const  GET_ALL_ORDERS = 'GET_ALL_ORDERS'
 export const  GET_ORDERS_BY_DATE = 'GET_ORDERS_BY_DATE'
 export const  ALL_ORDERS_DASH = 'ALL_ORDERS_DASH'
+export const  GET_ALL_USERS = 'GET_ALL_USERS'
+export const  GET_USER_BY_ID = 'GET_USER_BY_ID'
 
 
 const axios = require('axios').default;
@@ -103,6 +105,27 @@ export function updateItem(item){
     return async function(dispatch){
       const res = await axios.post(`${url}updateItem`, item)
       return dispatch({ type: UPDATE_ITEM, payload: res.data[1]})
+    }
+}
+
+export function createUser(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}createWaiter`, payload)
+      console.log('res', res)
+    }
+}
+
+export function getAllUser(){
+    return async function(dispatch){
+      const res = await axios.get(`${url}getAllWaiters`)
+      return dispatch({ type: GET_ALL_USERS, payload: res.data})
+    }
+}
+
+export function getUserById(id){
+    return async function(dispatch){
+      const res = await axios.post(`${url}getWaiterById/${id}`)
+      return dispatch({ type: GET_USER_BY_ID, payload: res.data})
     }
 }
 

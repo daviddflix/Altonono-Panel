@@ -18,7 +18,7 @@ export default function ModifyItem (){
      const productByid = useSelector(state => state.productByid);
      const {variables} = useContext(ModalContext);
      const windowlength = window.matchMedia("(max-width:700px)");
-     console.log('productByid', productByid)
+    
 
      useEffect( () => {
         dispatch(getProductDetail(id))

@@ -159,7 +159,7 @@ function Card({id, name, table, method, telefono, monto, statusFood, time}){
   }
 
   return( 
-    <div id='boxpedido' style={statusFood === 'cancelado' ? {backgroundColor: '#ff595a'} : {backgroundColor: 'transparent'}} onClick={handleDetails}  className={s.boxpedido}  >
+    <div id='boxpedido'  onClick={handleDetails}  className={s.boxpedido}  >
    
   <h4 className={s.width}>#{id}</h4>
   <h4 className={s.width}>{time.slice(0, 5)}</h4>
@@ -168,7 +168,7 @@ function Card({id, name, table, method, telefono, monto, statusFood, time}){
   <h4 className={s.width}>{method}</h4>
   <h4 className={s.width}>{telefono}</h4>
   <h4 className={s.width}><CurrencyFormat value={monto} displayType={'text'} thousandSeparator={true} prefix={'ARS'} /></h4>
-  <h4 className={s.width}>{statusFood === 'Pedido Listo'? 'En Preparacion': statusFood}</h4>
+  <h4 className={statusFood === 'cancelado'? s.cancel : statusFood === 'Pedido Finalizado' ? s.done : s.width}>{statusFood === 'Pedido Listo'? 'En Preparacion': statusFood}</h4>
 
   </div>
   )

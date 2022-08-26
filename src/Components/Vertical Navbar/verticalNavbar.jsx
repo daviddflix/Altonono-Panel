@@ -4,6 +4,7 @@ import {MdDashboard} from 'react-icons/md'
 import {MdProductionQuantityLimits} from 'react-icons/md'
 import {GoListUnordered} from 'react-icons/go'
 import {GiMeal} from 'react-icons/gi'
+import {ImUsers} from 'react-icons/im'
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { useContext } from 'react'
@@ -49,6 +50,7 @@ export default function VerticalNavbar (){
     <MenuItem icon={<GoListUnordered />}>Pedidos <NavLink to='/orders'/></MenuItem>
     <MenuItem icon={<GiMeal />}>Historial<NavLink to='/resume'/></MenuItem>
     <MenuItem icon={<MdProductionQuantityLimits />}>Menu<NavLink to='/menu'/></MenuItem>
+    <MenuItem icon={<ImUsers />}>Usuarios<NavLink to='/users'/></MenuItem>
   </Menu>
 </ProSidebar>
 </nav>

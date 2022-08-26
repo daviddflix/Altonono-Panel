@@ -1,0 +1,123 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    transition: 0.3s ;
+    height: calc(100vh - 50px);
+    background-color: #f5f7f8;
+    position: relative;
+}
+
+.submain{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header{
+    width: 99%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #282828;
+}
+
+.containername{
+    display: flex;
+}
+
+.faceIcon{
+    width: 40px;
+    height: 40px;
+}
+
+.name{
+    text-transform: capitalize;
+    font-size: 2rem;
+    margin: 0 1rem 0 .3rem;
+}
+
+.iconback{
+    width: 30px;
+    height: 30px;
+    margin: 1rem;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+}
+
+.containercomanda{
+    width: 40%;
+}
+
+.containerProductos{
+    width: 60%;
+    height: 81.5vh;
+    border-left: 1px solid #282828;
+}
+
+.category{
+    /* border-bottom: #282828 solid 2px; */
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.categoryname{
+    margin: .3rem .5rem 0 .3rem ;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: .5rem;
+    /* border-radius: 100px; */
+    cursor: pointer;
+}
+
+.products{
+    overflow-y: scroll;
+    max-height: 68vh;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: .8rem;
+    width: 100px;
+    height: 80px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border: #282828 solid 1px;
+}
+
+.title{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    display: grid;
+    place-content: center;
+}
+
+.price{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3398db;
+}
+
+@media screen and (max-width: 700px) {
+    .products{
+        height: 55vh;
+    }
+}

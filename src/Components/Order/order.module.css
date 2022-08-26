@@ -41,7 +41,22 @@
     width: 14%;
     display: grid;
     place-content: center;
-    
+   color: #282828;
+}
+
+.cancel{
+    text-transform: uppercase;
+    background-color: #ff595a;
+    color: #fff;
+    padding: 1%;
+}
+
+.done{
+    text-transform: uppercase;
+    background-color: #29d884;
+    color: #fff;
+    padding: 1%;
+
 }
 
 .containertitle{
