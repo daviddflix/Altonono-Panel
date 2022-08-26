@@ -8,6 +8,7 @@ import Order from './Components/Order/order'
 import Detail from './Components/Detail/detail';
 import { SocketContext, socket } from './context/socketContext';
 import  ModalContext  from './context/modalContext'
+import  userContext  from './context/userContext'
 import { useEffect, useState } from 'react';
 import Spinner from './Components/spinner/spinner';
 import CacheBuster from 'react-cache-buster';
@@ -24,9 +25,19 @@ import sound from './Components/Order/Sounds/SD_ALERT_27.mp3'
 import Users from './Components/Users/users';
 import {CreateUser} from './Components/Users/users';
 import Comanda from './Components/Comanda/comanda';
+import Encurso from './Components/Comanda/encurso'
+import CreateComanda from './Components/Comanda/crearcomanda/crearComanda';
 
 function App() {
 
+  const [client, setClient] = useState({
+    name: '',
+    table: '',
+    telefono: '',
+    method: '',
+    comentarios: ''
+  })
+  
   
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.isLogin);
@@ -78,6 +89,7 @@ function App() {
 <div> 
 <SocketContext.Provider value={socket}>
 <ModalContext.Provider value={{variables, setVariables}} >
+<userContext.Provider value={{client, setClient}}>
     <Navbar/>
     <VerticalNavbar/>
       <Switch>
@@ -106,8 +118,16 @@ function App() {
         <Users/>
         </PrivateRoutes>
 
+        <PrivateRoutes exact  path='/encurso/:id'>
+        <Encurso/>
+        </PrivateRoutes>
+
         <PrivateRoutes exact  path='/create'>
         <CreateUser/>
+        </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/createComanda/:id'>
+        <CreateComanda/>
         </PrivateRoutes>
 
         <PrivateRoutes exact  path='/comanda/:id'>
@@ -122,6 +142,7 @@ function App() {
         <ModifyItem/>
         </PrivateRoutes>
  </Switch>
+ </userContext.Provider>
  </ModalContext.Provider>
 </SocketContext.Provider>
 </div>

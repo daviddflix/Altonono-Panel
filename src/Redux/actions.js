@@ -2,6 +2,10 @@ export const CREDENTIAL = 'CREDENTIAL'
 export const UPDATE_LOGIN = 'UPDATE_LOGIN'
 export const  ADD_ORDERS = 'ADD_ORDER'
 export const  RESET = 'RESET'
+export const  ADD_CLIENT = 'ADD_CLIENT'
+export const  DELETE_ITEM = 'DELETE_ITEM'
+export const  ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
+export const  SUSTRACT_TO_CART = 'SUSTRACT_TO_CART'
 export const  GET_DETAILS = 'GET_DETAILS'
 export const  STATUS = 'STATUS'
 export const  CANCEL = 'CANCEL'
@@ -188,6 +192,13 @@ export function updateLogin (value){
     }
 }
 
+export function addClient (value){
+    return{
+        type: ADD_CLIENT,
+        payload: value
+    }
+}
+
 
 export function emptyDetails (){
 
@@ -209,5 +220,28 @@ export const addOrder = (payload) => {
 export const reset = () => {
     return{
         type: RESET
+    }
+}
+
+export function sustractItem(value){
+   
+    return{
+        type:SUSTRACT_TO_CART,
+        payload: value
+    }
+}
+
+export function DeleteItem(value){
+    
+    return{
+        type:DELETE_ITEM,
+        payload: value
+    }
+}
+
+export function addItem(value){
+    return{
+        type:ADD_ITEM_TO_CART,
+        payload: value
     }
 }

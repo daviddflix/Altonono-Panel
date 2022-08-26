@@ -58,7 +58,7 @@ export default function Users(){
                     {
                         users.length > 0 ? users.map(p => {
                             return(
-                                <NavLink to={`/comanda/${p.id}`} key={p.id} className={s.container}>
+                                <NavLink to={`/createComanda/${p.id}`} key={p.id} className={s.container}>
                                     <AttachMoneyIcon className={s.moneyIcon}/>
                                     <div className={s.containerName}>
                                         <h3 className={s.total}>0</h3>

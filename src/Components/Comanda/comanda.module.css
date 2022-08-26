@@ -16,12 +16,19 @@
     align-items: center;
 }
 
+.containerHeader{
+    width: 100%;
+    height: 100%;
+}
+
 .header{
     width: 99%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 2px solid #282828;
+    height: 15%;
+    box-sizing: border-box;
 }
 
 .containername{
@@ -40,14 +47,16 @@
 }
 
 .iconback{
-    width: 30px;
-    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
     margin: 1rem;
 }
 
 .container{
     width: 100%;
     display: flex;
+    flex-direction: column;
+    height: calc(100vh - 15vh);
 }
 
 .containercomanda{
@@ -55,30 +64,40 @@
 }
 
 .containerProductos{
-    width: 60%;
-    height: 81.5vh;
-    border-left: 1px solid #282828;
+    width: 100%;
+    height: 90%;
 }
 
 .category{
-    /* border-bottom: #282828 solid 2px; */
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    height: 20%;
 }
 
 .categoryname{
-    margin: .3rem .5rem 0 .3rem ;
+    margin: .3rem ;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: .5rem;
-    /* border-radius: 100px; */
     cursor: pointer;
+    width: 8%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 700px) {
+    .categoryname{
+        height: 20%;
+        width: 17%;
+    }
 }
 
 .products{
     overflow-y: scroll;
-    max-height: 68vh;
+    max-height: 80%;
     display: flex;
     flex-wrap: wrap;
 }
@@ -114,6 +133,29 @@
     align-items: center;
     justify-content: center;
     background-color: #3398db;
+}
+
+.containerbtns{
+    display: flex;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    bottom: 1rem;
+}
+
+.btnencurso{
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    margin: 0 1rem 0 0;
+    background-color: #10c15b;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: .5rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
 }
 
 @media screen and (max-width: 700px) {
