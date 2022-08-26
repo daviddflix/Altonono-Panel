@@ -71,7 +71,7 @@ console.log(productsToShow)
                   <IoArrowBackOutline onClick={goback} className={s.iconback}/>
                   <div className={s.containername}>
                   <BiFace className={s.faceIcon}/>
-                  <h2 className={s.name}>{user[0].name}</h2>
+                  <h2 className={s.name}>{user && user[0].name}</h2>
                   </div>
                </div>
                <div className={s.container}>
