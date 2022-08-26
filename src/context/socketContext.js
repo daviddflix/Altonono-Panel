@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import io from "socket.io-client";
 
-const port = 'https://altonono.herokuapp.com/'
+const port = process.env.REACT_APP_URL
 // process.env.REACT_APP_URL
 
 export const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});

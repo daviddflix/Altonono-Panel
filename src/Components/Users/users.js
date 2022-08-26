@@ -66,7 +66,7 @@ export default function Users(){
                                     </div>
                                 </NavLink>
                             )
-                        }) : <div><Spinner/></div>
+                        }) : <div><h3>No Hay usuarios creados</h3></div>
                     }
                 </div>
             </div>

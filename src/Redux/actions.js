@@ -28,7 +28,7 @@ export const  GET_USER_BY_ID = 'GET_USER_BY_ID'
 
 const axios = require('axios').default;
 
-const url = 'https://altonono.herokuapp.com/'
+const url = process.env.REACT_APP_URL
 
 export function accessAdmin(){
     return async function (dispatch){  
