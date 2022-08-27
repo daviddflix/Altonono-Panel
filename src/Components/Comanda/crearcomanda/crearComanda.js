@@ -47,7 +47,7 @@ export default function CreateComanda(){
     
 
     const {client, setClient} = useContext(userContext);
-    console.log(client)
+  
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
