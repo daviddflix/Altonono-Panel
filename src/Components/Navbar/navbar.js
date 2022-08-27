@@ -50,6 +50,12 @@ export default function Navbar (){
     const internet = navigator.onLine
     const statusInternet = internet === true ? `Conexion estable ${conexion}` : 'Revisa tu conexion'
 
+    useEffect(() => {
+       if(conexion === '2g' || internet === false){
+          dispatch(updateStatus('Cerrado'))
+       }
+    }, [conexion, internet])
+
     return(
        <nav  className={s.navbar}> 
            <ul className={s.ul}>
