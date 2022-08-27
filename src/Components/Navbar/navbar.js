@@ -45,7 +45,11 @@ export default function Navbar (){
             setVariables(prev => ({...prev, toggle: false}))
         }
     };
-
+     
+    const conexion = navigator.connection.effectiveType
+    const internet = navigator.onLine
+    console.log('conexion:',conexion)
+    const statusInternet = internet === true ? `Conexion estable ${conexion}` : 'Revisa tu conexion'
 
     return(
        <nav  className={s.navbar}> 
@@ -55,6 +59,7 @@ export default function Navbar (){
               < FaBars className={s.icon}/>
                </div>
                <div className={s.subul}>
+                <h3 style={internet === true ? {color: '#10c15b'} : {color: 'red'}} className={s.internet}>{statusInternet}</h3>
                 <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status.length === 0 ? s.iconOffline: status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button>
                 {/* {status.length > 0 ? <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button> :  <button className={s.btnNoStatus}><SpinnerTiny/></button> } */}
                <div className={s.btnLogout}><Logout/></div>
