@@ -6,6 +6,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, getProducts, getUserById } from '../../Redux/actions';
 import {BiFace} from 'react-icons/bi';
+import {BsTrash} from 'react-icons/bs';
 
 export default function Comanda(){
     
@@ -133,8 +134,10 @@ function CardProduct({ title, unit_price, description, status, id, available, im
 
     return(
     <div  onClick={ProductNumberIncrement} className={s.item}>
+        <span className={s.quantity}>0</span>
         <h4 className={s.title}>{title}</h4>
         <h3 className={s.price}>{unit_price}</h3>
+        <BsTrash className={s.trash}/>
     </div>
     )
 }

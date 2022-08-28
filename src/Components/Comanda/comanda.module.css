@@ -103,6 +103,7 @@
 }
 
 .item{
+    position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -112,7 +113,35 @@
     height: 80px;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    border: #282828 solid 1px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.quantity{
+  position: absolute;
+  top: -.5rem;
+  right: -.5rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #3398db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+}
+.trash{
+    position: absolute;
+    bottom: -.5rem;
+    left: -.5rem;
+    width: 15px;
+    height: 15px;
+    color: #282828;
+    background-color: #ff595a;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .title{
