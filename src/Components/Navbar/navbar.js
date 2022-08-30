@@ -15,6 +15,7 @@ export default function Navbar (){
 
     const {variables, setVariables} = useContext(ModalContext);
     const status = useSelector(state => state.status);
+    const admin = useSelector(state => state.admin)
     const dispatch = useDispatch();
    
 
@@ -61,8 +62,7 @@ export default function Navbar (){
                </div>
                <div className={s.subul}>
                 <h3 style={internet === true ? {color: '#10c15b'} : {color: 'red'}} className={s.internet}>{statusInternet}</h3>
-                <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status.length === 0 ? s.iconOffline: status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button>
-                {/* {status.length > 0 ? <button onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button> :  <button className={s.btnNoStatus}><SpinnerTiny/></button> } */}
+                <button disabled={admin.role === 'mozos'} onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status.length === 0 ? s.iconOffline: status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button>
                <div className={s.btnLogout}><Logout/></div>
               </div>
            </ul>

@@ -10,13 +10,14 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import { useContext } from 'react'
 import ModalContext from '../../context/modalContext';
 import React, { useRef, useEffect } from "react";
+import { useSelector } from 'react-redux'
 
 export default function VerticalNavbar (){
 
   const {variables, setVariables} = useContext(ModalContext);
   const windowlength = window.matchMedia("(max-width:700px)");
   const wrapperRef = useRef(null);
-
+  const admin = useSelector(state => state.admin)
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -46,8 +47,8 @@ export default function VerticalNavbar (){
 <nav ref={wrapperRef} id='nav'  className={s.navbar}>
 <ProSidebar width={variables.sidebarWidth}   collapsedWidth={windowlength.matches=== true? '0px': '80px'} collapsed={variables.toggle} >
   <Menu iconShape="square">
-    <MenuItem icon={<MdDashboard />}>Dashboard<NavLink to='/'/></MenuItem>
-    <MenuItem icon={<GoListUnordered />}>Pedidos <NavLink to='/orders'/></MenuItem>
+    <MenuItem style={admin.role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<MdDashboard />}>Dashboard<NavLink to='/'/></MenuItem>
+    <MenuItem style={admin.role === 'mozos' ? {display: 'none'}: {display: 'block'}} icon={<GoListUnordered />}>Pedidos <NavLink to='/orders'/></MenuItem>
     <MenuItem icon={<GiMeal />}>Historial<NavLink to='/resume'/></MenuItem>
     <MenuItem icon={<MdProductionQuantityLimits />}>Menu<NavLink to='/menu'/></MenuItem>
     <MenuItem icon={<ImUsers />}>Usuarios<NavLink to='/users'/></MenuItem>

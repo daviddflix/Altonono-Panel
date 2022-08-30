@@ -140,7 +140,7 @@
 
 .togglebtn{
     height: 100%;
-    margin-left: 1rem;
+    margin-left: .3rem;
     transition: .2s ease;
 }
 
@@ -170,10 +170,14 @@
     }
 
     .cardtitle{
-        width: 44%;
+        width: 43%;
         margin: 0 1rem 0 0;
         overflow: hidden;
         font-size: 1rem;
+    }
+
+    .subcontainercard{
+        box-sizing: border-box;
     }
 
     .iconsection{

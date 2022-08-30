@@ -4,9 +4,17 @@ import s from './comanda.module.css'
 import {IoArrowBackOutline} from 'react-icons/io5'
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, getProducts, getUserById } from '../../Redux/actions';
+import { addItem, getProducts, getUserById, sustractItem } from '../../Redux/actions';
 import {BiFace} from 'react-icons/bi';
-import {BsTrash} from 'react-icons/bs';
+import {AiFillMinusCircle} from 'react-icons/ai';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import userContext from '../../context/userContext';
 
 export default function Comanda(){
     
@@ -19,7 +27,7 @@ export default function Comanda(){
     const {id} = useParams();
     const dispatch = useDispatch();
 
-    
+   
 
     useEffect(() => {
       dispatch(getUserById(id))
@@ -51,11 +59,6 @@ export default function Comanda(){
     const productsToShow = products && products.filter(p => p.category_id === category);
 
 
-
-    //   const ProductNumberDecrement = () => {
-    //     dispatch(sustractItem({title, quantity: 1, unit_price: Number(unit_price), description, id}))
-    //   }
-
     const styles = {
         length : {
             width: 'calc(100vw - 80px)',
@@ -75,14 +78,8 @@ export default function Comanda(){
     return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
            <div className={s.submain}>
-               {/* <div className={s.header}> */}
+              
                 <Header user={user[0].name}/>
-                  {/* <IoArrowBackOutline onClick={goback} className={s.iconback}/>
-                  <div className={s.containername}>
-                  <BiFace className={s.faceIcon}/>
-                  <h2 className={s.name}>{!user.length ? "cargando" : user[0].name}</h2>
-                  </div> */}
-               {/* </div> */}
                <div className={s.container}>
                   <div className={s.containerProductos}>
                       <div className={s.category}>
@@ -112,8 +109,7 @@ export default function Comanda(){
                       </div>
                   </div>
                   <div className={s.containerbtns}>
-                    <button onClick={encurso} className={s.btnencurso}>En curso</button>
-                    <button  className={s.btnencurso}>Mis comandas</button>
+                    <Button onClick={encurso} style={{width: '90%'}} variant='contained'>cobrar</Button>
                   </div>
                </div>
            </div>
@@ -122,9 +118,11 @@ export default function Comanda(){
 }
 
 
-function CardProduct({ title, unit_price, description, status, id, available, image}){
+function CardProduct({ title, unit_price, description, id, available}){
 
-    const dispatch= useDispatch()
+    const dispatch= useDispatch();
+    const cartItem = useSelector(state => state.cart);
+    const findQuantity = cartItem.find(p => p.id === id)
 
     const ProductNumberIncrement = () => {
         if(available === true){
@@ -132,12 +130,18 @@ function CardProduct({ title, unit_price, description, status, id, available, im
         }
     }
 
+    const ProductNumberDecrement = (e) => {
+        e.stopPropagation()
+        dispatch(sustractItem({title, quantity: 1, unit_price: Number(unit_price), description, id}))
+      }
+
     return(
-    <div  onClick={ProductNumberIncrement} className={s.item}>
-        <span className={s.quantity}>0</span>
+    <div style={available === false ? {opacity: 0.5} : {opacity: 1}} onClick={ProductNumberIncrement} className={s.item}>
+        <span className={s.quantity}>{findQuantity !== undefined? findQuantity.quantity: 0}</span>
         <h4 className={s.title}>{title}</h4>
         <h3 className={s.price}>{unit_price}</h3>
-        <BsTrash className={s.trash}/>
+        <AiFillMinusCircle onClick={ProductNumberDecrement} className={s.trash}/>
+        {available === false && <h6>No disponible</h6>}
     </div>
     )
 }
@@ -159,5 +163,80 @@ export function Header({user}){
                   <h2 className={s.name}>{!user.length ? "cargando" : user}</h2>
              </div>
         </div>
+    )
+}
+
+
+export function Dialogo(){
+
+    const [open, setOpen] = useState(false);
+    const {client, setClient} = useContext(userContext);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setClient({ ...client, [name]: value });
+      };
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+    
+    return(
+        <div className={s.btnmiscomandas}>
+        <Button variant="contained" className={s.dialog}  onClick={handleClickOpen}>
+        Cliente
+  </Button>
+  <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Cliente</DialogTitle>
+      <DialogContent>
+      <DialogContentText>
+          Ingresar nombre y/o mesa del cliente
+      </DialogContentText>
+      <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          name='name'
+          label='Nombre'
+          value={client.name}
+          onChange={handleChange}
+          type="text"
+          fullWidth
+          variant="standard"
+      />
+      <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          name='table'
+          value={client.table}
+          onChange={handleChange}
+          label='Mesa'
+          type="number"
+          fullWidth
+          variant="standard"
+      />
+      <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          name='comentarios'
+          value={client.comentarios}
+          onChange={handleChange}
+          label='Comentarios'
+          type="text"
+          fullWidth
+          variant="standard"
+      />
+      </DialogContent>
+      <DialogActions>
+      <Button onClick={handleClose}>Cancelar</Button>
+      <Button >Continuar</Button>
+      </DialogActions>
+  </Dialog>
+    </div>
     )
 }

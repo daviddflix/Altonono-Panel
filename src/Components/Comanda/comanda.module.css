@@ -27,7 +27,7 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 2px solid #282828;
-    height: 15%;
+    height: 8%;
     box-sizing: border-box;
 }
 
@@ -86,6 +86,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.btnmiscomandas{
+    width: 98%;
+    margin: 1rem 0 0 0;
 }
 
 @media screen and (max-width: 700px) {

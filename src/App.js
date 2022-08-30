@@ -6,7 +6,6 @@ import Dashboard from './Components/Dashboard/dashboard';
 import MainPanel from './MainPanel/mainpanel';
 import Order from './Components/Order/order'
 import Detail from './Components/Detail/detail';
-import { SocketContext, socket } from './context/socketContext';
 import  ModalContext  from './context/modalContext'
 import  userContext  from './context/userContext'
 import { useEffect, useState } from 'react';
@@ -27,8 +26,13 @@ import {CreateUser} from './Components/Users/users';
 import Comanda from './Components/Comanda/comanda';
 import Encurso from './Components/Comanda/encurso'
 import CreateComanda from './Components/Comanda/crearcomanda/crearComanda';
+import io from "socket.io-client";
 
 function App() {
+
+  const port = process.env.REACT_APP_URL
+  const admin = useSelector(state => state.admin)
+  const socket = admin.role !== 'mozos' && io.connect(`${port}`, {transports: ['websocket', 'polling']});
 
   const [client, setClient] = useState({
     name: '',
@@ -56,11 +60,14 @@ function App() {
 
   useEffect(() => {  
     let isMounted = true
+    if(admin.role !== 'mozos'){
       socket.on('pedido', data => {
         handlesound()
          if (isMounted) dispatch(addOrder(data))
       })
       return ()=> { isMounted = false}
+    }
+   
      })
 
      const isProduction = process.env.NODE_ENV === 'production';
@@ -87,7 +94,6 @@ function App() {
         </div>:
 
 <div> 
-<SocketContext.Provider value={socket}>
 <ModalContext.Provider value={{variables, setVariables}} >
 <userContext.Provider value={{client, setClient}}>
     <Navbar/>
@@ -144,7 +150,6 @@ function App() {
  </Switch>
  </userContext.Provider>
  </ModalContext.Provider>
-</SocketContext.Provider>
 </div>
       }
 

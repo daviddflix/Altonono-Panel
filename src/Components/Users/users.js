@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import ModalContext from "../../context/modalContext";
 import s from './user.module.css'
-import {AiOutlinePlus} from 'react-icons/ai'
+import {AiOutlinePlusCircle} from 'react-icons/ai'
+import {FaUsers} from 'react-icons/fa'
 import { NavLink, useHistory } from "react-router-dom";
 import { Alert, TextField } from "@mui/material";
 import Button from '@mui/material/Button'
@@ -52,7 +53,7 @@ export default function Users(){
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
             <div className={s.submain}>
                 <div onClick={create} className={s.header}>
-                     <button className={s.btn}><AiOutlinePlus className={s.iconplus}/>CREAR</button>
+                     <button className={s.btn}><AiOutlinePlusCircle className={s.iconplus}/>CREAR</button>
                 </div>
                 <div className={s.containerUsers}>
                     {
@@ -66,7 +67,10 @@ export default function Users(){
                                     </div>
                                 </NavLink>
                             )
-                        }) : <div><h3>No Hay usuarios creados</h3></div>
+                        }) : <div className={s.noUsers}>
+                            <FaUsers className={s.usersIcons}/>
+                            <h3>No Hay usuarios creados</h3>
+                            </div>
                     }
                 </div>
             </div>

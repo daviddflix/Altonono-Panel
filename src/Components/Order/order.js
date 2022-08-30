@@ -5,7 +5,7 @@ import CurrencyFormat from 'react-currency-format'
 import {  useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import ModalContext from '../../context/modalContext';
-import { emptyDetails, getAllOrders, getOrdersByDate, getStatus } from '../../Redux/actions';
+import { emptyDetails, filterOrders, getAllOrders, getOrdersByDate, getStatus } from '../../Redux/actions';
 import {BiTask} from 'react-icons/bi'
 import moment from 'moment'
 
@@ -13,14 +13,12 @@ export default function Pedidos(){
 
     const pedidos = useSelector(state => state.allOrders);
     const dispatch = useDispatch();
-console.log('pedidos', pedidos)
 
     const [date, setDate] = useState('');
 
   const handleDate = (e) => {
     setDate(e.target.value)
     const date = moment(e.target.value).format('l')
-    console.log('date', date)
     dispatch(getOrdersByDate({date: date}))
   }
     
@@ -38,7 +36,15 @@ console.log('pedidos', pedidos)
 
    const {variables} = useContext(ModalContext);
    const windowlength = window.matchMedia("(max-width:700px)");
+   const [filter, setFilter] = useState('');
+   
+   const handleFilter = (e) => {
+     setFilter(e.target.value)
+   }
 
+   useEffect(() => {
+     dispatch(filterOrders(filter))
+   }, [filter])
 
    const styles = {
     length : {
@@ -66,7 +72,15 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
           windowlength.matches === false?
           <div className={s.container}>
           <div className={s.containertitle}>
-          <h1 className={s.title}>Resumen del Pedido</h1>
+          <div className={s.filters}>
+            <label className={s.labelFiltros} >Filtros</label>    
+                <select placeholder='Selecciona' onChange={handleFilter} className={s.select}  >
+                    <option className={s.option} >Selecciona</option>
+                    <option className={s.option} value='cancelado'>Cancelados</option>
+                    <option className={s.option} value='QR'>Pagado con QR</option>
+                    <option className={s.option} value='Efectivo'>Pagado en Efectivo</option>
+                </select>         
+            </div>
           <input className={s.date}  value={date} onChange={handleDate} type='date'/>
           <CurrencyFormat className={s.total} value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
           </div>
@@ -109,7 +123,15 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
       {
         <div className={s.maincontainer2}>
            <div className={s.containertitle}>
-          <h1 className={s.title}>Resumen del Pedido</h1>
+           <div className={s.filters}>
+            <label className={s.labelFiltros} >Filtros</label>    
+                <select className={s.select} name="filtros"  >
+                    <option className={s.option} value=''></option>
+                    <option className={s.option} value='cancelados'>Cancelados</option>
+                    <option className={s.option} value='qr'>Pagado con QR</option>
+                    <option className={s.option} value='efectivo'>Pagado en Efectivo</option>
+                </select>         
+            </div>
           <input className={s.date}  value={date} onChange={handleDate} type='date'/>
           <CurrencyFormat className={s.total} value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
           </div>

@@ -21,9 +21,7 @@ const MainPanel = () => {
         document.title='Panel Admin'
     })
 
-    useEffect(() => {
-         dispatch(accessAdmin())
-    }, [dispatch])
+  
 
   const intialValues = { mail: "", password: "" };
  
@@ -36,7 +34,8 @@ const MainPanel = () => {
 
   const submit = async () => {
     setFormValues({ mail: "", password: "" });
-    if(formValues.mail === admin[0].email && formValues.password === admin[0].password){
+    dispatch(accessAdmin({email: formValues.mail, password: formValues.password}))
+    if(formValues.mail === admin.email && formValues.password === admin.password){
       dispatch(updateLogin(true))
       history.push('/')
     } else {

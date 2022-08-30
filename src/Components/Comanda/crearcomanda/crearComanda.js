@@ -127,7 +127,6 @@ export default function CreateComanda(){
                 </DialogActions>
             </Dialog>
               </div>
-              <button onClick={goToEncurso} className={s.btnmiscomandas}>En curso</button>
             <button  className={s.btnmiscomandas}>Mis Comandas</button>
             <BsPlusSquare onClick={goToCreate} className={s.btncrearcliente}/>
               </div>

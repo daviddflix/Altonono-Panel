@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_CLIENT, ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, ALL_ORDERS_DASH, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, SET_CRONO, STATUS, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
+import {ADD_CLIENT, ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, ALL_ORDERS_DASH, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, FILTER_ORDERS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, SET_CRONO, STATUS, SUSTRACT_TO_CART, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
@@ -56,7 +56,7 @@ const InicialState = {
             storage.removeItem('persist:root')
             return{
                 isLogin: false,
-                admin: [],
+                admin: {},
                 status: [],
                 queueOfTheDay: [],
                 detalle : {},
@@ -100,7 +100,7 @@ const InicialState = {
                 ...state,
                 mesas: [...state.mesas, action.payload],
             }
-        case ADD_ITEM_TO_CART:
+        case ADD_ITEM_TO_CART: 
             
             const find = state.cart.find( p => p.id === action.payload.id)
      
@@ -119,6 +119,26 @@ const InicialState = {
             cart:[...state.cart, action.payload]
             
             }
+
+            case SUSTRACT_TO_CART:
+console.log(action.payload)
+                const findItem = state.cart.find( p => p.id === action.payload.id)
+     console.log('findItem', findItem)
+                if(findItem && findItem.quantity > 1){
+                  return {
+                    ...state,
+                     cart: state.cart.map(p => p.id === action.payload.id? {
+                       ...p, quantity : p.quantity - 1
+                     }: p)
+                  }
+                }
+                if(findItem && findItem.quantity === 1){
+                 return {
+                   ...state,
+                    cart: state.cart.filter(p => p.id !== action.payload.id) 
+                 }
+               }
+                
 
 
             case GET_ALL_ORDERS:
@@ -216,6 +236,16 @@ const InicialState = {
             return{
                ...state,
                allOrders: [...state.allOrders, action.payload],
+
+            }
+
+        case FILTER_ORDERS: 
+
+        const filterByCash = state.allOrders.filter(p => p.method === action.payload)
+     
+            return{
+               ...state,
+               allOrders: filterByCash,
 
             }
 
