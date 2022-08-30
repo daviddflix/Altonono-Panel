@@ -8,8 +8,8 @@ import {IoCloseCircleSharp} from 'react-icons/io5'
 import {GiReceiveMoney} from 'react-icons/gi'
 import {FaAward} from 'react-icons/fa'
 import { useHistory } from 'react-router-dom';
-import {  getAllOrders, getAllOrdersOfTheDay, getAllOrdersToDash, getStatus } from '../../Redux/actions';
-import moment from 'moment'
+import {  getAllOrders, getAllOrdersOfTheDay, getStatus } from '../../Redux/actions';
+
 
 export default function Dashboard(){
 
@@ -18,7 +18,6 @@ export default function Dashboard(){
   const orders = useSelector(state => state.queueOfTheDay);
   const allOrders = useSelector(state => state.allOrders);
  
-console.log('orders', orders)
 
  useEffect(() => {
     dispatch(getAllOrdersOfTheDay())
@@ -34,11 +33,11 @@ console.log('orders', orders)
 
   const totalOrdersLengthByDay = orders.length > 0 ? orders.filter(p => p.status === "Pedido Finalizado").length : 0
   const OrdersCancel = orders.length > 0 ? orders.filter(p => p.status === "cancelado").length : 0
-
-
- 
-  const arrayOfTotalOrder = orders.length > 0 ? orders.map(p => p.monto) : 0
-
+  const totalOrder = allOrders.length > 0 ? allOrders.filter(p => p.status !== 'cancelado').length : 0
+  
+  
+  const totalOrdersByDay = orders.length > 0 ? orders.filter(p => p.status === "Pedido Finalizado") : []
+  const arrayOfTotalOrder = totalOrdersByDay.length > 0 ? totalOrdersByDay.map(p => p.monto) : 0
   const total = arrayOfTotalOrder === 0 ? 0 : arrayOfTotalOrder.reduce((a,b) => a + b, 0);
   
  
@@ -95,7 +94,7 @@ const styles = {
                   <div className={s.box2}>
                   <FaAward className={s.iconOrder}/>
                      <div className={s.subBox}>
-                       <h1>{allOrders.length}</h1>
+                       <h1>{totalOrder}</h1>
                        <h4>Total pedidos</h4>
                      </div>
                   </div>

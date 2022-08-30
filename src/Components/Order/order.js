@@ -20,12 +20,13 @@ console.log('pedidos', pedidos)
   const handleDate = (e) => {
     setDate(e.target.value)
     const date = moment(e.target.value).format('l')
+    console.log('date', date)
     dispatch(getOrdersByDate({date: date}))
   }
-   
+    
     useEffect(() => {
       dispatch(getAllOrders())
-    }, [dispatch])
+    }, [dispatch]) 
     
     useEffect(() => {
       dispatch(getStatus())

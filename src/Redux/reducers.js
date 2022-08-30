@@ -28,7 +28,7 @@ const InicialState = {
 
              return{
                  ...state,
-                 queueOfTheDay: [...state.queue, action.payload]
+                queueOfTheDay: [...state.queueOfTheDay, action.payload]
              }
 
          case ORDER_OF_THE_DAY:
@@ -62,7 +62,6 @@ const InicialState = {
                 detalle : {},
                 cardStatusDelivery: [],
                 allOrders: [],
-                allOrdersdash: [],
                 products: [],
                 crono: [],
                 productByid: {},
@@ -163,24 +162,18 @@ const InicialState = {
             const updatedOrder = action.payload[1]
 
            
-            const itemInQueue = state.queue.filter(p => p.id === updatedOrder.id)
-            const itemInConfirm = state.confirmOrder.filter(p => p.id === updatedOrder.id)
+            const itemInQueue = state.queueOfTheDay.filter(p => p.id === updatedOrder.id)
+           
 
           
         if(itemInQueue.length>0){
             return{
                 ...state,
-                queue: state.queue.filter(p => p.id !== updatedOrder.id),
+                queueOfTheDay: state.queueOfTheDay.filter(p => p.id !== updatedOrder.id),
               
             }
         } 
-        if(itemInConfirm.length>0){
-           
-            return{
-                ...state,
-                confirmOrder: state.confirmOrder.filter(p => p.id !== updatedOrder.id),
-            }
-        }
+        
         break
 
         case PRODUCTS: 

@@ -159,6 +159,7 @@ export function updateStatusOrder(payload){
 export function getOrdersByDate(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}getOrderByDate`, payload)
+      console.log('res', res)
       return dispatch({ type: GET_ORDERS_BY_DATE, payload: res.data})
     }
 }

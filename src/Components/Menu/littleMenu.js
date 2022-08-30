@@ -12,8 +12,12 @@ import {BsCartCheck} from 'react-icons/bs'
 export default function Tabsview() {
 
   const [value, setValue] = React.useState('1');
-  const newOrder = useSelector(state => state.queue);
-  const confirmOrder = useSelector(state => state.confirmOrder);
+  const orders = useSelector(state => state.queueOfTheDay);
+
+  const newOrders = orders.length > 0 ? orders.filter(p => p.status === "Aceptar") : []
+  const confirmOrder = orders.length > 0 ? orders.filter(p => p.status === "Pedido Listo") : []
+
+  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -34,7 +38,7 @@ export default function Tabsview() {
                 value === '1'?
                 <div className={m.subnew}>
               {
-                newOrder.length>0? newOrder.map((p, i) => {
+                newOrders.length>0? newOrders.map((p, i) => {
                   return(
                  <div key={p.id} style={{width: '100%'}}>
                      <Card
