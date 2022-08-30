@@ -106,9 +106,9 @@ export default function Detail (){
       }
 
       if(detalle.status === 'Pedido Listo'){
-        dispatch(updateStatusOrderInConfirm({status : 'Pedido Finalizado', id: id}))
+        dispatch(updateStatusOrder({status : 'Pedido Finalizado', id: id}))
         history.push('/orders')
-      }
+      } 
    }
 
    

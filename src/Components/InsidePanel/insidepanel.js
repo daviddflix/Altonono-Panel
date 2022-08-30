@@ -6,24 +6,31 @@ import {MdOutlineWbTwilight} from 'react-icons/md'
 import {BsCartCheck} from 'react-icons/bs'
 import { useHistory } from 'react-router-dom';
 import ModalContext from '../../context/modalContext';
-import {  emptyDetails, getStatus, setCrono, updateStatusOrderInConfirm } from '../../Redux/actions';
+import {  emptyDetails, getAllOrdersOfTheDay, getStatus, setCrono, updateStatusOrderInConfirm } from '../../Redux/actions';
 
 
 export default function IncomingOrders() {
 
   const dispatch = useDispatch();
-  const newOrder = useSelector(state => state.queue);
-  const confirmOrder = useSelector(state => state.confirmOrder);
+  const orders = useSelector(state => state.queueOfTheDay);
+
+  const newOrders = orders.length > 0 ? orders.filter(p => p.status === "Aceptar") : []
+  const confirmOrder = orders.length > 0 ? orders.filter(p => p.status === "Pedido Listo") : []
+
 
   const {variables} = React.useContext(ModalContext);
   const windowlength = window.matchMedia("(max-width:700px)")
-
+  
   React.useEffect(() => {
       document.title = 'Pedidos'
  })
 
  React.useEffect(() => {
   dispatch(getStatus())
+ }, [dispatch])
+
+ React.useEffect(() => {
+  dispatch(getAllOrdersOfTheDay())
  }, [dispatch])
 
  const styles = {
@@ -52,7 +59,7 @@ export default function IncomingOrders() {
             <h2 className={s.title}>Nuevos</h2>
             <div className={s.subnew}>
               {
-                newOrder.length>0? newOrder.map((p, i) => {
+                newOrders.length > 0 ? newOrders.map((p, i) => {
                   return(
                   <Card
                   key={p.id}
@@ -101,6 +108,10 @@ export function Card({name, id}){
   const history = useHistory();
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    dispatch(getAllOrdersOfTheDay())
+   }, [dispatch])
+
   const handleDetails = () => {
     dispatch(emptyDetails())
     history.push(`/detail/${id}`)
@@ -125,6 +136,10 @@ export function Card2({id, method, name}){
   const valueCrono = useSelector(state => state.crono);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  React.useEffect(() => {
+    dispatch(getAllOrdersOfTheDay())
+   }, [dispatch])
 
   const getValue = valueCrono && valueCrono.find(p => p.id === id);
 

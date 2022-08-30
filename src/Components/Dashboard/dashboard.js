@@ -8,34 +8,36 @@ import {IoCloseCircleSharp} from 'react-icons/io5'
 import {GiReceiveMoney} from 'react-icons/gi'
 import {FaAward} from 'react-icons/fa'
 import { useHistory } from 'react-router-dom';
-import {  getAllOrdersToDash, getStatus } from '../../Redux/actions';
+import {  getAllOrders, getAllOrdersOfTheDay, getAllOrdersToDash, getStatus } from '../../Redux/actions';
 import moment from 'moment'
 
 export default function Dashboard(){
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const pedidos = useSelector(state => state.allOrdersdash);
-  const date = moment().format('l');
+  const orders = useSelector(state => state.queueOfTheDay);
+  const allOrders = useSelector(state => state.allOrders);
+ 
+console.log('orders', orders)
 
+ useEffect(() => {
+    dispatch(getAllOrdersOfTheDay())
+   }, [dispatch])
 
-  useEffect(() => {
-    dispatch(getAllOrdersToDash())
-  }, [dispatch]);
+   useEffect(() => {
+    dispatch(getAllOrders())
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(getStatus())
   }, [dispatch])
 
-
-  const totalOrdersLength = pedidos === 'no hay pedidos' ? 0 : pedidos.filter(p => p.status !== 'cancelado').length
-  const OrdersCancel = pedidos === 'no hay pedidos' ? 0 : pedidos.filter(p => p.status === 'cancelado').length
-  const totalOrders = pedidos === 'no hay pedidos' ? 0 : pedidos.filter(p => p.status !== 'cancelado'); // total order without cancelations
+  const totalOrdersLengthByDay = orders.length > 0 ? orders.filter(p => p.status === "Pedido Finalizado").length : 0
+  const OrdersCancel = orders.length > 0 ? orders.filter(p => p.status === "cancelado").length : 0
 
 
-  const totalOrdersLengthByDay = totalOrders === 0 ? 0 : totalOrders.filter(p => p.date === date).length // length of the order of the current day
-  const totalOrdersByDay = totalOrders === 0 ? 0 : totalOrders.filter(p => p.date === date); // orders of the current day
-  const arrayOfTotalOrder = totalOrdersByDay === 0 ? 0 : totalOrdersByDay.map(p => p.monto)
+ 
+  const arrayOfTotalOrder = orders.length > 0 ? orders.map(p => p.monto) : 0
 
   const total = arrayOfTotalOrder === 0 ? 0 : arrayOfTotalOrder.reduce((a,b) => a + b, 0);
   
@@ -80,7 +82,7 @@ const styles = {
                   <IoCloseCircleSharp className={s.iconRechazados}/>
                      <div className={s.subBox}>
                        <h1>{OrdersCancel}</h1>
-                       <h4>Pedidos Rechazados</h4>
+                       <h4>Pedidos Rechazados del dia</h4>
                      </div>
                   </div>
                   <div className={s.box2}>
@@ -93,7 +95,7 @@ const styles = {
                   <div className={s.box2}>
                   <FaAward className={s.iconOrder}/>
                      <div className={s.subBox}>
-                       <h1>{totalOrdersLength}</h1>
+                       <h1>{allOrders.length}</h1>
                        <h4>Total pedidos</h4>
                      </div>
                   </div>

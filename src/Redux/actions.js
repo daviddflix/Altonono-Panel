@@ -24,6 +24,7 @@ export const  GET_ORDERS_BY_DATE = 'GET_ORDERS_BY_DATE'
 export const  ALL_ORDERS_DASH = 'ALL_ORDERS_DASH'
 export const  GET_ALL_USERS = 'GET_ALL_USERS'
 export const  GET_USER_BY_ID = 'GET_USER_BY_ID'
+export const  ORDER_OF_THE_DAY = 'ORDER_OF_THE_DAY'
 
 
 const axios = require('axios').default;
@@ -83,6 +84,14 @@ export function getDetails(id){
     }
 }
 
+
+ export function getAllOrdersOfTheDay(){
+    return async function(dispatch){
+      const res = await axios.get(`${url}getOrderByOfTheDay`)
+      return dispatch({ type: ORDER_OF_THE_DAY, payload: res.data})
+    }
+}
+
  
  
  export function getStatus(){
@@ -115,7 +124,6 @@ export function updateItem(item){
 export function createUser(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}createWaiter`, payload)
-      console.log('res', res)
     }
 }
 
@@ -144,7 +152,7 @@ export function cancelar(payload){
 export function updateStatusOrder(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateStatusOrder`, payload)
-      return dispatch({ type: UPDATE_STATUS_ORDER_IN_QUEUE, payload: res.data})
+    //   return dispatch({ type: UPDATE_STATUS_ORDER_IN_QUEUE, payload: res.data})
     }
 }
 

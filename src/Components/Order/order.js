@@ -13,7 +13,7 @@ export default function Pedidos(){
 
     const pedidos = useSelector(state => state.allOrders);
     const dispatch = useDispatch();
-
+console.log('pedidos', pedidos)
 
     const [date, setDate] = useState('');
 

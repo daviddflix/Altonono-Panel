@@ -5,9 +5,9 @@ import { Route } from "react-router-dom";
 
 export default function PrivateRoutes(props){
  
-    const admin = useSelector(state => state.isLogin)
+    const isLogin = useSelector(state => state.isLogin)
     
-    if(admin === false) return <Redirect to='/'/> 
+    if(isLogin === false) return <Redirect to='/'/> 
 
     return(
         <Route {...props}/>

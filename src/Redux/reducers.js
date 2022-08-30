@@ -1,14 +1,12 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_CLIENT, ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, ALL_ORDERS_DASH, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, PRODUCTS, RESET, SET_CRONO, STATUS, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_ORDER_IN_QUEUE, UPDATE_STATUS_STORE } from "./actions"
+import {ADD_CLIENT, ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, ALL_ORDERS_DASH, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, SET_CRONO, STATUS, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
     isLogin: false,
     admin: [],
-    queue: [],
-    confirmOrder: [],
+    queueOfTheDay: [],
     allOrders: [],
-    allOrdersdash: [],
     detalle : {},
     status: [],
     products: [],
@@ -30,7 +28,14 @@ const InicialState = {
 
              return{
                  ...state,
-                 queue: [...state.queue, action.payload]
+                 queueOfTheDay: [...state.queue, action.payload]
+             }
+
+         case ORDER_OF_THE_DAY:
+
+             return{
+                 ...state,
+                 queueOfTheDay: action.payload
              }
 
         case CREDENTIAL:
@@ -53,8 +58,7 @@ const InicialState = {
                 isLogin: false,
                 admin: [],
                 status: [],
-                queue: [],
-                confirmOrder: [],
+                queueOfTheDay: [],
                 detalle : {},
                 cardStatusDelivery: [],
                 allOrders: [],
@@ -117,12 +121,6 @@ const InicialState = {
             
             }
 
-            case ALL_ORDERS_DASH:
-            
-                return{
-                    ...state,
-                    allOrdersdash: action.payload,
-                }
 
             case GET_ALL_ORDERS:
             
@@ -192,31 +190,16 @@ const InicialState = {
                     products: action.payload,
                 }
 
-        case UPDATE_STATUS_ORDER_IN_QUEUE: 
-
-        const updatedOrde = action.payload[1]
-
-        const found = state.queue.filter(p => p.id === updatedOrde.id)
-
-        if(found){
-            return{
-                ...state,
-                queue: state.queue.filter(p => p.id !== updatedOrde.id),
-                confirmOrder: [...state.confirmOrder, updatedOrde]
-              }
-        }
-        break
-
         case UPDATE_STATUS_ORDER_IN_CONFIRM: 
 
         const updatedOrderinConfirm = action.payload[1]
 
-        const foundOrder = state.confirmOrder.filter(p => p.id === updatedOrderinConfirm.id)
+        const foundOrder = state.queueOfTheDay.filter(p => p.id === updatedOrderinConfirm.id)
 
         if(foundOrder){
             return{
                 ...state,
-                confirmOrder: state.confirmOrder.filter(p => p.id !== updatedOrderinConfirm.id),
+                queueOfTheDay: state.queueOfTheDay.filter(p => p.id !== updatedOrderinConfirm.id),
               }
         }
         break
@@ -239,7 +222,6 @@ const InicialState = {
      
             return{
                ...state,
-               confirmOrder:  state.confirmOrder.filter(p => p.id !== action.payload.detalle.id),
                allOrders: [...state.allOrders, action.payload],
 
             }
