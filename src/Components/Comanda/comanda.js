@@ -15,6 +15,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import userContext from '../../context/userContext';
+import {FaUserAlt} from 'react-icons/fa'
 
 export default function Comanda(){
     
@@ -159,7 +160,7 @@ export function Header({user}){
         <div className={s.header}>
              <IoArrowBackOutline onClick={goback} className={s.iconback}/>
              <div className={s.containername}>
-                  <BiFace className={s.faceIcon}/>
+                  <FaUserAlt className={s.faceIcon}/>
                   <h2 className={s.name}>{!user.length ? "cargando" : user}</h2>
              </div>
         </div>
@@ -181,6 +182,17 @@ export function Dialogo(){
     };
   
     const handleClose = () => {
+      setOpen(false);
+    };
+
+    const cancel = () => {
+    setClient({
+        name: '',
+        table: '',
+        telefono: '',
+        method: '',
+        comentarios: ''
+      })
       setOpen(false);
     };
     
@@ -233,8 +245,8 @@ export function Dialogo(){
       />
       </DialogContent>
       <DialogActions>
-      <Button onClick={handleClose}>Cancelar</Button>
-      <Button >Continuar</Button>
+      <Button onClick={cancel}>Cancelar</Button>
+      <Button onClick={handleClose}>Continuar</Button>
       </DialogActions>
   </Dialog>
     </div>

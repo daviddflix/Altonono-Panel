@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import {ADD_CLIENT, ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, ALL_ORDERS_DASH, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, FILTER_ORDERS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, SET_CRONO, STATUS, SUSTRACT_TO_CART, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
+import { ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, FILTER_ORDERS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, SET_CRONO, STATUS, SUSTRACT_TO_CART, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
@@ -16,7 +16,7 @@ const InicialState = {
     users: [],
     userById: [],
     cart: [],
-    mesas:[]
+  
 }
 
 
@@ -68,7 +68,7 @@ const InicialState = {
                 users: [],
                 userById: [],
                 cart: [],
-                mesas:[]
+              
             }
             case STATUS:
             
@@ -94,12 +94,6 @@ const InicialState = {
                 detalle: action.payload,
             }
 
-        case ADD_CLIENT:
-            
-            return{
-                ...state,
-                mesas: [...state.mesas, action.payload],
-            }
         case ADD_ITEM_TO_CART: 
             
             const find = state.cart.find( p => p.id === action.payload.id)
@@ -121,9 +115,9 @@ const InicialState = {
             }
 
             case SUSTRACT_TO_CART:
-console.log(action.payload)
+
                 const findItem = state.cart.find( p => p.id === action.payload.id)
-     console.log('findItem', findItem)
+     
                 if(findItem && findItem.quantity > 1){
                   return {
                     ...state,
@@ -139,7 +133,7 @@ console.log(action.payload)
                  }
                }
                 
-
+             break
 
             case GET_ALL_ORDERS:
             

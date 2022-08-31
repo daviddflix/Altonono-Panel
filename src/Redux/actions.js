@@ -31,13 +31,6 @@ const axios = require('axios').default;
 
 const url = 'https://altonono.herokuapp.com/'
 
-// export function accessAdmin(){
-//     return async function (dispatch){  
-//        const res = await fetch(`${url}getAdmin`)
-//        const info = await res.json()
-//        return dispatch({ type: CREDENTIAL, payload: info })
-//     }        
-//  }
 
 
 export function accessAdmin(payload){

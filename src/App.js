@@ -27,17 +27,18 @@ import Comanda from './Components/Comanda/comanda';
 import Encurso from './Components/Comanda/encurso'
 import CreateComanda from './Components/Comanda/crearcomanda/crearComanda';
 import io from "socket.io-client";
+import MisComandas from './Components/Comanda/misComandas/misComandas';
 
 function App() {
 
-  const port = process.env.REACT_APP_URL
+  const port = 'https://altonono.herokuapp.com/'
   const admin = useSelector(state => state.admin)
   const socket = admin.role !== 'mozos' && io.connect(`${port}`, {transports: ['websocket', 'polling']});
 
   const [client, setClient] = useState({
     name: '',
     table: '',
-    telefono: '',
+    telefono: 'Mozo',
     method: '',
     comentarios: ''
   })
@@ -118,6 +119,10 @@ function App() {
 
         <PrivateRoutes exact  path='/detail/:id'>
         <Detail/>
+        </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/miscomandas/:id'>
+        <MisComandas/>
         </PrivateRoutes>
 
         <PrivateRoutes exact  path='/users'>

@@ -13,7 +13,8 @@ import { createUser, getAllUser } from "../../Redux/actions";
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from '../spinner/spinner'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import {FaUserAlt} from 'react-icons/fa'
+import CurrencyFormat from 'react-currency-format';
 
 export default function Users(){
 
@@ -23,7 +24,7 @@ export default function Users(){
     const history = useHistory();
     const dispatch = useDispatch();
 
-
+ 
     useEffect(() => {
        dispatch(getAllUser())
     }, [])
@@ -58,14 +59,10 @@ export default function Users(){
                 <div className={s.containerUsers}>
                     {
                         users.length > 0 ? users.map(p => {
+                            const arraytotal = p.payments.length > 0 ? p.payments.map(p => p.monto) : 0
+                            const total = arraytotal === 0 ? 0 : arraytotal.reduce((a,b) => a + b, 0)
                             return(
-                                <NavLink to={`/createComanda/${p.id}`} key={p.id} className={s.container}>
-                                    <AttachMoneyIcon className={s.moneyIcon}/>
-                                    <div className={s.containerName}>
-                                        <h3 className={s.total}>0</h3>
-                                        <h3 className={s.name}>{p.name}</h3>
-                                    </div>
-                                </NavLink>
+                               <Card total={total} id={p.id} key={p.name} name={p.name}/>
                             )
                         }) : <div className={s.noUsers}>
                             <FaUsers className={s.usersIcons}/>
@@ -76,6 +73,19 @@ export default function Users(){
             </div>
         </div>
     )
+}
+
+function Card({name, id, total }){
+    return(
+        <NavLink to={`/createComanda/${id}`}  className={s.container}>
+            <FaUserAlt className={s.moneyIcon}/>
+            <div className={s.containerName}>
+            <CurrencyFormat className={s.total} value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                <h3 className={s.name}>{name}</h3>
+            </div>
+      </NavLink>
+    )
+   
 }
 
 
@@ -111,8 +121,8 @@ export function CreateUser(){
             showConfirmButton: false,
             timer: 1500
             })
+            history.push('/create')
         }
-        history.push('/create')
      }
 
     const handleSubmit = (e) => {

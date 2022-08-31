@@ -2,12 +2,13 @@ import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ModalContext from "../../context/modalContext";
 import { createComanda, getUserById } from "../../Redux/actions";
 import { Dialogo, Header } from "./comanda";
 import s from './encurso.module.css'
 import userContext from "../../context/userContext";
+import Swal from 'sweetalert2'
 
 const methodos = [
     {
@@ -30,12 +31,27 @@ export default function Encurso(){
     const windowlength = window.matchMedia("(max-width:700px)");
     const {id} = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
     const user = useSelector(state => state.userById);
-    const carrito = useSelector(state => state.cart);
-    const {client} = useContext(userContext);
+    const cart = useSelector(state => state.cart);
+    const {client, setClient} = useContext(userContext);
 
     const comanda = () => {
-        dispatch(createComanda({carrito, client, waiterId:id }))
+        dispatch(createComanda({cart, client, waiterId:id }))
+        Swal.fire({
+            icon: 'success',
+            title: 'Comanda creada',
+            showConfirmButton: true,
+            timer: 1500
+          })
+        setClient({
+            name: '',
+            table: '',
+            telefono: '',
+            method: '',
+            comentarios: ''
+          })
+          history.push(`/createComanda/${id}`)
     }
    
 
@@ -86,7 +102,7 @@ function Card({image, method, color, alt}){
     const handleChange = (e) => {
         setClient({ ...client, method: method });
       };
-console.log('client', client)
+
     return(
         <div style={{backgroundColor: color}} onClick={handleChange} className={s.containerMethod}>
            <input className={s.iconsMethod} type='image' src={image} alt={alt} />

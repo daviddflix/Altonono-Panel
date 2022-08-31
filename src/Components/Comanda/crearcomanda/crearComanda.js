@@ -41,13 +41,8 @@ export default function CreateComanda(){
          history.push(`/comanda/${id}`)
       }
 
-      const goToEncurso = () => {
-         history.push(`/encurso/${id}`)
-      }
-    
 
     const {client, setClient} = useContext(userContext);
-  
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -57,6 +52,10 @@ export default function CreateComanda(){
     const handleClose = () => {
       setOpen(false);
     };
+
+    const handleMisComandas = () => {
+       history.push(`/miscomandas/${id}`)
+    }
 
     const create = () => {
       if(client.name && client.table){
@@ -127,7 +126,7 @@ export default function CreateComanda(){
                 </DialogActions>
             </Dialog>
               </div>
-            <button  className={s.btnmiscomandas}>Mis Comandas</button>
+            <button onClick={handleMisComandas} className={s.btnmiscomandas}>Mis Comandas</button>
             <BsPlusSquare onClick={goToCreate} className={s.btncrearcliente}/>
               </div>
          </div>

@@ -37,7 +37,11 @@ const MainPanel = () => {
     dispatch(accessAdmin({email: formValues.mail, password: formValues.password}))
     if(formValues.mail === admin.email && formValues.password === admin.password){
       dispatch(updateLogin(true))
-      history.push('/')
+      if(admin.role === 'mozos'){
+        history.push('/users')
+      } else {
+        history.push('/')
+      }
     } else {
       Swal.fire({
         icon: 'error',

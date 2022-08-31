@@ -1,0 +1,39 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    transition: 0.3s ;
+    height: calc(100vh - 50px);
+    background-color: #f5f7f8;
+    position: relative;
+}
+
+.submain{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container{
+    width: 100%;
+    height: 90%;
+
+}
+
+.cardmain{
+    text-decoration: none;
+    color: #282828;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.cardsubmain{
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    width: 100%;
+    height: 100%;
+}

@@ -20,6 +20,7 @@
     justify-content: flex-end;
     align-items: center;
     border-bottom: #282828 solid 2px;
+    
 }
 
 .btn{
@@ -33,6 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 10px;
 }
 
 
@@ -46,8 +48,9 @@
 }
 
 .moneyIcon{
-    min-width: 50px;
+    min-width: 30px;
     min-height: 50px;
+    margin: 0 1rem 0 .5rem;
     color: #29d884;
 }
 
@@ -66,7 +69,9 @@
     border: none;
     display: flex;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
+    border-radius: 10px;
 }
 
 .noUsers{
@@ -84,23 +89,16 @@
     color: #282828;
 }
 
-@media screen and (max-width: 700px) {
-    .btn{
-        width: 30%;
-    }
 
-    .container{
-        width: 40%;
-    }
-}
 
 .containerName{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    width: 70%;
+    width: 40%;
     height: 80%;
+   
 }
 
 .total{
@@ -110,7 +108,7 @@
 
 .name{
     text-transform: capitalize;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: #282828;
 }
 
@@ -143,4 +141,26 @@
     width: 50%;
     color: #282828;
     background-color: #3398db;
+}
+
+@media screen and (max-width: 700px) {
+    .btn{
+        width: 30%;
+    }
+
+    .total{
+        font-size: 1.5rem;
+    }
+
+    .name{
+        font-size: 1rem;
+    }
+
+    .moneyIcon{
+        margin: .3rem;
+    }
+
+    .container{
+        width: 40%;
+    }
 }
