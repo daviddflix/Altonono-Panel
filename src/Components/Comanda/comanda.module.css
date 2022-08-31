@@ -87,8 +87,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 100px;
 }
 
+.categoryname:hover{
+  background-color: #3398db;
+}
 .btnmiscomandas{
     width: 98%;
     margin: 1rem 0 0 0;

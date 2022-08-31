@@ -33,9 +33,52 @@
     background-color: #fff;
     margin: 1rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 5px;
+}
+
+.metodo{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: #29d884;
+}
+
+@media screen and (max-width: 700px) {
+
+    .cardmain{
+        width: 30%;
+    }
+    
+}
+
+.containerNocomanda{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+}
+
+.cardname{
+    text-transform: capitalize;
+    width: 100%;
+    height: 75%;
+    border-bottom: #282828 solid 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.listIcon{
+    width: 30px;
+    height: 30px;
 }
 

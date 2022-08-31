@@ -6,6 +6,7 @@ import ModalContext from "../../../context/modalContext";
 import { getUserById } from "../../../Redux/actions";
 import { Header } from "../comanda";
 import s from './miscomandas.module.css'
+import {FcList} from 'react-icons/fc'
 
 export default function MisComandas(){
 
@@ -47,10 +48,11 @@ export default function MisComandas(){
                     {
                         items.length > 0 ? items.map(p => {
                             return(
-                               <Card id={p.id} key={p.id} name={p.name}/>
+                               <Card id={p.id} key={p.id} name={p.name} method={p.method}/>
                             )
-                        }) : <div>
-                            <h3>No</h3>
+                        }) : <div className={s.containerNocomanda}>
+                            <FcList className={s.listIcon}/>
+                            <h3>No hay comandas creadas</h3>
                         </div>
                     }
                 </div>
@@ -60,11 +62,13 @@ export default function MisComandas(){
 }
 
 
-function Card({id, name, table}){
+function Card({id, name, method}){
     return(
         <NavLink className={s.cardmain} to={`detalleComanda/${id}`}>
-           <h3>{name}</h3>
-           <h3>{table}</h3>
+           <h3 className={s.cardname}>{name}</h3>
+           <div className={s.metodo}>
+             <h6>{method}</h6>
+           </div>
         </NavLink>
     )
 }
