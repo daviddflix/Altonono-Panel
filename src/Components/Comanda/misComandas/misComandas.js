@@ -36,17 +36,22 @@ export default function MisComandas(){
         }
       }
 
+    const items = user.length > 0 ? user[0].payments : []
+    console.log('items', items)
+
     return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
             <div className={s.submain}>
                 <Header user={!user.length ? "cargando" : user[0].name}/>
                 <div className={s.container}>
                     {
-                        user.length > 0 && user.map(p => {
+                        items.length > 0 ? items.map(p => {
                             return(
                                <Card id={p.id} key={p.id} name={p.name}/>
                             )
-                        })
+                        }) : <div>
+                            <h3>No</h3>
+                        </div>
                     }
                 </div>
             </div>
@@ -58,10 +63,8 @@ export default function MisComandas(){
 function Card({id, name, table}){
     return(
         <NavLink className={s.cardmain} to={`detalleComanda/${id}`}>
-           <div className={s.cardsubmain}>
            <h3>{name}</h3>
            <h3>{table}</h3>
-           </div>
         </NavLink>
     )
 }
