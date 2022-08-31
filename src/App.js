@@ -28,6 +28,9 @@ import Encurso from './Components/Comanda/encurso'
 import CreateComanda from './Components/Comanda/crearcomanda/crearComanda';
 import io from "socket.io-client";
 import MisComandas from './Components/Comanda/misComandas/misComandas';
+import MesaAbierta from './Components/Comanda/mesaAbiertas/mesaAbierta';
+import DetailMesaAbierta from './Components/Comanda/detalleComanda/detalle';
+import DetailMesa from './Components/Comanda/mesaAbiertas/detalleComanda';
 
 function App() {
 
@@ -37,9 +40,9 @@ function App() {
 
   const [client, setClient] = useState({
     name: '',
-    table: '',
-    telefono: 'Mozo',
-    method: '',
+    table: 'Mozo/a',
+    telefono: 'Mozo/a',
+    method: 'Mesa abierta',
     comentarios: ''
   })
   
@@ -124,6 +127,19 @@ function App() {
         <PrivateRoutes exact  path='/miscomandas/:id'>
         <MisComandas/>
         </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/miscomandas/detail_comanda/:id'>
+        <DetailMesa/>
+        </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/open_tab/:id'>
+        <MesaAbierta/>
+        </PrivateRoutes>
+
+        <PrivateRoutes exact  path='/open_tab/detalleComanda/:id'>
+        <DetailMesaAbierta/>
+        </PrivateRoutes>
+
 
         <PrivateRoutes exact  path='/users'>
         <Users/>

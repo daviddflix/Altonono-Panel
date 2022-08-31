@@ -5,11 +5,11 @@ import { NavLink, useParams } from "react-router-dom";
 import ModalContext from "../../../context/modalContext";
 import { getUserById } from "../../../Redux/actions";
 import { Header } from "../comanda";
-import s from './miscomandas.module.css'
-import {FcList} from 'react-icons/fc'
+import s from './mesaAbierta.module.css'
+import {SiAirtable} from 'react-icons/si'
 import moment from 'moment'
 
-export default function MisComandas(){
+export default function MesaAbierta(){
 
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
@@ -40,8 +40,8 @@ export default function MisComandas(){
 
     const date = moment().format('l')
     const items = user.length > 0 ? user[0].payments.filter(p => p.date === date) : []
-    const filterbyState = items.length > 0 ? items.filter(p => p.status === 'Pedido Finalizado') : []
-console.log('items', items)
+    const filterbyState = items.length > 0 ? items.filter(p => p.status === 'Mesa Abierta') : []
+console.log()
 
     return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
@@ -54,20 +54,20 @@ console.log('items', items)
                                <Card id={p.id} key={p.id} name={p.name} method={p.method}/>
                             )
                         }) : <div className={s.containerNocomanda}>
-                            <FcList className={s.listIcon}/>
-                            <h3>No hay comandas creadas</h3>
+                            <SiAirtable className={s.listIcons}/>
+                            <h3>No hay mesas abiertas</h3>
                         </div>
                     }
                 </div>
             </div>
         </div>
     )
-} 
+}
 
 
-function Card({id, name, method}){
+function Card({id, name, method}){ 
     return(
-        <NavLink className={s.cardmain} to={`/miscomandas/detail_comanda/${id}`}>
+        <NavLink className={s.cardmain} to={`/open_tab/detalleComanda/${id}`}>
            <h3 className={s.cardname}>{name}</h3>
            <div className={s.metodo}>
              <h6>{method}</h6>

@@ -1,3 +1,6 @@
+
+
+
 .main{
     display: flex;
     justify-content: center;
@@ -77,8 +80,8 @@
     align-items: center;
 }
 
-.listIcon{
+.listIcons{
     width: 30px;
     height: 30px;
+    color: #786948;
 }
-

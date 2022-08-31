@@ -25,6 +25,7 @@ export const  FILTER_ORDERS = 'FILTER_ORDERS'
 export const  GET_ALL_USERS = 'GET_ALL_USERS'
 export const  GET_USER_BY_ID = 'GET_USER_BY_ID'
 export const  ORDER_OF_THE_DAY = 'ORDER_OF_THE_DAY'
+export const  RESET_CART = 'RESET_CART'
 
 
 const axios = require('axios').default;
@@ -236,6 +237,12 @@ export const addOrder = (payload) => {
 export const reset = () => {
     return{
         type: RESET
+    }
+}
+
+export const resetCart = () => {
+    return{
+        type: RESET_CART
     }
 }
 

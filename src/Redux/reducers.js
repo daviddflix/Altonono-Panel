@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import { ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, FILTER_ORDERS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, SET_CRONO, STATUS, SUSTRACT_TO_CART, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
+import { ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, FILTER_ORDERS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, RESET_CARD, RESET_CART, SET_CRONO, STATUS, SUSTRACT_TO_CART, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
@@ -49,6 +49,12 @@ const InicialState = {
             return{
                 ...state,
                 isLogin: action.payload
+            }
+
+        case RESET_CART:
+            return{
+                ...state,
+                cart: []
             }
     
         case RESET:
@@ -117,7 +123,8 @@ const InicialState = {
             case SUSTRACT_TO_CART:
 
                 const findItem = state.cart.find( p => p.id === action.payload.id)
-     
+     console.log('findItem', findItem)
+     console.log('action', action.payload)
                 if(findItem && findItem.quantity > 1){
                   return {
                     ...state,
@@ -131,6 +138,11 @@ const InicialState = {
                    ...state,
                     cart: state.cart.filter(p => p.id !== action.payload.id) 
                  }
+               }
+                if(!findItem) {
+                return {
+                    ...state,
+                  }
                }
                 
              break

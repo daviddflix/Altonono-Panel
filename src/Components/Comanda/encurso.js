@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import ModalContext from "../../context/modalContext";
-import { createComanda, getUserById } from "../../Redux/actions";
+import { createComanda, getUserById, resetCart } from "../../Redux/actions";
 import { Dialogo, Header } from "./comanda";
 import s from './encurso.module.css'
 import userContext from "../../context/userContext";
@@ -35,12 +35,40 @@ export default function Encurso(){
     const user = useSelector(state => state.userById);
     const cart = useSelector(state => state.cart);
     const {client, setClient} = useContext(userContext);
-
+console.log('client', client)
     const comanda = () => {
-        dispatch(createComanda({cart, client, waiterId:id }))
+        if(client.method === 'QR' || client.method === 'Efectivo', client.table, client.name){
+            dispatch(createComanda({cart, client, waiterId:id, status: 'Pedido Finalizado' }))
+            Swal.fire({
+                icon: 'success',
+                title: 'Comanda creada',
+                showConfirmButton: true,
+                timer: 1500
+              })
+            setClient({
+                name: '',
+                table: '',
+                telefono: '',
+                method: '',
+                comentarios: ''
+              })
+              history.push(`/createComanda/${id}`)
+              dispatch(resetCart())
+        } else{
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Hay algunos campos vacios',
+        })
+    }
+       
+    }
+
+    const letOpen = () => {
+        dispatch(createComanda({cart, client, waiterId:id, status: 'Mesa Abierta'}))
         Swal.fire({
             icon: 'success',
-            title: 'Comanda creada',
+            title: 'Mesa creada',
             showConfirmButton: true,
             timer: 1500
           })
@@ -90,7 +118,10 @@ export default function Encurso(){
                         })
                     }
                   </div>
-                  <Button onClick={comanda} variant='contained' style={{width: '90%'}}>CREAR COMANDA</Button>
+                  <div className={s.btns}>
+                     <Button disabled={cart.length === 0 || !client.name || !client.table } onClick={comanda} variant='contained' style={{width: '40%', marginRight: '.5rem'}}>CREAR COMANDA</Button>
+                  <Button disabled={cart.length === 0 || !client.name || !client.table } onClick={letOpen} variant='contained' style={{width: '40%'}}>mesa abierta</Button>
+                  </div>
          </div>
        </div>
     )

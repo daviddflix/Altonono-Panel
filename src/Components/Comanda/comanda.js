@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import ModalContext from '../../context/modalContext';
 import s from './comanda.module.css'
-import {IoArrowBackOutline} from 'react-icons/io5'
+import {RiArrowLeftSLine} from 'react-icons/ri'
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, getProducts, getUserById, sustractItem } from '../../Redux/actions';
@@ -24,6 +24,7 @@ export default function Comanda(){
     const windowlength = window.matchMedia("(max-width:700px)");
     const user = useSelector(state => state.userById);
     const products = useSelector(state => state.products)
+    const cart = useSelector(state => state.cart);
     const history = useHistory();
     const {id} = useParams();
     const dispatch = useDispatch();
@@ -110,7 +111,7 @@ export default function Comanda(){
                       </div>
                   </div>
                   <div className={s.containerbtns}>
-                    <Button onClick={encurso} style={{width: '90%'}} variant='contained'>cobrar</Button>
+                    <Button disabled={cart.length === 0} onClick={encurso} style={{width: '90%'}} variant='contained'>cobrar</Button>
                   </div>
                </div>
            </div>
@@ -137,12 +138,12 @@ function CardProduct({ title, unit_price, description, id, available}){
       }
 
     return(
-    <div style={available === false ? {opacity: 0.5} : {opacity: 1}} onClick={ProductNumberIncrement} className={s.item}>
-        <span className={s.quantity}>{findQuantity !== undefined? findQuantity.quantity: 0}</span>
+    <div style={available === false ? {opacity: 0.7} : {opacity: 1}} onClick={ProductNumberIncrement} className={s.item}>
+        <span style={findQuantity !== undefined? {display: 'flex'} : {display: 'none'}} className={s.quantity}>{findQuantity !== undefined? findQuantity.quantity: 0}</span>
         <h4 className={s.title}>{title}</h4>
         <h3 className={s.price}>{unit_price}</h3>
-        <AiFillMinusCircle onClick={ProductNumberDecrement} className={s.trash}/>
-        {available === false && <h6>No disponible</h6>}
+        <AiFillMinusCircle style={findQuantity !== undefined? {display: 'flex'} : {display: 'none'}} onClick={ProductNumberDecrement} className={s.trash}/>
+        {available === false && <h6 className={s.nodisponible}>No disponible</h6>}
     </div>
     )
 }
@@ -158,7 +159,7 @@ export function Header({user}){
 
     return(
         <div className={s.header}>
-             <IoArrowBackOutline onClick={goback} className={s.iconback}/>
+             <RiArrowLeftSLine onClick={goback} className={s.iconback}/>
              <div className={s.containername}>
                   <FaUserAlt className={s.faceIcon}/>
                   <h2 className={s.name}>{!user.length ? "cargando" : user}</h2>

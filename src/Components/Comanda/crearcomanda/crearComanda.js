@@ -57,6 +57,11 @@ export default function CreateComanda(){
        history.push(`/miscomandas/${id}`)
     }
 
+
+    const handleOpenTables = () => {
+       history.push(`/open_tab/${id}`)
+    }
+
     const create = () => {
       if(client.name && client.table){
         dispatch(addClient([client]))
@@ -126,6 +131,7 @@ export default function CreateComanda(){
                 </DialogActions>
             </Dialog>
               </div>
+            <button onClick={handleOpenTables} className={s.btnmiscomandas}>Mesas Abiertas</button>
             <button onClick={handleMisComandas} className={s.btnmiscomandas}>Mis Comandas</button>
             <BsPlusSquare onClick={goToCreate} className={s.btncrearcliente}/>
               </div>
