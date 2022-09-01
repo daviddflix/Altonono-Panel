@@ -126,7 +126,7 @@
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 5px;
-    padding: 5px;
+    padding: 2px;
 }
 
 .quantity{
@@ -169,7 +169,7 @@
 
 .nodisponible{
     position: absolute;
-    top: 0;
+    top: 5px;
     left: 25%;
 }
 

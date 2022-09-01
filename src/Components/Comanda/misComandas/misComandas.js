@@ -51,7 +51,7 @@ console.log('items', items)
                     {
                         filterbyState.length > 0 ? filterbyState.map(p => {
                             return(
-                               <Card id={p.id} key={p.id} name={p.name} method={p.method}/>
+                               <Card id={p.id} key={p.id} name={p.name} status={p.status}/>
                             )
                         }) : <div className={s.containerNocomanda}>
                             <FcList className={s.listIcon}/>
@@ -65,12 +65,12 @@ console.log('items', items)
 } 
 
 
-function Card({id, name, method}){
+function Card({id, name, status}){
     return(
         <NavLink className={s.cardmain} to={`/miscomandas/detail_comanda/${id}`}>
            <h3 className={s.cardname}>{name}</h3>
            <div className={s.metodo}>
-             <h6>{method}</h6>
+             <h6>{status}</h6>
            </div>
         </NavLink>
     )
