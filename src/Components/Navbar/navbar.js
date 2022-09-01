@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getStatus, updateStatus } from '../../Redux/actions';
 import {RiRadioButtonLine} from 'react-icons/ri'
 import  { SpinnerTiny } from '../spinner/spinner';
+import './button.css'
 
 export default function Navbar (){
 
@@ -56,8 +57,7 @@ export default function Navbar (){
     return(
        <nav  className={s.navbar}> 
            <ul className={s.ul}>
-               
-               <div onClick={handleOpen} className={s.link}>
+           <div onClick={handleOpen} className={s.link}>
               < FaBars className={s.icon}/>
                </div>
                <div className={s.subul}>
@@ -69,4 +69,36 @@ export default function Navbar (){
        </nav>
     )
 } 
+
+
+
+
+
+
+ function Button(){
+
+   
+    const {variables, setVariables} = useContext(ModalContext);
+
+    const handleOpen = () => {
+        if(variables.toggle === false){
+            setVariables(prev => ({...prev, toggle: true}))
+          
+        }
+        if(variables.toggle === true){
+            setVariables(prev => ({...prev, toggle: false}))
+        }
+    };
+     
+
+    return(
+        <label htmlFor="check" className="bar">
+    <input id="check" onClick={handleOpen}  type="checkbox"/>
+
+    <span className="top"></span>
+    <span className="middle"></span>
+    <span className="bottom"></span>
+</label>
+    )
+}
 

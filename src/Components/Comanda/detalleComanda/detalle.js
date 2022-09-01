@@ -6,7 +6,7 @@ import CurrencyFormat from 'react-currency-format'
 import {RiArrowLeftSLine} from 'react-icons/ri'
 import { getDetails } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
-import { SpinnerTiny } from "../../spinner/spinner";
+import Spinner, { SpinnerTiny } from "../../spinner/spinner";
 import {CgMathPlus} from 'react-icons/cg'
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -23,6 +23,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import {HiMinus} from 'react-icons/hi'
 import {AiOutlinePlus} from 'react-icons/ai'
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 export default function DetailMesaAbierta (){
 
@@ -32,7 +34,7 @@ export default function DetailMesaAbierta (){
     const {id} = useParams();
     const detalle = useSelector(state => state.detalle);
     const history = useHistory();
-console.log('detalle', detalle)
+
     useEffect( () => {
         dispatch(getDetails(id))
      }, [id, dispatch])
@@ -57,19 +59,6 @@ console.log('detalle', detalle)
     const goback = () => {
       history.goBack()
     }
-
-//     comentarios: "scascas"
-// date: "8/30/2022"
-// id: "23"
-// items: (2) [{…}, {…}]
-// method: "Efectivo"
-// monto: 1500
-// name: "david"
-// status: "Pedido Finalizado"
-// table: "3"
-// telefono: ""
-// time: "20:38:56.984084-03"
-// waiterId: 1
 
     return(
         <div  style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
@@ -109,7 +98,7 @@ console.log('detalle', detalle)
                         </div>
                     </div>
                 </div> :
-                <div className={s.containerSpinner}><SpinnerTiny/></div>
+                <div className={s.containerSpinner}><Spinner/></div>
             }
         </div>
     )
@@ -137,6 +126,7 @@ function MaxWidthDialog() {
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('sm');
+  const products = useSelector(state => state.products);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -180,27 +170,13 @@ function MaxWidthDialog() {
               width: 'fit-content',
             }}
           >
-            <FormControl sx={{ mt: 2, minWidth: 300 }}>
-              <InputLabel htmlFor="max-width">Productos</InputLabel>
-              <Select
-                autoFocus
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                label="maxWidth"
-                inputProps={{
-                  name: 'max-width',
-                  id: 'max-width',
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-           
+             <Autocomplete
+      id="grouped-demo"
+      options={products.sort((a, b) => a - b)}
+      groupBy={(option) => option.category}
+      sx={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Productos" />}
+    />
           </Box>
         </DialogContent>
         <DialogActions>

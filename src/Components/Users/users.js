@@ -15,15 +15,18 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from '../spinner/spinner'
 import {FaUserAlt} from 'react-icons/fa'
 import CurrencyFormat from 'react-currency-format';
+import moment from 'moment'
 
 export default function Users(){
 
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
+    console.log('variables',variables)
+    console.log('windowlength',windowlength)
     const users = useSelector(state => state.users)
     const history = useHistory();
     const dispatch = useDispatch();
-
+    const date = moment().format('l')
  
     useEffect(() => {
        dispatch(getAllUser())
@@ -50,7 +53,7 @@ export default function Users(){
       }
 
 
-    return(
+    return( 
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
             <div className={s.submain}>
                 <div onClick={create} className={s.header}>
@@ -59,8 +62,10 @@ export default function Users(){
                 <div className={s.containerUsers}>
                     {
                         users.length > 0 ? users.map(p => {
-                            const arraytotal = p.payments.length > 0 ? p.payments.map(p => p.monto) : 0
+                            const filterByDate = p.payments.length > 0 ? p.payments.filter(p => p.date === date) : 0
+                            const arraytotal = filterByDate === 0 || filterByDate === [] ? 0 : filterByDate.map(p => p.monto);
                             const total = arraytotal === 0 ? 0 : arraytotal.reduce((a,b) => a + b, 0)
+                               
                             return(
                                <Card total={total} id={p.id} key={p.name} name={p.name}/>
                             )

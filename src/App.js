@@ -36,13 +36,13 @@ function App() {
 
   const port = 'https://altonono.herokuapp.com/'
   const admin = useSelector(state => state.admin)
-  const socket = admin.role !== 'mozos' && io.connect(`${port}`, {transports: ['websocket', 'polling']});
+  const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});
 
   const [client, setClient] = useState({
     name: '',
-    table: 'Mozo/a',
-    telefono: 'Mozo/a',
-    method: 'Mesa abierta',
+    table: 'Moza',
+    telefono: 'Moza',
+    method: '',
     comentarios: ''
   })
   
@@ -64,7 +64,7 @@ function App() {
 
   useEffect(() => {  
     let isMounted = true
-    if(admin.role !== 'mozos'){
+    if(admin.role === 'admin'){
       socket.on('pedido', data => {
         handlesound()
          if (isMounted) dispatch(addOrder(data))

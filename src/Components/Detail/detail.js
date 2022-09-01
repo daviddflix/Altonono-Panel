@@ -19,7 +19,6 @@ export default function Detail (){
     const {id} = useParams();
     const history = useHistory();
     const detalle = useSelector(state => state.detalle);
-    // const confirmOrder = useSelector(state => state.confirmOrder);
 
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
@@ -32,7 +31,7 @@ export default function Detail (){
      dispatch(getStatus())
    }, [dispatch])
 
-    // const changeBtn =  confirmOrder.length > 0 && confirmOrder.filter(p => p.id === id)// find order in confirm array
+  
   
     const cancel = () => {
       return(

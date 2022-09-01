@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink as div, useHistory, useParams } from "react-router-dom";
 import ModalContext from "../../../context/modalContext";
-import { getUserById } from "../../../Redux/actions";
+import { emptyDetails, getUserById } from "../../../Redux/actions";
 import { Header } from "../comanda";
 import s from './mesaAbierta.module.css'
 import {SiAirtable} from 'react-icons/si'
@@ -66,12 +66,22 @@ console.log()
 
 
 function Card({id, name, status}){ 
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+
+    const seeDetail = () => {
+        dispatch(emptyDetails())
+        history.push(`/open_tab/detalleComanda/${id}`)
+    }
+
     return(
-        <NavLink className={s.cardmain} to={`/open_tab/detalleComanda/${id}`}>
+        <div onClick={seeDetail}  className={s.cardmain}>
            <h3 className={s.cardname}>{name}</h3>
            <div className={s.metodo}>
              <h6>{status}</h6>
            </div>
-        </NavLink>
+        </div>
     )
 }

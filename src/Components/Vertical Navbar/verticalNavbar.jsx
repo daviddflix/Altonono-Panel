@@ -21,11 +21,11 @@ export default function VerticalNavbar (){
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (windowlength.matches === true && variables.toggle === false) {
-         if(wrapperRef.current && !wrapperRef.current.contains(event.target)){
-          setVariables(prev => ({...prev, toggle: true}))
-         }
-      }
+      // if (windowlength.matches === true && variables.toggle === false) {
+      //    if(wrapperRef.current && !wrapperRef.current.contains(event.target)){
+      //     setVariables(prev => ({...prev, toggle: true}))
+      //    }
+      // }
       if (wrapperRef.current && wrapperRef.current.contains(event.target)) {
         if(windowlength.matches === true && variables.toggle === false){
          setVariables(prev => ({...prev, toggle: true}))
@@ -41,21 +41,24 @@ export default function VerticalNavbar (){
     };
   }); 
 
-
+ 
 
     return(
 <nav ref={wrapperRef} id='nav'  className={s.navbar}>
-<ProSidebar width={variables.sidebarWidth}   collapsedWidth={windowlength.matches=== true? '0px': '80px'} collapsed={variables.toggle} >
+<ProSidebar width={windowlength.matches=== true?  '100vw' : variables.sidebarWidth}   collapsedWidth={windowlength.matches=== true? '0px': '80px'} collapsed={variables.toggle} >
   <Menu iconShape="square">
     <MenuItem style={admin.role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<MdDashboard />}>Dashboard<NavLink to='/'/></MenuItem>
     <MenuItem style={admin.role === 'mozos' ? {display: 'none'}: {display: 'block'}} icon={<GoListUnordered />}>Pedidos <NavLink to='/orders'/></MenuItem>
-    <MenuItem icon={<GiMeal />}>Historial<NavLink to='/resume'/></MenuItem>
-    <MenuItem icon={<MdProductionQuantityLimits />}>Menu<NavLink to='/menu'/></MenuItem>
+    <MenuItem style={admin.role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<GiMeal />}>Historial<NavLink to='/resume'/></MenuItem>
+    <MenuItem style={admin.role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<MdProductionQuantityLimits />}>Menu<NavLink to='/menu'/></MenuItem>
     <MenuItem icon={<ImUsers />}>Usuarios<NavLink to='/users'/></MenuItem>
   </Menu>
 </ProSidebar>
 </nav>
     )
 }
+
+
+
 
 
