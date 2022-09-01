@@ -40,7 +40,7 @@ function App() {
 
   const [client, setClient] = useState({
     name: '',
-    table: 'Moza',
+    table: '',
     telefono: 'Moza',
     method: '',
     comentarios: ''

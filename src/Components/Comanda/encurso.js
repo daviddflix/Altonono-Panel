@@ -23,6 +23,12 @@ const methodos = [
         alt: 'QR',
         id: 2
     },
+    {
+        image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
+        method: 'Invitacion',
+        alt: 'Invitacion',
+        id: 3
+    },
 ]
 
 export default function Encurso(){
@@ -108,7 +114,9 @@ console.log('client', client)
        <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
           <div className={s.submain}>
                   <Header user={user[0].name}/>
+                  <div className={s.containerDialogo}>
                   <Dialogo/>
+                  </div>
                   <div className={s.containerCart}>
                     {
                         methodos.map(p => {

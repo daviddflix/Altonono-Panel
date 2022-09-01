@@ -123,8 +123,7 @@ const InicialState = {
             case SUSTRACT_TO_CART:
 
                 const findItem = state.cart.find( p => p.id === action.payload.id)
-     console.log('findItem', findItem)
-     console.log('action', action.payload)
+    
                 if(findItem && findItem.quantity > 1){
                   return {
                     ...state,
@@ -247,11 +246,11 @@ const InicialState = {
 
         case FILTER_ORDERS: 
 
-        const filterByCash = state.allOrders.filter(p => p.method === action.payload)
+       
      
             return{
                ...state,
-               allOrders: filterByCash,
+               allOrders: action.payload,
 
             }
 

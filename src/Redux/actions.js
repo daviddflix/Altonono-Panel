@@ -158,6 +158,13 @@ export function getOrdersByDate(payload){
     }
 }
 
+export function filterOrders(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}filter`, payload)
+      return dispatch({ type: FILTER_ORDERS, payload: res.data})
+    }
+}
+
 export function updateStatusOrderInConfirm(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateStatusOrder`, payload)
@@ -180,12 +187,7 @@ export function getCardStatus (value){
     }
 } 
 
-export function filterOrders (value){
-    return{
-        type: FILTER_ORDERS,
-        payload: value
-    }
-} 
+
 
 export function completedOrder (value){
    

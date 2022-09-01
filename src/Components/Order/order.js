@@ -36,15 +36,12 @@ export default function Pedidos(){
 
    const {variables} = useContext(ModalContext);
    const windowlength = window.matchMedia("(max-width:700px)");
-   const [filter, setFilter] = useState('');
-   
-   const handleFilter = (e) => {
-     setFilter(e.target.value)
-   }
+ 
 
-   useEffect(() => {
-     dispatch(filterOrders(filter))
-   }, [filter])
+   const filter = (e) => {
+   
+    dispatch(filterOrders({constrain: e.target.value}))
+   }
 
    const styles = {
     length : {
@@ -62,7 +59,7 @@ export default function Pedidos(){
     }
 } 
 
-const totalOrders = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" ? 0 : pedidos.filter(p => p.status !== 'cancelado')
+const totalOrders = pedidos === 'no hay pedidos' || pedidos === "No hay productos para la fecha seleccionada" || pedidos === [] ? 0 : pedidos.filter(p => p.status !== 'cancelado')
 const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
   const total = filterTotal === 0 ? 0 : filterTotal.reduce((a,b) => a + b, 0);
   
@@ -74,7 +71,7 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
           <div className={s.containertitle}>
           <div className={s.filters}>
             <label className={s.labelFiltros} >Filtros</label>    
-                <select placeholder='Selecciona' onChange={handleFilter} className={s.select}  >
+                <select placeholder='Selecciona' onChange={(e) => filter(e)} className={s.select}  >
                     <option className={s.option} >Selecciona</option>
                     <option className={s.option} value='cancelado'>Cancelados</option>
                     <option className={s.option} value='QR'>Pagado con QR</option>
@@ -124,12 +121,12 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
         <div className={s.maincontainer2}>
            <div className={s.containertitle}>
            <div className={s.filters}>
-            <label className={s.labelFiltros} >Filtros</label>    
-                <select className={s.select} name="filtros"  >
+            {/* <label className={s.labelFiltros} >Filtros</label>     */}
+                <select className={s.select}  onChange={(e) => filter(e)} name="filtros"  >
                     <option className={s.option} value=''></option>
-                    <option className={s.option} value='cancelados'>Cancelados</option>
-                    <option className={s.option} value='qr'>Pagado con QR</option>
-                    <option className={s.option} value='efectivo'>Pagado en Efectivo</option>
+                    <option className={s.option} value='cancelado'>Cancelados</option>
+                    <option className={s.option} value='QR'>Pagado con QR</option>
+                    <option className={s.option} value='Efectivo'>Pagado en Efectivo</option>
                 </select>         
             </div>
           <input className={s.date}  value={date} onChange={handleDate} type='date'/>

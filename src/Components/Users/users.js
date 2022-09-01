@@ -21,8 +21,7 @@ export default function Users(){
 
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
-    console.log('variables',variables)
-    console.log('windowlength',windowlength)
+   
     const users = useSelector(state => state.users)
     const history = useHistory();
     const dispatch = useDispatch();
