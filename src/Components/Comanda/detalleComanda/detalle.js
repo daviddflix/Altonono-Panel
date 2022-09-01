@@ -172,8 +172,8 @@ function MaxWidthDialog() {
           >
              <Autocomplete
       id="grouped-demo"
-      options={products.sort((a, b) => a - b)}
-      groupBy={(option) => option.category}
+      options={products.sort((a, b) => a.title - b.title)}
+      // groupBy={(option) => option.category}
       sx={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="Productos" />}
     />
