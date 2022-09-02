@@ -33,7 +33,7 @@ export default function Dashboard(){
 
   const totalOrdersLengthByDay = orders.length > 0 ? orders.filter(p => p.status === "Pedido Finalizado").length : 0
   const OrdersCancel = orders.length > 0 ? orders.filter(p => p.status === "cancelado").length : 0
-  const totalOrder = allOrders.length > 0 ? allOrders.filter(p => p.status !== 'cancelado').length : 0
+  const totalOrder = allOrders === 'no hay pedidos' ? 0 : allOrders.filter(p => p.status !== 'cancelado').length 
   
   
   const totalOrdersByDay = orders.length > 0 ? orders.filter(p => p.status === "Pedido Finalizado") : []

@@ -258,19 +258,14 @@ function MaxWidthDialog() {
           >
              <Autocomplete
       id="grouped-demo"
-      options={products.map(p => p.title)}
-      renderOption={params => {
-        return(
-          <TextField {...params} label={params} />
-        )
-      }}
-      // onChage={(value, newvalue) => {
-      //   setNewCart(prev => ({
-      //     ...prev, cart: [...prev.cart, newvalue]
-      //   }))
-      // }}
+      options={products}
+      renderInput={(params) => (
+        <TextField {...params} label="Productos..." variant="outlined" />
+  
+        )}
+      getOptionLabel={option => option.title}
       sx={{ width: 250 }}
-      renderInput={(params) => <TextField {...params} label="Productos" />}
+     
     />
           </Box>
         </DialogContent>

@@ -71,9 +71,6 @@ function App() {
   useEffect(() => {  
     let isMounted = true
       socket.on('pedido', data => {
-        if(admin.role === 'admin'){
-          handlesound()
-        }
         if (isMounted) dispatch(addOrder(data))
       })
       return ()=> { isMounted = false}
