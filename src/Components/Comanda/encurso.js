@@ -9,6 +9,7 @@ import { Dialogo, Header } from "./comanda";
 import s from './encurso.module.css'
 import userContext from "../../context/userContext";
 import Swal from 'sweetalert2'
+import CurrencyFormat from 'react-currency-format'
 
 const methodos = [
     {
@@ -109,6 +110,8 @@ console.log('client', client)
         }
       }
      
+      const subtotal = cart.length > 0 ? cart.map(p => p.unit_price * p.quantity) : 0
+      const total = subtotal === 0 ? 0 : subtotal.reduce((a,b) => a + b, 0)
 
     return(
        <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
@@ -125,6 +128,10 @@ console.log('client', client)
                             )
                         })
                     }
+                  </div>
+                  <div className={s.containerTotal}>
+                     <h2>Total</h2>
+                     <CurrencyFormat className={s.total}  value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                   </div>
                   <div className={s.btns}>
                      <Button disabled={cart.length === 0 || !client.name || !client.method } onClick={comanda} variant='contained' style={{width: '40%', marginRight: '.5rem'}}>CREAR COMANDA</Button>
@@ -148,4 +155,4 @@ function Card({image, method, color, alt}){
            <h3>{method}</h3>
         </div>
     )
-}
+} 

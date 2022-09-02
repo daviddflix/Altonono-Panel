@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import {RiArrowLeftSLine} from 'react-icons/ri'
-import { getDetails } from "../../../Redux/actions";
+import { getDetails, getProducts } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
 import Spinner, { SpinnerTiny } from "../../spinner/spinner";
 import {CgMathPlus} from 'react-icons/cg'
@@ -66,7 +66,7 @@ export default function DetailMesaAbierta (){
                 detalle.items ? <div className={s.submain}>
                      <div className={s.containerArrow}>
                         <div className={s.subcontainerArrow}>
-                        <RiArrowLeftSLine onClick={goback} className={s.arrowleft}/>
+                         <RiArrowLeftSLine onClick={goback} className={s.arrowleft}/>
                         <h3 className={s.maintitle}>Detalle del pedido</h3>
                         </div>
                         <MaxWidthDialog/>
@@ -88,7 +88,7 @@ export default function DetailMesaAbierta (){
                         </div>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Total</h4>
-                            <CurrencyFormat value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                            <CurrencyFormat className={s.total} value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                         </div>
                     </div>
                     <div className={s.containerResumen}><h3>Estado</h3></div>
@@ -96,6 +96,10 @@ export default function DetailMesaAbierta (){
                         <div className={s.subbox2}>
                             <h4 className={s.status}>{detalle.status}</h4>
                         </div>
+                    </div>
+                    <div className={s.containerBtnss}>
+                    <Button className={s.btnss}  variant="contained">Cerrar mesa</Button>
+                    <Button className={s.btnss}  variant="contained">Guardar</Button>
                     </div>
                 </div> :
                 <div className={s.containerSpinner}><Spinner/></div>
@@ -127,6 +131,11 @@ function MaxWidthDialog() {
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('sm');
   const products = useSelector(state => state.products);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [dispatch])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -136,16 +145,7 @@ function MaxWidthDialog() {
     setOpen(false);
   };
 
-  const handleMaxWidthChange = (event) => {
-    setMaxWidth(
-      // @ts-expect-error autofill of arbitrary value is not handled.
-      event.target.value,
-    );
-  };
-
-  const handleFullWidthChange = (event) => {
-    setFullWidth(event.target.checked);
-  };
+ 
 
   return (
     <React.Fragment>
@@ -171,10 +171,12 @@ function MaxWidthDialog() {
             }}
           >
              <Autocomplete
+             key={products.map((option) => option.id)}
       id="grouped-demo"
-      options={products.sort((a, b) => a.title - b.title)}
+      options={products.map((option) => option.title)}
       // groupBy={(option) => option.category}
-      sx={{ width: 300 }}
+      sx={{ width: 250 }}
+      
       renderInput={(params) => <TextField {...params} label="Productos" />}
     />
           </Box>

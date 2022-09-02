@@ -140,10 +140,13 @@ function CardProduct({ title, unit_price, description, id, available}){
     return(
     <div style={available === false ? {opacity: 0.7} : {opacity: 1}} onClick={ProductNumberIncrement} className={s.item}>
         <span style={findQuantity !== undefined? {display: 'flex'} : {display: 'none'}} className={s.quantity}>{findQuantity !== undefined? findQuantity.quantity: 0}</span>
-        <h4 className={s.title}>{title}</h4>
-        <h3 className={s.price}>{unit_price}</h3>
+       <div className={s.containertitle}>
+            <h4 className={s.title}>{title}</h4>
+            <h4 className={s.description}>{description}</h4>
+       </div>
+         <h3 className={s.price}>{unit_price}</h3>
         <AiFillMinusCircle style={findQuantity !== undefined? {display: 'flex'} : {display: 'none'}} onClick={ProductNumberDecrement} className={s.trash}/>
-        {available === false && <h6 className={s.nodisponible}>No disponible</h6>}
+        {/* {available === false && <h6 className={s.nodisponible}>No disponible</h6>} */}
     </div>
     )
 }
