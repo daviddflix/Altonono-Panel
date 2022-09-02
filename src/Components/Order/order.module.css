@@ -70,7 +70,9 @@
     display: flex;
     width: 97%;
     align-items: center;
+    justify-content: flex-start;
     height: 100px;
+  
 }
 
 .title{
@@ -80,19 +82,22 @@
 } 
 
 .date{
-    height: 30px;
+    height: 60%;
     border: none;
     margin: 0 1rem 0 0 ;
     font-size: 1.1rem;
-   
+    width: 11%;
+    height: 60%;
+    text-align: center;
 }
 
 .total{
-    padding: .1em 1rem;
+  
     font-weight: 700;
     font-size: 1.3rem;
     background-color: #fff;
-    width: 50px;
+    width: 10%;
+    height: 60%;
     display: grid;
     place-content: center;
 }
@@ -100,19 +105,26 @@
 .filters{
     display: flex;
     align-items: center;
-    height: 30px;
+    width: 20%;
+    height: 60%;
     border: none;
     margin: 0 1rem 0 0 ;
     font-size: 1.1rem;
 }
 
 .labelFiltros{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0 .3rem 0 0;
 }
 
 .select{
   border: none;  
   height: 100%;
+  width: 70%;
   outline: none;
   font-size: 1rem;
   margin: 0 0 .3rem 0;

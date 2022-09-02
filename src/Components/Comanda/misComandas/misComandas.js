@@ -39,6 +39,7 @@ export default function MisComandas(){
       }
 
     const date = moment().format('l')
+    console.log('date', date)
     const items = user.length > 0 ? user[0].payments.filter(p => p.date === date) : []
     const filterbyState = items.length > 0 ? items.filter(p => p.status === 'Pedido Finalizado') : []
 console.log('items', items)

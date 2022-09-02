@@ -7,23 +7,45 @@
 }
 
 .submain{
+   
     display: flex;
     flex-direction: column;
     width: 95%;
     height: 90vh;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
    
 }
 
+.containerArrow{
+    
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1rem;
+    height: 10%;
+    position: relative;
+   
+}
+
+.subcontainerArrow{
+    display: flex;
+    align-items: center;
+    width: 85%;
+}
+
+.plusicon{
+    height: 100%;
+}
+
+
 .box1{
-    width: 97%;
+    width: 80%;
     background-color: #fff;
-    border: #282828 solid 1px;
     margin: 1rem 0 1rem 1rem;
     height: 30%;
     overflow-y: scroll;
-    border-radius: 5px;
 }
 
 .subbox1{
@@ -38,7 +60,7 @@
     display: flex;
     align-items: center;
     width: 40%;
-    margin: 0 .3rem .3rem 0;
+    margin: 0 0 .4rem 0;
     border-radius: 100px;
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -50,11 +72,19 @@
   background-color: #fff;
 }
 
+.cancelar{
+  background-color: #ff595a;
+}
 
 .total{
     font-size: 1.4rem;
     font-weight: 800;
     background-color: transparent;
+    
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btnadd:hover{
@@ -87,21 +117,6 @@
     height: 60vh;
 }
 
-.containerArrow{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-around;
-    margin: 1rem;
-    position: relative;
-   
-}
-
-.subcontainerArrow{
-    display: flex;
-    align-items: center;
-    width: 85%;
-}
 
 .maintitle{
   margin: 0;
@@ -118,7 +133,7 @@
 
 
 .containerResumen{
-    width: 100%;
+    width: 90%;
     align-items: center;
     display: flex;
     justify-content: flex-start;
@@ -128,7 +143,7 @@
 .box2{
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 80%;
     background-color: #fff;
     margin: 0 0 2rem 0;
 }
@@ -142,8 +157,9 @@
 }
 
 .subbox2_title{
-    width: 70%;
+    width: 50%;
     margin: 0 0 0 1.5rem;
+   
 }
 
 .method{
@@ -165,6 +181,37 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.containerChangeMethod{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainContainerMethod{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.containerMethod{
+     display: flex;
+     flex-direction: column;
+     width: 100px;
+     height: 100px;
+    align-items: center;
+    justify-content: center;
+    margin: .5rem;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.imageMethod{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
 }
 
 

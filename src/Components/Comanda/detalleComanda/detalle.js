@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import {RiArrowLeftSLine} from 'react-icons/ri'
-import { getDetails, getProducts } from "../../../Redux/actions";
+import { cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
 import Spinner, { SpinnerTiny } from "../../spinner/spinner";
 import {CgMathPlus} from 'react-icons/cg'
@@ -25,6 +25,7 @@ import {HiMinus} from 'react-icons/hi'
 import {AiOutlinePlus} from 'react-icons/ai'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Swal from 'sweetalert2'
 
 export default function DetailMesaAbierta (){
 
@@ -34,7 +35,59 @@ export default function DetailMesaAbierta (){
     const {id} = useParams();
     const detalle = useSelector(state => state.detalle);
     const history = useHistory();
+    const [newCart, setNewCart] = React.useState({
+      method: detalle.method,
+      cart: detalle.items
+    })
 
+
+    const cancel = () => {
+      return(
+        Swal.fire({
+          title: 'Confirmar cancelacion',
+          input: 'text',
+          inputPlaceholder: 'Razon de cancelacion',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          confirmButtonText: 'Cancelar',
+          confirmButtonColor: '#ff595a',
+          showLoaderOnConfirm: true,
+          preConfirm: (login) => {
+        
+            if(!login){
+              Swal.showValidationMessage(
+                `Especificar motivo de cancelacion`
+              )
+            }
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Cancelado!',
+              'Pedido cancelado.',
+              'success'
+            )
+            dispatch(cancelar({status : 'cancelado', id: id}))
+            history.push(`/createComanda/${id}`)
+          }
+        })
+      )
+    }
+
+    const handleStatusBtn = () => {       
+        dispatch(updateStatusOrder({status : 'Pedido Finalizado', id: id}))
+        history.push(`/createComanda/${id}`)
+        Swal.fire({
+          icon: 'success',
+          title: 'Mesa Cerrada',
+          showConfirmButton: false,
+          timer: 1500
+        })
+   }
+    
+    console.log('newCart', newCart)
     useEffect( () => {
         dispatch(getDetails(id))
      }, [id, dispatch])
@@ -84,7 +137,7 @@ export default function DetailMesaAbierta (){
                     <div className={s.box2}>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Forma de pago</h4>
-                            <h4 className={s.method}>{detalle.method}</h4>
+                            <div className={s.containerChangeMethod}><ChangeMethod/></div>
                         </div>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Total</h4>
@@ -98,8 +151,9 @@ export default function DetailMesaAbierta (){
                         </div>
                     </div>
                     <div className={s.containerBtnss}>
-                    <Button className={s.btnss}  variant="contained">Cerrar mesa</Button>
+                    <Button className={s.btnss} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
                     <Button className={s.btnss}  variant="contained">Guardar</Button>
+                    <Button className={s.cancelar} onClick={cancel}  variant="contained">CANCELAR</Button>
                     </div>
                 </div> :
                 <div className={s.containerSpinner}><Spinner/></div>
@@ -188,3 +242,102 @@ function MaxWidthDialog() {
     </React.Fragment>
   );
 }
+
+const methodos = [
+  {
+      image: 'https://img.utdstc.com/icon/f24/b94/f24b94db83f2c097744c62d36981fd056214096b5adb5ae80d651d188579af1e:200',
+      method: 'Efectivo',
+      alt: 'Efectivo',
+      id: 1
+  },
+  {
+      image: 'https://static.vecteezy.com/system/resources/previews/004/996/077/original/qr-code-scanning-qr-code-reader-app-concept-icon-recognition-or-reading-qr-code-in-flat-style-green-and-blue-scanner-application-line-icon-illustration-vector.jpg',
+      method: 'QR',
+      alt: 'QR',
+      id: 2
+  },
+  {
+      image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
+      method: 'Invitacion',
+      alt: 'Invitacion',
+      id: 3
+  },
+]
+
+function ChangeMethod() {
+  const [open, setOpen] = React.useState(false);
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [maxWidth, setMaxWidth] = React.useState('sm');
+  const detalle = useSelector(state => state.detalle);
+  const dispatch = useDispatch();
+
+  
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+ 
+
+  return (
+    <React.Fragment>
+      <Button variant="outlined" className={s.plusicon} onClick={handleClickOpen}>
+        forma de cobro
+      </Button>
+      <Dialog
+        fullWidth={fullWidth}
+        maxWidth={maxWidth}
+        open={open}
+        onClose={handleClose}
+      >
+        {/* <DialogTitle>Elige una forma </DialogTitle> */}
+        <DialogContent>
+          <Box
+            noValidate
+            component="form"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              m: 'auto',
+              width: 'fit-content',
+            }}
+          >
+         <div className={s.mainContainerMethod}>
+          {
+              methodos.map(p => {
+                return(
+            <CardMethod key={p.id} image={p.image} color={'#fff'} alt={p.alt} method={p.method}/>
+                )
+              })
+            }
+         </div>
+          
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>cERRAR</Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+
+function CardMethod({image, method, color, alt}){
+
+ 
+  // const handleChange = (e) => {
+  //     setClient({ ...client, method: method });
+  //   };
+
+  return(
+      <div style={{backgroundColor: color}}  className={s.containerMethod}>
+         <input className={s.imageMethod} type='image' src={image} alt={alt} />
+         <h3>{method}</h3>
+      </div>
+  )
+} 

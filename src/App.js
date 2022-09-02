@@ -40,7 +40,7 @@ function App() {
 
   const [client, setClient] = useState({
     name: '',
-    table: '',
+    table: 'Moza',
     telefono: 'Moza',
     method: '',
     comentarios: ''
@@ -51,7 +51,7 @@ function App() {
   const isLogin = useSelector(state => state.isLogin);
   const windowlength = window.matchMedia("(max-width:700px)")
   const [variables, setVariables] = useState({
-    toggle: false,
+    toggle: windowlength.matches === true? true : false,
     sidebarWidth: '200px'
   });
 
@@ -64,14 +64,13 @@ function App() {
 
   useEffect(() => {  
     let isMounted = true
-    if(admin.role === 'admin'){
       socket.on('pedido', data => {
-        handlesound()
-         if (isMounted) dispatch(addOrder(data))
+        if(admin.role === 'admin'){
+          handlesound()
+        }
+        if (isMounted) dispatch(addOrder(data))
       })
       return ()=> { isMounted = false}
-    }
-   
      })
 
      const isProduction = process.env.NODE_ENV === 'production';

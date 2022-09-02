@@ -42,9 +42,9 @@ export default function Encurso(){
     const user = useSelector(state => state.userById);
     const cart = useSelector(state => state.cart);
     const {client, setClient} = useContext(userContext);
-console.log('client', client)
+
     const comanda = () => {
-        if(client.method === 'QR' || client.method === 'Efectivo', client.table, client.name){
+        if(client.method && cart.length >  0 && client.name){
             dispatch(createComanda({cart, client, waiterId:id, status: 'Pedido Finalizado' }))
             Swal.fire({
                 icon: 'success',
@@ -86,6 +86,7 @@ console.log('client', client)
             method: '',
             comentarios: ''
           })
+          dispatch(resetCart())
           history.push(`/createComanda/${id}`)
     }
    

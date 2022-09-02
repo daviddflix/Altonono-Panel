@@ -74,6 +74,7 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
                 <select placeholder='Selecciona' onChange={(e) => filter(e)} className={s.select}  >
                     <option className={s.option} >Selecciona</option>
                     <option className={s.option} value='cancelado'>Cancelados</option>
+                    <option className={s.option} value='Mesa Abierta'>Mesas Abiertas</option>
                     <option className={s.option} value='QR'>Pagado con QR</option>
                     <option className={s.option} value='Efectivo'>Pagado en Efectivo</option>
                 </select>         
@@ -125,6 +126,7 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
                 <select className={s.select}  onChange={(e) => filter(e)} name="filtros"  >
                     <option className={s.option} value=''></option>
                     <option className={s.option} value='cancelado'>Cancelados</option>
+                    <option className={s.option} value='Mesa Abierta'>Mesas Abiertas</option>
                     <option className={s.option} value='QR'>Pagado con QR</option>
                     <option className={s.option} value='Efectivo'>Pagado en Efectivo</option>
                 </select>         
