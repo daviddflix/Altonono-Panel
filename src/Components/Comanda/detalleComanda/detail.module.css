@@ -39,6 +39,11 @@
     height: 100%;
 }
 
+.plusiconMethod{
+    height: 100%;
+}
+
+
 
 .box1{
     width: 80%;
@@ -144,9 +149,35 @@
     display: flex;
     flex-direction: column;
     width: 80%;
+    height: 20%;
     background-color: #fff;
     margin: 0 0 2rem 0;
 }
+
+.box3{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 20%;
+    background-color: #fff;
+    margin: 0 0 2rem 0;
+}
+
+@media screen and (max-width: 700px) {
+    .plusiconMethod{
+        width: 100%; 
+        font-size: .7rem;   
+    }
+
+    .box1{
+        width: 90%;
+    }
+
+    .box2{
+        width: 90%;
+    }
+}
+
 
 .subbox2{
     display: flex;

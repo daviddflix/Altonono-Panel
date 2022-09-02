@@ -145,7 +145,7 @@ export default function DetailMesaAbierta (){
                         </div>
                     </div>
                     <div className={s.containerResumen}><h3>Estado</h3></div>
-                    <div className={s.box2}>
+                    <div className={s.box3}>
                         <div className={s.subbox2}>
                             <h4 className={s.status}>{detalle.status}</h4>
                         </div>
@@ -153,7 +153,7 @@ export default function DetailMesaAbierta (){
                     <div className={s.containerBtnss}>
                     <Button className={s.btnss} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
                     <Button className={s.btnss}  variant="contained">Guardar</Button>
-                    <Button className={s.cancelar} onClick={cancel}  variant="contained">CANCELAR</Button>
+                    <Button className={s.cancelar} color='error' onClick={cancel}  variant="contained">CANCELAR</Button>
                     </div>
                 </div> :
                 <div className={s.containerSpinner}><Spinner/></div>
@@ -285,7 +285,7 @@ function ChangeMethod() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" className={s.plusicon} onClick={handleClickOpen}>
+      <Button variant="outlined" className={s.plusiconMethod} onClick={handleClickOpen}>
         forma de cobro
       </Button>
       <Dialog
