@@ -8,6 +8,7 @@ import Order from './Components/Order/order'
 import Detail from './Components/Detail/detail';
 import  ModalContext  from './context/modalContext'
 import  userContext  from './context/userContext'
+import  cartContext  from './context/cartContext'
 import { useEffect, useState } from 'react';
 import Spinner from './Components/spinner/spinner';
 import CacheBuster from 'react-cache-buster';
@@ -44,6 +45,11 @@ function App() {
     telefono: 'Moza',
     method: '',
     comentarios: ''
+  })
+
+  const [newCart, setNewCart] = useState({
+    method: '',
+    cart: ''
   })
   
   
@@ -99,6 +105,7 @@ function App() {
 <div> 
 <ModalContext.Provider value={{variables, setVariables}} >
 <userContext.Provider value={{client, setClient}}>
+<cartContext.Provider value={{newCart, setNewCart}}>
     <Navbar/>
     <VerticalNavbar/>
       <Switch>
@@ -168,6 +175,7 @@ function App() {
         <ModifyItem/>
         </PrivateRoutes>
  </Switch>
+ </cartContext.Provider>
  </userContext.Provider>
  </ModalContext.Provider>
 </div>

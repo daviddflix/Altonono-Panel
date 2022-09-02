@@ -26,6 +26,7 @@ import {AiOutlinePlus} from 'react-icons/ai'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Swal from 'sweetalert2'
+import cartContext from "../../../context/cartContext";
 
 export default function DetailMesaAbierta (){
 
@@ -35,10 +36,7 @@ export default function DetailMesaAbierta (){
     const {id} = useParams();
     const detalle = useSelector(state => state.detalle);
     const history = useHistory();
-    const [newCart, setNewCart] = React.useState({
-      method: detalle.method,
-      cart: detalle.items
-    })
+    const {newCart, setNewCart} = useContext(cartContext)
 
 
     const cancel = () => {
@@ -70,7 +68,7 @@ export default function DetailMesaAbierta (){
               'success'
             )
             dispatch(cancelar({status : 'cancelado', id: id}))
-            history.push(`/createComanda/${id}`)
+            history.push(`/users`)
           }
         })
       )
@@ -78,7 +76,7 @@ export default function DetailMesaAbierta (){
 
     const handleStatusBtn = () => {       
         dispatch(updateStatusOrder({status : 'Pedido Finalizado', id: id}))
-        history.push(`/createComanda/${id}`)
+        history.push(`/users`)
         Swal.fire({
           icon: 'success',
           title: 'Mesa Cerrada',
@@ -186,10 +184,44 @@ function MaxWidthDialog() {
   const [maxWidth, setMaxWidth] = React.useState('sm');
   const products = useSelector(state => state.products);
   const dispatch = useDispatch();
+  const {newCart, setNewCart} = useContext(cartContext)
 
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
+
+  const AddnewProduct = (e) => {
+      
+    // const {name} = e.target
+
+    setNewCart(prev => ({
+      ...prev, cart: [...prev.cart, e.target.options]
+    }))
+
+      
+  //  if (checked === true){
+  //  options.salsa.length <=1 ? setOptions(prev => ({
+  //      ...prev, salsa: [...prev.salsa, name], picture_url: pic_to_render, 
+  //      id: uuidv4(), price: price, title: title
+  //    })) : setMessage(true)
+  //  }
+   
+  //  if(options.salsa.length >= 2){
+  //    e.target.checked = false
+    
+  //  }
+
+   
+   
+
+  //   if(checked === false){
+  //     setMessage(false)
+  //     setOptions(prev => ({
+  //       ...prev, salsa: prev.salsa.filter(p => p !== name)
+  //     }))
+  //   }
+ }    
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -225,12 +257,19 @@ function MaxWidthDialog() {
             }}
           >
              <Autocomplete
-             key={products.map((option) => option.id)}
       id="grouped-demo"
-      options={products.map((option) => option.title)}
-      // groupBy={(option) => option.category}
+      options={products.map(p => p.title)}
+      renderOption={params => {
+        return(
+          <TextField {...params} label={params} />
+        )
+      }}
+      // onChage={(value, newvalue) => {
+      //   setNewCart(prev => ({
+      //     ...prev, cart: [...prev.cart, newvalue]
+      //   }))
+      // }}
       sx={{ width: 250 }}
-      
       renderInput={(params) => <TextField {...params} label="Productos" />}
     />
           </Box>
@@ -281,7 +320,7 @@ function ChangeMethod() {
     setOpen(false);
   };
 
- 
+  const {newCart, setNewCart} = useContext(cartContext)
 
   return (
     <React.Fragment>
@@ -310,7 +349,7 @@ function ChangeMethod() {
           {
               methodos.map(p => {
                 return(
-            <CardMethod key={p.id} image={p.image} color={'#fff'} alt={p.alt} method={p.method}/>
+            <CardMethod key={p.id} image={p.image} color={newCart.method === p.method ? 'red' : '#fff'} alt={p.alt} method={p.method}/>
                 )
               })
             }
@@ -329,14 +368,14 @@ function ChangeMethod() {
 
 function CardMethod({image, method, color, alt}){
 
- 
-  // const handleChange = (e) => {
-  //     setClient({ ...client, method: method });
-  //   };
+  const {newCart, setNewCart} = useContext(cartContext)
+  const handleChange = (e) => {
+    setNewCart({ ...newCart, method: method });
+    };
 
   return(
-      <div style={{backgroundColor: color}}  className={s.containerMethod}>
-         <input className={s.imageMethod} type='image' src={image} alt={alt} />
+      <div defaultValue={newCart.method} style={{backgroundColor: color}}  className={s.containerMethod}>
+         <input  className={s.imageMethod} type='image' src={image} alt={alt} />
          <h3>{method}</h3>
       </div>
   )
