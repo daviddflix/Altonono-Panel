@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import {RiArrowLeftSLine} from 'react-icons/ri'
-import { cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
+import { addItemToOpenTable, cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
 import Spinner, { SpinnerTiny } from "../../spinner/spinner";
 import {CgMathPlus} from 'react-icons/cg'
@@ -84,11 +84,36 @@ export default function DetailMesaAbierta (){
           timer: 1500
         })
    }
+
+
+   const updateComanda = () => {
+     dispatch(addItemToOpenTable(newCart))
+     history.push(`/users`)
+     Swal.fire({
+       icon: 'success',
+       title: 'Mesa Cerrada',
+       showConfirmButton: false,
+       timer: 1500
+     })
+   }
     
     console.log('newCart', newCart)
     useEffect( () => {
         dispatch(getDetails(id))
      }, [id, dispatch])
+
+
+    useEffect( () => {
+        setNewCart(prev => ({
+      ...prev, cart: detalle.items
+    }))
+     }, [])
+
+    useEffect( () => {
+        setNewCart(prev => ({
+      ...prev, total: detalle.monto
+    }))
+     }, [])
 
 
     const styles = {
@@ -124,9 +149,9 @@ export default function DetailMesaAbierta (){
                      </div>
                     <div className={s.box1}>
                        {
-                        detalle.items && detalle.items.map(p => {
+                        newCart.cart && newCart.cart.map(p => {
                             return(
-                              <Card key={p.id} title={p.title} quantity={p.quantity} unit_price={p.unit_price}/>
+                              <Card key={p.id} id={p.id} title={p.title} quantity={p.quantity} unit_price={p.unit_price}/>
                             )
                         })
                        }
@@ -139,7 +164,7 @@ export default function DetailMesaAbierta (){
                         </div>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Total</h4>
-                            <CurrencyFormat className={s.total} value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                            <CurrencyFormat className={s.total} value={newCart.total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                         </div>
                     </div>
                     <div className={s.containerResumen}><h3>Estado</h3></div>
@@ -150,7 +175,7 @@ export default function DetailMesaAbierta (){
                     </div>
                     <div className={s.containerBtnss}>
                     <Button className={s.btnss} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
-                    <Button className={s.btnss}  variant="contained">Guardar</Button>
+                    <Button className={s.btnss} disabled={!newCart.method} onClick={updateComanda} variant="contained">Guardar</Button>
                     <Button className={s.cancelar} color='error' onClick={cancel}  variant="contained">CANCELAR</Button>
                     </div>
                 </div> :
@@ -161,11 +186,31 @@ export default function DetailMesaAbierta (){
 }
 
 
-function Card({quantity, title, unit_price, }){
+function Card({quantity, title, unit_price, id}){
+
+  const {newCart, setNewCart} = useContext(cartContext)
+  const findItem = newCart.cart.find(p => p.id === id)
+
+  // const add = () => {
+  //   if(findItem){
+  //     newCart.cart.map(p => p.id === id? {
+
+  //       ...p, quantity : p.quantity + 1
+  //   }: p)
+
+  //     // setNewCart(prev => ({
+  //     //   ...prev, cart : cart.map(p => p.id === id? {
+  //     //     ...p, quantity : p.quantity + 1
+  //     // }: p)
+  //     // }))
+  //   }
+  
+  // }
+
     return(
         <div className={s.subbox1}>
             <h4 className={s.cardtitle}>{title}</h4>
-            <CurrencyFormat value={unit_price*quantity} className={s.subtotal} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            <CurrencyFormat value={unit_price} className={s.subtotal} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             <div className={s.subbox_}>
                 <button className={s.btnadd}><HiMinus/></button>
                   <span className={s.quantity}>{quantity}</span>
@@ -184,43 +229,19 @@ function MaxWidthDialog() {
   const [maxWidth, setMaxWidth] = React.useState('sm');
   const products = useSelector(state => state.products);
   const dispatch = useDispatch();
-  const {newCart, setNewCart} = useContext(cartContext)
+  const {newCart, setNewCart} = useContext(cartContext);
+  const detalle = useSelector(state => state.detalle);
+
+  useEffect(() => {
+    setNewCart(prev => ({
+      ...prev, cart: detalle.items
+    }))
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
 
-  const AddnewProduct = (e) => {
-      
-    // const {name} = e.target
-
-    setNewCart(prev => ({
-      ...prev, cart: [...prev.cart, e.target.options]
-    }))
-
-      
-  //  if (checked === true){
-  //  options.salsa.length <=1 ? setOptions(prev => ({
-  //      ...prev, salsa: [...prev.salsa, name], picture_url: pic_to_render, 
-  //      id: uuidv4(), price: price, title: title
-  //    })) : setMessage(true)
-  //  }
-   
-  //  if(options.salsa.length >= 2){
-  //    e.target.checked = false
-    
-  //  }
-
-   
-   
-
-  //   if(checked === false){
-  //     setMessage(false)
-  //     setOptions(prev => ({
-  //       ...prev, salsa: prev.salsa.filter(p => p !== name)
-  //     }))
-  //   }
- }    
 
 
   const handleClickOpen = () => {
@@ -261,8 +282,13 @@ function MaxWidthDialog() {
       options={products}
       renderInput={(params) => (
         <TextField {...params} label="Productos..." variant="outlined" />
-  
         )}
+      onChange={(_event, newTeam) => {
+        setNewCart(prev => ({
+          ...prev, cart: [...prev.cart, {...newTeam, quantity: 1}]
+        }))
+    
+      }}
       getOptionLabel={option => option.title}
       sx={{ width: 250 }}
      
@@ -344,7 +370,7 @@ function ChangeMethod() {
           {
               methodos.map(p => {
                 return(
-            <CardMethod key={p.id} image={p.image} color={newCart.method === p.method ? 'red' : '#fff'} alt={p.alt} method={p.method}/>
+            <CardMethod key={p.id} image={p.image} color={newCart.method === p.method ? '#3398db' : '#fff'} alt={p.alt} method={p.method}/>
                 )
               })
             }
@@ -369,7 +395,7 @@ function CardMethod({image, method, color, alt}){
     };
 
   return(
-      <div defaultValue={newCart.method} style={{backgroundColor: color}}  className={s.containerMethod}>
+      <div onClick={handleChange} style={{backgroundColor: color}}  className={s.containerMethod}>
          <input  className={s.imageMethod} type='image' src={image} alt={alt} />
          <h3>{method}</h3>
       </div>

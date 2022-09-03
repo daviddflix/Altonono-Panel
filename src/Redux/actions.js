@@ -165,6 +165,14 @@ export function filterOrders(payload){
     }
 }
 
+
+export function addItemToOpenTable(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}updateComanda`, payload)
+     console.log('res', res)
+    }
+}
+
 export function updateStatusOrderInConfirm(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateStatusOrder`, payload)

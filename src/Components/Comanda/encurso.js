@@ -136,7 +136,7 @@ export default function Encurso(){
                   </div>
                   <div className={s.btns}>
                      <Button disabled={cart.length === 0 || !client.name || !client.method } onClick={comanda} variant='contained' style={{width: '40%', marginRight: '.5rem'}}>CREAR COMANDA</Button>
-                  <Button disabled={cart.length === 0 || !client.name  } onClick={letOpen} variant='contained' style={{width: '40%'}}>mesa abierta</Button>
+                  <Button disabled={cart.length === 0 || !client.name || !client.method } onClick={letOpen} variant='contained' style={{width: '40%'}}>mesa abierta</Button>
                   </div>
          </div>
        </div>

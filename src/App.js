@@ -49,7 +49,8 @@ function App() {
 
   const [newCart, setNewCart] = useState({
     method: '',
-    cart: ''
+    cart: '',
+    total: ''
   })
   
   
