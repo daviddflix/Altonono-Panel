@@ -21,7 +21,7 @@ import Menus from './Components/Menu/menu';
 import Restore from './Components/Restore/restore';
 import ModifyItem from './Components/InsidePanel/modifyItem';
 import Tabsview from './Components/Menu/littleMenu';
-import sound from './Components/Order/Sounds/SD_ALERT_27.mp3'
+import sound from './Components/Order/Sounds/alert.mp3'
 import Users from './Components/Users/users';
 import {CreateUser} from './Components/Users/users';
 import Comanda from './Components/Comanda/comanda';
