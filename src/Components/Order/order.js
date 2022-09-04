@@ -77,6 +77,7 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
                     <option className={s.option} value='Mesa Abierta'>Mesas Abiertas</option>
                     <option className={s.option} value='QR'>Pagado con QR</option>
                     <option className={s.option} value='Efectivo'>Pagado en Efectivo</option>
+                    <option className={s.option} value='Efectivo'>Pagado con Mercado pago</option>
                 </select>         
             </div>
           <input className={s.date}  value={date} onChange={handleDate} type='date'/>
@@ -122,7 +123,6 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
         <div className={s.maincontainer2}>
            <div className={s.containertitle}>
            <div className={s.filters}>
-            {/* <label className={s.labelFiltros} >Filtros</label>     */}
                 <select className={s.select}  onChange={(e) => filter(e)} name="filtros"  >
                     <option className={s.option} value=''></option>
                     <option className={s.option} value='cancelado'>Cancelados</option>

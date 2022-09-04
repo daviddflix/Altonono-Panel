@@ -19,7 +19,7 @@ export default function Detail (){
     const {id} = useParams();
     const history = useHistory();
     const detalle = useSelector(state => state.detalle);
-
+console.log('detalle', detalle.telefono)
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
 
@@ -162,11 +162,6 @@ export default function Detail (){
           onClick={handleStatusBtn} 
           disabled={detalle.status === 'cancelado'|| detalle.status === 'Pedido Finalizado'}
           className={detalle.status === 'cancelado' || detalle.status === 'Pedido Finaliado'? s.completedOrder : s.acceptbutton}>{detalle.status}</button>
-      //   detalle.status === 'cancelado' || detalle.status === 'Pedido Listo'?  <button className={s.completedOrder} >Pedido finalizado</button> :
-      //  changeBtn.length > 0?  
-      //  <button className={s.acceptbutton} onClick={handleDelivery}>{detalle.items? "Pedido Listo" : <div className={s.containerSpinner}><Spinner/></div>}</button> :
-      //     <button className={s.acceptbutton} onClick={handleStatus} >{detalle.items? "Aceptar" : <div className={s.containerSpinner}><Spinner/></div>}</button> 
-
          }
         </div>
         </div>
@@ -187,11 +182,14 @@ export default function Detail (){
                 }
 
               </div>
-              {
-                  detalle.comentarios && <div className={s.boxItems}>
-                  <h4>{detalle.comentarios}</h4>
+              <div className={s.containerComentarios}>
+                 <h4 className={s.titleComentario}>Comentarios:</h4>
+                {
+                    detalle.comentarios && <div className={s.boxItems}>
+                    <h4><u>{detalle.comentarios}</u></h4>
+                </div>
+                }
               </div>
-              }
                   
        <div className={s.boxTotal}>
           <h3>Total</h3>

@@ -21,11 +21,6 @@ export default function VerticalNavbar (){
 
   useEffect(() => {
     function handleClickOutside(event) {
-      // if (windowlength.matches === true && variables.toggle === false) {
-      //    if(wrapperRef.current && !wrapperRef.current.contains(event.target)){
-      //     setVariables(prev => ({...prev, toggle: true}))
-      //    }
-      // }
       if (wrapperRef.current && wrapperRef.current.contains(event.target)) {
         if(windowlength.matches === true && variables.toggle === false){
          setVariables(prev => ({...prev, toggle: true}))

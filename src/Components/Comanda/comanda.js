@@ -4,7 +4,7 @@ import s from './comanda.module.css'
 import {RiArrowLeftSLine} from 'react-icons/ri'
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, getProducts, getUserById, sustractItem } from '../../Redux/actions';
+import { addItem, findProduct, getUserById, sustractItem } from '../../Redux/actions';
 import {BiFace} from 'react-icons/bi';
 import {AiFillMinusCircle} from 'react-icons/ai';
 import Button from '@mui/material/Button';
@@ -16,6 +16,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import userContext from '../../context/userContext';
 import {FaUserAlt} from 'react-icons/fa'
+import {IoIosSearch} from 'react-icons/io'
 
 export default function Comanda(){
     
@@ -23,7 +24,7 @@ export default function Comanda(){
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
     const user = useSelector(state => state.userById);
-    const products = useSelector(state => state.products)
+    const products = useSelector(state => state.productsInComanda)
     const cart = useSelector(state => state.cart);
     const history = useHistory();
     const {id} = useParams();
@@ -36,7 +37,7 @@ export default function Comanda(){
     }, [])
 
     useEffect(() => {
-        dispatch(getProducts())
+        dispatch(findProduct())
       }, [dispatch])
 
     const encurso = () => {
@@ -59,7 +60,12 @@ export default function Comanda(){
 
     const [category, setCategory] = useState('Comidas')
     const productsToShow = products && products.filter(p => p.category_id === category);
+    const [product, setProduct] = useState('');
 
+    const getProduct = (e) => {
+        setProduct(e.target.value)
+        dispatch(findProduct(product))
+    }
 
     const styles = {
         length : {
@@ -83,6 +89,10 @@ export default function Comanda(){
               
                 <Header user={user[0].name}/>
                <div className={s.container}>
+                <div className={s.containerInput}>
+                    {/* <IoIosSearch className={s.searchIcon}/> */}
+                    <input value={product} onChange={getProduct}  placeholder='Encuentra productos por su nombre' className={s.input}/>
+                </div>
                   <div className={s.containerProductos}>
                       <div className={s.category}>
                           {

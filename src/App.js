@@ -71,7 +71,8 @@ function App() {
 
   useEffect(() => {  
     let isMounted = true
-      socket.on('pedido', data => {
+    socket.on('pedido', data => {
+        handlesound()
         if (isMounted) dispatch(addOrder(data))
       })
       return ()=> { isMounted = false}

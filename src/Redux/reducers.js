@@ -1,5 +1,5 @@
 import storage from "redux-persist/lib/storage"
-import { ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, FILTER_ORDERS, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, RESET_CARD, RESET_CART, SET_CRONO, STATUS, SUSTRACT_TO_CART, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
+import { ADD_ITEM_TO_CART, ADD_ORDERS, ALL_ORDERS, CANCEL, CARD_STATUS_DELIVERY, CREDENTIAL, EMPTY_DETAILS, FILTER_ORDERS, FIND_PRODUCT, GET_ALL_ORDERS, GET_ALL_USERS, GET_DETAILS, GET_ORDERS_BY_DATE, GET_PRODUCT_BY_ID, GET_USER_BY_ID, ORDER_OF_THE_DAY, PRODUCTS, RESET, RESET_CARD, RESET_CART, SET_CRONO, STATUS, SUSTRACT_TO_CART, UPDATE_LOGIN, UPDATE_STATUS_ORDER_IN_CONFIRM, UPDATE_STATUS_STORE } from "./actions"
 
 
 const InicialState = {
@@ -10,6 +10,7 @@ const InicialState = {
     detalle : {},
     status: [],
     products: [],
+    productsInComanda: [],
     cardStatusDelivery: [],
     crono: [],
     productByid: {},
@@ -74,7 +75,7 @@ const InicialState = {
                 users: [],
                 userById: [],
                 cart: [],
-              
+                productsInComanda: []
             }
             case STATUS:
             
@@ -151,6 +152,12 @@ const InicialState = {
                 return{
                     ...state,
                     allOrders: action.payload
+                }
+            case FIND_PRODUCT:
+            
+                return{
+                    ...state,
+                    productsInComanda: action.payload
                 }
 
             case GET_USER_BY_ID:

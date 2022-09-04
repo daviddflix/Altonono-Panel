@@ -26,6 +26,7 @@ export const  GET_ALL_USERS = 'GET_ALL_USERS'
 export const  GET_USER_BY_ID = 'GET_USER_BY_ID'
 export const  ORDER_OF_THE_DAY = 'ORDER_OF_THE_DAY'
 export const  RESET_CART = 'RESET_CART'
+export const  FIND_PRODUCT = 'FIND_PRODUCT'
 
 
 const axios = require('axios').default;
@@ -170,6 +171,19 @@ export function addItemToOpenTable(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateComanda`, payload)
      console.log('res', res)
+    }
+}
+
+export function findProduct(payload){
+    return async function(dispatch){
+        if(payload){
+            const res = await axios.post(`${url}findProduct?product=${payload}`)
+           return dispatch({ type: FIND_PRODUCT, payload: res.data})
+        } else{
+            const res = await axios.post(`${url}findProduct`)
+            return dispatch({ type: FIND_PRODUCT, payload: res.data})
+        }
+     
     }
 }
 
