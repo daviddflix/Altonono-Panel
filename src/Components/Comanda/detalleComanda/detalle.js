@@ -85,7 +85,9 @@ export default function DetailMesaAbierta() {
     })
   }
 
-  console.log('newCart', newCart)
+  const sub = newCart.cart.length>0 ? newCart.cart.map((a) => a.unit_price * a.quantity): 0
+  const total = sub === 0 ? 0 : sub.reduce((a, b) => a + b, 0)
+  console.log('total', total)
   useEffect(() => {
     dispatch(getDetails(id))
   }, [id, dispatch])
@@ -139,7 +141,7 @@ export default function DetailMesaAbierta() {
             </div>
             <div className={s.subbox2}>
               <h4 className={s.subbox2_title}>Total</h4>
-              <CurrencyFormat className={s.total} value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+              <CurrencyFormat className={s.total} value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             </div>
           </div>
           <div className={s.containerResumen}><h3>Estado</h3></div>
