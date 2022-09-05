@@ -124,9 +124,9 @@ export default function DetailMesaAbierta() {
           </div>
           <div className={s.box1}>
             {
-              detalle.items && detalle.items.map(p => {
+              newCart.cart && newCart.cart.map(p => {
                 return (
-                  <Card key={p.id} title={p.title} quantity={p.quantity} unit_price={p.unit_price} />
+                  <Card key={p.id} title={p.title} id={p.id} quantity={p.quantity} unit_price={p.unit_price} />
                 )
               })
             }
@@ -161,15 +161,46 @@ export default function DetailMesaAbierta() {
 }
 
 
-function Card({ quantity, title, unit_price, }) {
+function Card({ quantity, title, unit_price, id }) {
+
+  const { newCart, setNewCart } = useContext(cartContext);
+
+  
+  const increaseQuantity = () => {
+    setNewCart(prev => ({
+      ...prev, cart: [...prev.cart.map(p => p.id === id ? {
+        ...p, quantity: p.quantity + 1
+      } : p)]
+    }))
+  }
+  
+  const decreaseQuantity = () => {
+    const findProduct = newCart.cart.find(p => p.id === id)
+
+    if(findProduct && findProduct.quantity > 1){
+      setNewCart(prev => ({
+        ...prev, cart: [...prev.cart.map(p => p.id === id ? {
+          ...p, quantity: p.quantity - 1
+        } : p)]
+      }))
+    }
+
+    if(findProduct && findProduct.quantity === 1){
+      setNewCart(prev => ({
+        ...prev, cart: [...prev.cart.filter(p => p.id !== id)]
+      }))
+    }
+   
+  }
+
   return (
     <div className={s.subbox1}>
       <h4 className={s.cardtitle}>{title}</h4>
       <CurrencyFormat value={unit_price * quantity} className={s.subtotal} displayType={'text'} thousandSeparator={true} prefix={'$'} />
       <div className={s.subbox_}>
-        <button className={s.btnadd}><HiMinus /></button>
+        <button onClick={decreaseQuantity} className={s.btnadd}><HiMinus /></button>
         <span className={s.quantity}>{quantity}</span>
-        <button className={s.btnadd}><AiOutlinePlus /></button>
+        <button onClick={increaseQuantity} className={s.btnadd}><AiOutlinePlus /></button>
       </div>
     </div>
   )
@@ -183,6 +214,7 @@ function MaxWidthDialog() {
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('sm');
   const products = useSelector(state => state.products);
+  const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
   const { newCart, setNewCart } = useContext(cartContext)
 
@@ -190,38 +222,11 @@ function MaxWidthDialog() {
     dispatch(getProducts())
   }, [dispatch])
 
-  const AddnewProduct = (e) => {
-
-    // const {name} = e.target
-
+  useEffect(() => {
     setNewCart(prev => ({
-      ...prev, cart: [...prev.cart, e.target.options]
+      ...prev, cart: detalle.items
     }))
-
-
-    //  if (checked === true){
-    //  options.salsa.length <=1 ? setOptions(prev => ({
-    //      ...prev, salsa: [...prev.salsa, name], picture_url: pic_to_render, 
-    //      id: uuidv4(), price: price, title: title
-    //    })) : setMessage(true)
-    //  }
-
-    //  if(options.salsa.length >= 2){
-    //    e.target.checked = false
-
-    //  }
-
-
-
-
-    //   if(checked === false){
-    //     setMessage(false)
-    //     setOptions(prev => ({
-    //       ...prev, salsa: prev.salsa.filter(p => p !== name)
-    //     }))
-    //   }
-  }
-
+  },[])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -230,8 +235,6 @@ function MaxWidthDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-
-
 
   return (
     <React.Fragment>
@@ -259,23 +262,19 @@ function MaxWidthDialog() {
             <Autocomplete
               id="grouped-demo"
               options={products}
-              renderOption={params => {
-                return (
-                  <TextField {...params} label={params} />
-                )
+              getOptionLabel={option => option.title}
+              onChange={(value, newvalue) => {
+                setNewCart(prev => ({
+                  ...prev, cart: [...prev.cart, {...newvalue, quantity: 1}]
+                }))
               }}
-              // onChage={(value, newvalue) => {
-              //   setNewCart(prev => ({
-              //     ...prev, cart: [...prev.cart, newvalue]
-              //   }))
-              // }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Productos" />}
             />
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>cERRAR</Button>
+          <Button onClick={handleClose}>continuar</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
