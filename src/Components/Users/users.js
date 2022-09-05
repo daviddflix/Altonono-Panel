@@ -62,8 +62,9 @@ export default function Users(){
                     {
                         users.length > 0 ? users.map(p => {
                             const filterByDate = p.payments.length > 0 ? p.payments.filter(p => p.date === date) : 0
-                            const filterByDateWithoutCancelation = filterByDate === 0  || filterByDate === [] ? 0 : filterByDate.filter(p => p.status !== "cancelado")
-                            const arraytotal = filterByDateWithoutCancelation === 0  ? 0 : filterByDateWithoutCancelation.map(p => p.monto);
+                            const filterByDateWithoutCancelation = filterByDate === 0  || filterByDate === [] ? 0 : filterByDate.filter(p => p.status === "Pedido Finalizado")
+                            const filterByDateWithoutInvitation = filterByDateWithoutCancelation === 0  ? 0 : filterByDate.filter(p => p.method !== "Invitacion")
+                            const arraytotal = filterByDateWithoutInvitation === 0  ? 0 : filterByDateWithoutInvitation.map(p => p.monto);
                             const total = arraytotal === 0 ? 0 : arraytotal.reduce((a,b) => a + b, 0)
 
                             return(

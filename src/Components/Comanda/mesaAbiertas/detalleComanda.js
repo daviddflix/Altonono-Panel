@@ -53,7 +53,7 @@ export default function DetailMesa (){
                        {
                         detalle.items && detalle.items.map(p => {
                             return(
-                               <div key={id} className={s.subbox1}>
+                               <div key={p.id} className={s.subbox1}>
                                     <div className={s.subbox_}>
                                         <h4 className={s.quantity}>x{p.quantity}</h4>
                                         <h4>{p.title}</h4>

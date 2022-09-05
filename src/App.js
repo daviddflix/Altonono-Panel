@@ -16,18 +16,15 @@ import { version } from '../package.json';
 import IncomingOrders from './Components/InsidePanel/insidepanel';
 import VerticalNavbar from './Components/Vertical Navbar/verticalNavbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOrder, getStatus } from './Redux/actions';
 import Menus from './Components/Menu/menu';
 import Restore from './Components/Restore/restore';
 import ModifyItem from './Components/InsidePanel/modifyItem';
 import Tabsview from './Components/Menu/littleMenu';
-import sound from './Components/Order/Sounds/alert.mp3'
 import Users from './Components/Users/users';
 import {CreateUser} from './Components/Users/users';
 import Comanda from './Components/Comanda/comanda';
 import Encurso from './Components/Comanda/encurso'
 import CreateComanda from './Components/Comanda/crearcomanda/crearComanda';
-import io from "socket.io-client";
 import MisComandas from './Components/Comanda/misComandas/misComandas';
 import MesaAbierta from './Components/Comanda/mesaAbiertas/mesaAbierta';
 import DetailMesaAbierta from './Components/Comanda/detalleComanda/detalle';
@@ -35,9 +32,8 @@ import DetailMesa from './Components/Comanda/mesaAbiertas/detalleComanda';
 
 function App() {
 
-  const port = 'https://altonono.herokuapp.com/'
   const admin = useSelector(state => state.admin)
-  const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});
+ 
 
   const [client, setClient] = useState({
     name: '',
@@ -61,22 +57,6 @@ function App() {
     toggle: windowlength.matches === true? true : false,
     sidebarWidth: '200px'
   });
-
-  const playAudio = new Audio(sound);
-
-  const handlesound = () => {
-    playAudio.play()
-  }
-  
-
-  useEffect(() => {  
-    let isMounted = true
-    socket.on('pedido', data => {
-        handlesound()
-        if (isMounted) dispatch(addOrder(data))
-      })
-      return ()=> { isMounted = false}
-     })
 
      const isProduction = process.env.NODE_ENV === 'production';
 

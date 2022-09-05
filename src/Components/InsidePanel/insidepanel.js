@@ -6,8 +6,9 @@ import {MdOutlineWbTwilight} from 'react-icons/md'
 import {BsCartCheck} from 'react-icons/bs'
 import { useHistory } from 'react-router-dom';
 import ModalContext from '../../context/modalContext';
-import {  emptyDetails, getAllOrdersOfTheDay, getStatus, setCrono, updateStatusOrderInConfirm } from '../../Redux/actions';
-
+import {  addOrder, emptyDetails, getAllOrdersOfTheDay, getStatus, setCrono, updateStatusOrderInConfirm } from '../../Redux/actions';
+import io from "socket.io-client";
+import sound from '../Order/Sounds/alert.mp3'
 
 export default function IncomingOrders() {
 
@@ -32,6 +33,34 @@ export default function IncomingOrders() {
  React.useEffect(() => {
   dispatch(getAllOrdersOfTheDay())
  }, [dispatch])
+
+ const port = 'https://altonono.herokuapp.com/'
+ const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});
+ const admin = useSelector(state => state.admin)
+
+ const playAudio = new Audio(sound);
+
+ const handlesound = () => {
+  if(admin.role === 'admin'){
+    playAudio.play()
+  } else {
+    playAudio.pause()
+  }
+ }
+
+ const stopSound = () => {
+  playAudio.pause()
+ }
+ 
+
+ React.useEffect(() => {  
+   let isMounted = true
+   socket.on('pedido', data => {
+       handlesound()
+       if (isMounted) dispatch(addOrder(data))
+     })
+     return ()=> { isMounted = false}
+    })
 
  const styles = {
   length : {
@@ -65,6 +94,7 @@ export default function IncomingOrders() {
                   key={p.id}
                   name={p.name}
                   id={p.id}
+                  audio={stopSound}
                   />
                   )
                 }): <div className={s.noOrder}>
@@ -103,7 +133,7 @@ export default function IncomingOrders() {
 }
 
 
-export function Card({name, id}){
+export function Card({name, id, audio}){
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -113,6 +143,7 @@ export function Card({name, id}){
    }, [dispatch])
 
   const handleDetails = () => {
+    audio()
     dispatch(emptyDetails())
     history.push(`/detail/${id}`)
   }

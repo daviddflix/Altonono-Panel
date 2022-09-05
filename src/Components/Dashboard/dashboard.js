@@ -37,7 +37,8 @@ export default function Dashboard(){
   
   
   const totalOrdersByDay = orders.length > 0 ? orders.filter(p => p.status === "Pedido Finalizado") : []
-  const arrayOfTotalOrder = totalOrdersByDay.length > 0 ? totalOrdersByDay.map(p => p.monto) : 0
+  const totalOrdersWithoutInvitation =  totalOrdersByDay.length > 0 ? totalOrdersByDay.filter(p => p.method !== "Invitacion") : []
+  const arrayOfTotalOrder = totalOrdersWithoutInvitation.length > 0 ? totalOrdersWithoutInvitation.map(p => p.monto) : 0
   const total = arrayOfTotalOrder === 0 ? 0 : arrayOfTotalOrder.reduce((a,b) => a + b, 0);
   
  

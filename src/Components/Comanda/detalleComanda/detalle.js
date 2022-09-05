@@ -307,10 +307,6 @@ function ChangeMethod() {
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('sm');
-  const detalle = useSelector(state => state.detalle);
-  const dispatch = useDispatch();
-
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -320,7 +316,7 @@ function ChangeMethod() {
     setOpen(false);
   };
 
-  const { newCart, setNewCart } = useContext(cartContext)
+  const { newCart } = useContext(cartContext)
 
   return (
     <React.Fragment>
@@ -333,7 +329,7 @@ function ChangeMethod() {
         open={open}
         onClose={handleClose}
       >
-        {/* <DialogTitle>Elige una forma </DialogTitle> */}
+        <DialogTitle>Elige una forma de cobro</DialogTitle>
         <DialogContent>
           <Box
             noValidate
@@ -349,7 +345,7 @@ function ChangeMethod() {
               {
                 methodos.map(p => {
                   return (
-                    <CardMethod key={p.id} image={p.image} color={newCart.method === p.method ? 'red' : '#fff'} alt={p.alt} method={p.method} />
+                    <CardMethod key={p.id} image={p.image} color={newCart.method === p.method ? '#009ee3' : '#fff'} alt={p.alt} method={p.method} />
                   )
                 })
               }
@@ -358,7 +354,7 @@ function ChangeMethod() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>cERRAR</Button>
+          <Button onClick={handleClose}>confirmar</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
@@ -374,7 +370,7 @@ function CardMethod({ image, method, color, alt }) {
   };
 
   return (
-    <div defaultValue={newCart.method} style={{ backgroundColor: color }} className={s.containerMethod}>
+    <div onClick={handleChange} defaultValue={newCart.method} style={{ backgroundColor: color }} className={s.containerMethod}>
       <input className={s.imageMethod} type='image' src={image} alt={alt} />
       <h3>{method}</h3>
     </div>

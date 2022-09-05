@@ -21,6 +21,7 @@ import CurrencyFormat from 'react-currency-format';
 import {FaUserAlt} from 'react-icons/fa'
 import { AiOutlineGift, AiOutlineQrcode } from "react-icons/ai";
 import { GiReceiveMoney } from "react-icons/gi";
+import moment from 'moment'
 
 export default function CreateComanda(){
 
@@ -29,8 +30,27 @@ export default function CreateComanda(){
     const user = useSelector(state => state.userById);
     const history = useHistory();
     const {id} = useParams();
+    const date = moment().format('l')
     const dispatch = useDispatch();
 
+    const filterByDate = user.length > 0 ? user[0].payments.filter(p => p.date == date) : []
+
+    const finterInvitation = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
+    const arrayInvitation = finterInvitation.length > 0 ? finterInvitation.filter(p => p.method === "Invitacion") : []
+    const subInvitation = arrayInvitation.length > 0 ? arrayInvitation.map(p => p.monto) : []
+    const totalInvitation = subInvitation.length > 0 ? subInvitation.reduce((a, b) => a + b, 0) : 0
+
+    const filterQR = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
+    const arrayQR = filterQR.length > 0 ? filterQR.filter(p => p.method === "QR") : []
+    const subQR = arrayQR.length > 0 ? arrayQR.map(p => p.monto) : []
+    const totalQR = subQR.length > 0 ? subQR.reduce((a, b) => a + b, 0) : 0
+
+    const filterEfectivo = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
+    const arrayEfectivo = filterEfectivo.length > 0 ? filterEfectivo.filter(p => p.method === "Efectivo") : []
+    const subEfectivo = arrayEfectivo.length > 0 ? arrayEfectivo.map(p => p.monto) : []
+    const totalEfectivo = subEfectivo.length > 0 ? subEfectivo.reduce((a, b) => a + b, 0) : 0
+
+   
     useEffect(() => {
         dispatch(getUserById(id))
       }, [dispatch, id])
@@ -52,7 +72,7 @@ export default function CreateComanda(){
     const handleClickOpen = () => {
       setOpen(true);
     };
-  
+   
     const handleClose = () => {
       setOpen(false);
     };
@@ -95,9 +115,9 @@ export default function CreateComanda(){
               <Header user={!user.length ? "cargando" : user[0].name}/>
               <div className={s.mainContainer}>
               <div className={s.subcontainer}>
-                 <Card color={'#29d884'} Icon={<GiReceiveMoney className={s.moneyIcon}/>} name={'Efectivo'} total={0}/>
-                 <Card color={'#1976d2 '} Icon={<AiOutlineQrcode className={s.moneyIcon}/>} name={'QR'} total={0}/>
-                 <Card color={'#282828'} Icon={<AiOutlineGift className={s.moneyIcon}/>} name={'Invitaciones'} total={0}/>
+                 <Card color={'#29d884'} Icon={<GiReceiveMoney className={s.moneyIcon}/>} name={'Efectivo'} total={totalEfectivo}/>
+                 <Card color={'#1976d2 '} Icon={<AiOutlineQrcode className={s.moneyIcon}/>} name={'QR'} total={totalQR}/>
+                 <Card color={'#282828'} Icon={<AiOutlineGift className={s.moneyIcon}/>}  name={'Invitaciones'} total={totalInvitation}/>
               </div>
               <div className={s.containerbtns}>
                 <div className={s.btnmiscomandas}>

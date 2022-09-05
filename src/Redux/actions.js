@@ -184,14 +184,14 @@ export function addItemToOpenTable(payload){
 
 export function findProduct(payload){
     return async function(dispatch){
+      
         if(payload){
-            const res = await axios.post(`${url}findProduct?product=${payload}`)
-           return dispatch({ type: FIND_PRODUCT, payload: res.data})
+            const res = await axios.post(`${url}findProduct`, payload)
+            return dispatch({ type: FIND_PRODUCT, payload: res.data})
         } else{
             const res = await axios.post(`${url}findProduct`)
             return dispatch({ type: FIND_PRODUCT, payload: res.data})
-        }
-     
+        }  
     }
 }
 

@@ -59,15 +59,15 @@ export default function Comanda(){
         return false
     })
 
-    const [category, setCategory] = useState('All')
-    const productsToShow = category === 'All' ? products : products.filter(p => p.category_id === category);
     const [product, setProduct] = useState('');
 
     const getProduct = (e) => {
         setProduct(e.target.value)
-        console.log('product', product)
-        dispatch(findProduct(e.target.value))
     }
+
+    useEffect(() => {
+        dispatch(findProduct({product: product}))
+    }, [dispatch, product])
 
     const styles = {
         length : {
@@ -98,16 +98,16 @@ export default function Comanda(){
                   <div className={s.containerProductos}>
                       <div className={s.category}>
                           {
-                            unicProducts.map(p => {
+                         unicProducts &&  unicProducts.map(p => {
                                 return(
-                                    <div onClick={() => setCategory(p)} className={s.categoryname} key={p}>{p}</div>
+                                    <div onClick={() => dispatch(findProduct({category: p}))} className={s.categoryname} key={p}>{p}</div>
                                 )
                             })
                           }
                       </div>
                       <div className={s.products}>
                           {
-                            productsToShow.map(p => {
+                           productsInComanda && productsInComanda.map(p => {
                                 return(
                                    <CardProduct
                                    key={p.id}
