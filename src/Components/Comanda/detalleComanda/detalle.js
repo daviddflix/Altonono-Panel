@@ -137,6 +137,7 @@ export default function DetailMesaAbierta() {
           <div className={s.box2}>
             <div className={s.subbox2}>
               <h4 className={s.subbox2_title}>Forma de pago</h4>
+              <h4 className={s.subbox2_title}>{detalle.method}</h4>
               <div className={s.containerChangeMethod}><ChangeMethod /></div>
             </div>
             <div className={s.subbox2}>
@@ -151,7 +152,7 @@ export default function DetailMesaAbierta() {
             </div>
           </div>
           <div className={s.containerBtnss}>
-            <Button className={s.btnss} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
+            <Button className={s.btnss} disabled={!detalle.method} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
             <Button className={s.btnss} variant="contained">Guardar</Button>
             <Button className={s.cancelar} color='error' onClick={cancel} variant="contained">CANCELAR</Button>
           </div>
@@ -371,7 +372,7 @@ function CardMethod({ image, method, color, alt }) {
   };
 
   return (
-    <div onClick={handleChange} defaultValue={newCart.method} style={{ backgroundColor: color }} className={s.containerMethod}>
+    <div onClick={handleChange}  style={{ backgroundColor: color }} className={s.containerMethod}>
       <input className={s.imageMethod} type='image' src={image} alt={alt} />
       <h3>{method}</h3>
     </div>

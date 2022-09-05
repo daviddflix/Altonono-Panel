@@ -262,7 +262,7 @@ export function Dialogo(){
       </DialogContent>
       <DialogActions>
       <Button onClick={cancel}>Cancelar</Button>
-      <Button onClick={handleClose}>Continuar</Button>
+      <Button disabled={!client.name || !client.table} onClick={handleClose}>confirmar</Button>
       </DialogActions>
   </Dialog>
     </div>

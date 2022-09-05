@@ -128,7 +128,7 @@ export default function Encurso(){
                                 <Card color={client.method === p.method ? '#009ee3' : '#fff'} key={p.method} method={p.method} image={p.image} alt={p.alt}/>
                             )
                         })
-                    }
+                    } 
                   </div>
                   <div className={s.containerTotal}>
                      <h2>Total</h2>
