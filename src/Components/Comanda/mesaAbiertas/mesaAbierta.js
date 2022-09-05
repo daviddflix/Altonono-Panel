@@ -51,7 +51,7 @@ console.log()
                     {
                         filterbyState.length > 0 ? filterbyState.map(p => {
                             return(
-                               <Card id={p.id} key={p.id} name={p.name} status={p.status}/>
+                               <Card id={p.id} key={p.id} name={p.name} table={p.table}/>
                             )
                         }) : <div className={s.containerNocomanda}>
                             <SiAirtable className={s.listIcons}/>
@@ -65,7 +65,7 @@ console.log()
 }
 
 
-function Card({id, name, status}){ 
+function Card({id, name, table}){ 
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -80,7 +80,7 @@ function Card({id, name, status}){
         <div onClick={seeDetail}  className={s.cardmain}>
            <h3 className={s.cardname}>{name}</h3>
            <div className={s.metodo}>
-             <h6>{status}</h6>
+             <h6>Mesa {table}</h6>
            </div>
         </div>
     )

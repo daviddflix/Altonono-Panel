@@ -131,6 +131,8 @@ export function getAllUser(){
     }
 }
 
+
+
 export function getUserById(id){
     return async function(dispatch){
       const res = await axios.post(`${url}getWaiterById/${id}`)
@@ -178,7 +180,7 @@ export function filterOrders (value){
 export function addItemToOpenTable(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateComanda`, payload)
-     console.log('res', res)
+     console.log('addItemToOpenTable', res)
     }
 }
 

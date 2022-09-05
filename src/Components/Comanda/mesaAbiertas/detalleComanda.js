@@ -64,8 +64,12 @@ export default function DetailMesa (){
                         })
                        }
                     </div>
-                    <div className={s.containerResumen}><h3>Resumen</h3></div>
+    
                     <div className={s.box2}>
+                       <div className={s.boxComentarios}>
+                        <h4>Comentarios:</h4>
+                        <h4 className={s.comenario}><u>{detalle.comentarios}</u></h4>
+                        </div>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Forma de pago</h4>
                             <h4 className={s.method}>{detalle.method}</h4>

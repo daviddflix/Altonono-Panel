@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import { RiArrowLeftSLine } from 'react-icons/ri'
-import { cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
+import { addItemToOpenTable, cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
 import Spinner, { SpinnerTiny } from "../../spinner/spinner";
 import { CgMathPlus } from 'react-icons/cg'
@@ -74,6 +74,11 @@ export default function DetailMesaAbierta() {
     )
   }
 
+  const save = () => {
+    dispatch(addItemToOpenTable(newCart))
+    history.push(`/users`)
+  }
+
   const handleStatusBtn = () => {
     dispatch(updateStatusOrder({ status: 'Pedido Finalizado', id: id }))
     history.push(`/users`)
@@ -87,7 +92,7 @@ export default function DetailMesaAbierta() {
 
   const sub = newCart.cart.length>0 ? newCart.cart.map((a) => a.unit_price * a.quantity): 0
   const total = sub === 0 ? 0 : sub.reduce((a, b) => a + b, 0)
-  console.log('total', total)
+ 
   useEffect(() => {
     dispatch(getDetails(id))
   }, [id, dispatch])
@@ -122,7 +127,7 @@ export default function DetailMesaAbierta() {
               <RiArrowLeftSLine onClick={goback} className={s.arrowleft} />
               <h3 className={s.maintitle}>Detalle del pedido</h3>
             </div>
-            <MaxWidthDialog />
+            <MaxWidthDialog id={detalle.id}/>
           </div>
           <div className={s.box1}>
             {
@@ -133,11 +138,15 @@ export default function DetailMesaAbierta() {
               })
             }
           </div>
-          <div className={s.containerResumen}><h3>Resumen</h3></div>
+          {/* <div className={s.containerResumen}><h3>Resumen</h3></div> */}
           <div className={s.box2}>
+            <div className={s.boxComentarios}>
+              <h4>Comentarios:</h4>
+              <h4 className={s.comenario}><u>{detalle.comentarios}</u></h4>
+            </div>
             <div className={s.subbox2}>
               <h4 className={s.subbox2_title}>Forma de pago</h4>
-              <h4 className={s.subbox2_title}>{detalle.method}</h4>
+              <h4 className={s.subbox2_method}>{detalle.method}</h4>
               <div className={s.containerChangeMethod}><ChangeMethod /></div>
             </div>
             <div className={s.subbox2}>
@@ -152,8 +161,8 @@ export default function DetailMesaAbierta() {
             </div>
           </div>
           <div className={s.containerBtnss}>
-            <Button className={s.btnss} disabled={!detalle.method} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
-            <Button className={s.btnss} variant="contained">Guardar</Button>
+            <Button className={s.btnss} disabled={!newCart.method} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
+            <Button className={s.btnss} disabled={!newCart.method} onClick={save} variant="contained">Guardar</Button>
             <Button className={s.cancelar} color='error' onClick={cancel} variant="contained">CANCELAR</Button>
           </div>
         </div> :
@@ -212,7 +221,7 @@ function Card({ quantity, title, unit_price, id }) {
 
 
 
-function MaxWidthDialog() {
+function MaxWidthDialog({id}) {
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState('sm');
@@ -220,14 +229,14 @@ function MaxWidthDialog() {
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
   const { newCart, setNewCart } = useContext(cartContext)
-
+console.log(newCart)
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
 
   useEffect(() => {
     setNewCart(prev => ({
-      ...prev, cart: detalle.items
+      ...prev, cart: detalle.items, id: Number(id)
     }))
   },[])
 
@@ -322,7 +331,7 @@ function ChangeMethod() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" className={s.plusiconMethod} onClick={handleClickOpen}>
+      <Button variant="outlined" size="small" className={s.plusiconMethod} onClick={handleClickOpen}>
         forma de cobro
       </Button>
       <Dialog

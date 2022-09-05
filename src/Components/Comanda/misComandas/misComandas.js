@@ -39,10 +39,10 @@ export default function MisComandas(){
       }
 
     const date = moment().format('l')
-    console.log('date', date)
+   
     const items = user.length > 0 ? user[0].payments.filter(p => p.date === date) : []
     const filterbyState = items.length > 0 ? items.filter(p => p.status === 'Pedido Finalizado') : []
-console.log('items', items)
+
 
     return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
@@ -52,7 +52,7 @@ console.log('items', items)
                     {
                         filterbyState.length > 0 ? filterbyState.map(p => {
                             return(
-                               <Card id={p.id} key={p.id} name={p.name} status={p.status}/>
+                               <Card id={p.id} key={p.id} name={p.name} table={p.table}/>
                             )
                         }) : <div className={s.containerNocomanda}>
                             <FcList className={s.listIcon}/>
@@ -66,7 +66,7 @@ console.log('items', items)
 } 
 
 
-function Card({id, name, status}){
+function Card({id, name, table}){
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -81,7 +81,7 @@ function Card({id, name, status}){
         <div onClick={seeDetail} className={s.cardmain}>
            <h3 className={s.cardname}>{name}</h3>
            <div className={s.metodo}>
-             <h6>{status}</h6>
+             <h6>Mesa {table}</h6>
            </div>
         </div>
     )
