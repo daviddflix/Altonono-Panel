@@ -24,7 +24,8 @@ export default function Comanda(){
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
     const user = useSelector(state => state.userById);
-    const products = useSelector(state => state.productsInComanda)
+    const productsInComanda = useSelector(state => state.productsInComanda)
+    const products = useSelector(state => state.products)
     const cart = useSelector(state => state.cart);
     const history = useHistory();
     const {id} = useParams();
@@ -58,13 +59,14 @@ export default function Comanda(){
         return false
     })
 
-    const [category, setCategory] = useState('Comidas')
-    const productsToShow = products && products.filter(p => p.category_id === category);
+    const [category, setCategory] = useState('All')
+    const productsToShow = category === 'All' ? products : products.filter(p => p.category_id === category);
     const [product, setProduct] = useState('');
 
     const getProduct = (e) => {
         setProduct(e.target.value)
-        dispatch(findProduct(product))
+        console.log('product', product)
+        dispatch(findProduct(e.target.value))
     }
 
     const styles = {
@@ -154,7 +156,7 @@ function CardProduct({ title, unit_price, description, id, available}){
             <h4 className={s.title}>{title}</h4>
             <h4 className={s.description}>{description}</h4>
        </div>
-         <h3 className={s.price}>{unit_price}</h3>
+         <h3 className={s.price}>${unit_price}</h3>
         <AiFillMinusCircle style={findQuantity !== undefined? {display: 'flex'} : {display: 'none'}} onClick={ProductNumberDecrement} className={s.trash}/>
         {/* {available === false && <h6 className={s.nodisponible}>No disponible</h6>} */}
     </div>

@@ -39,8 +39,11 @@ export default function Pedidos(){
  
 
    const filter = (e) => {
-   
-    dispatch(filterOrders({constrain: e.target.value}))
+    if(e.target.value === 'All'){
+      dispatch(getAllOrders())
+    } else{
+      dispatch(filterOrders(e.target.value))
+    }
    }
 
    const styles = {
@@ -73,6 +76,7 @@ const filterTotal = totalOrders === 0 ? 0 : totalOrders.map(p => p.monto)
             <label className={s.labelFiltros} >Filtros</label>    
                 <select placeholder='Selecciona' onChange={(e) => filter(e)} className={s.select}  >
                     <option className={s.option} >Selecciona</option>
+                    <option className={s.option} value='All'>Todos</option>
                     <option className={s.option} value='cancelado'>Cancelados</option>
                     <option className={s.option} value='Mesa Abierta'>Mesas Abiertas</option>
                     <option className={s.option} value='QR'>Pagado con QR</option>

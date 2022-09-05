@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
-import {RiArrowLeftSLine} from 'react-icons/ri'
-import { addItemToOpenTable, cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
+import { RiArrowLeftSLine } from 'react-icons/ri'
+import { cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
 import Spinner, { SpinnerTiny } from "../../spinner/spinner";
-import {CgMathPlus} from 'react-icons/cg'
+import { CgMathPlus } from 'react-icons/cg'
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -21,203 +21,158 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import {HiMinus} from 'react-icons/hi'
-import {AiOutlinePlus} from 'react-icons/ai'
+import { HiMinus } from 'react-icons/hi'
+import { AiOutlinePlus } from 'react-icons/ai'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Swal from 'sweetalert2'
 import cartContext from "../../../context/cartContext";
 
-export default function DetailMesaAbierta (){
+export default function DetailMesaAbierta() {
 
-    const dispatch = useDispatch();
-    const {variables} = useContext(ModalContext);
-    const windowlength = window.matchMedia("(max-width:700px)");
-    const {id} = useParams();
-    const detalle = useSelector(state => state.detalle);
-    const history = useHistory();
-    const {newCart, setNewCart} = useContext(cartContext)
+  const dispatch = useDispatch();
+  const { variables } = useContext(ModalContext);
+  const windowlength = window.matchMedia("(max-width:700px)");
+  const { id } = useParams();
+  const detalle = useSelector(state => state.detalle);
+  const history = useHistory();
+  const { newCart, setNewCart } = useContext(cartContext)
 
 
-    const cancel = () => {
-      return(
-        Swal.fire({
-          title: 'Confirmar cancelacion',
-          input: 'text',
-          inputPlaceholder: 'Razon de cancelacion',
-          inputAttributes: {
-            autocapitalize: 'off'
-          },
-          confirmButtonText: 'Cancelar',
-          confirmButtonColor: '#ff595a',
-          showLoaderOnConfirm: true,
-          preConfirm: (login) => {
-        
-            if(!login){
-              Swal.showValidationMessage(
-                `Especificar motivo de cancelacion`
-              )
-            }
-          },
-          allowOutsideClick: () => !Swal.isLoading()
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire(
-              'Cancelado!',
-              'Pedido cancelado.',
-              'success'
+  const cancel = () => {
+    return (
+      Swal.fire({
+        title: 'Confirmar cancelacion',
+        input: 'text',
+        inputPlaceholder: 'Razon de cancelacion',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        confirmButtonText: 'Cancelar',
+        confirmButtonColor: '#ff595a',
+        showLoaderOnConfirm: true,
+        preConfirm: (login) => {
+
+          if (!login) {
+            Swal.showValidationMessage(
+              `Especificar motivo de cancelacion`
             )
-            dispatch(cancelar({status : 'cancelado', id: id}))
-            history.push(`/users`)
           }
-        })
-      )
-    }
-
-    const handleStatusBtn = () => {       
-        dispatch(updateStatusOrder({status : 'Pedido Finalizado', id: id}))
-        history.push(`/users`)
-        Swal.fire({
-          icon: 'success',
-          title: 'Mesa Cerrada',
-          showConfirmButton: false,
-          timer: 1500
-        })
-   }
-
-
-   const updateComanda = () => {
-     dispatch(addItemToOpenTable(newCart))
-     history.push(`/users`)
-     Swal.fire({
-       icon: 'success',
-       title: 'Mesa Cerrada',
-       showConfirmButton: false,
-       timer: 1500
-     })
-   }
-    
-    console.log('newCart', newCart)
-    useEffect( () => {
-        dispatch(getDetails(id))
-     }, [id, dispatch])
-
-
-    useEffect( () => {
-        setNewCart(prev => ({
-      ...prev, cart: detalle.items
-    }))
-     }, [])
-
-    useEffect( () => {
-        setNewCart(prev => ({
-      ...prev, total: detalle.monto
-    }))
-     }, [])
-
-
-    const styles = {
-        length : {
-            width: 'calc(100vw - 80px)',
-            position: 'relative',
-            left: '80px'
         },
-        moreLength: {
-            width: 'calc(100vw - 200px)',
-            position: 'relative',
-            left: '200px'
-        },
-        less: {
-           width : '100vw'
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Cancelado!',
+            'Pedido cancelado.',
+            'success'
+          )
+          dispatch(cancelar({ status: 'cancelado', id: id }))
+          history.push(`/users`)
         }
-      }
-
-    const goback = () => {
-      history.goBack()
-    }
-
-    return(
-        <div  style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>
-            {
-                detalle.items ? <div className={s.submain}>
-                     <div className={s.containerArrow}>
-                        <div className={s.subcontainerArrow}>
-                         <RiArrowLeftSLine onClick={goback} className={s.arrowleft}/>
-                        <h3 className={s.maintitle}>Detalle del pedido</h3>
-                        </div>
-                        <MaxWidthDialog/>
-                     </div>
-                    <div className={s.box1}>
-                       {
-                        newCart.cart && newCart.cart.map(p => {
-                            return(
-                              <Card key={p.id} id={p.id} title={p.title} quantity={p.quantity} unit_price={p.unit_price}/>
-                            )
-                        })
-                       }
-                    </div>
-                    <div className={s.containerResumen}><h3>Resumen</h3></div>
-                    <div className={s.box2}>
-                        <div className={s.subbox2}>
-                            <h4 className={s.subbox2_title}>Forma de pago</h4>
-                            <div className={s.containerChangeMethod}><ChangeMethod/></div>
-                        </div>
-                        <div className={s.subbox2}>
-                            <h4 className={s.subbox2_title}>Total</h4>
-                            <CurrencyFormat className={s.total} value={newCart.total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                        </div>
-                    </div>
-                    <div className={s.containerResumen}><h3>Estado</h3></div>
-                    <div className={s.box3}>
-                        <div className={s.subbox2}>
-                            <h4 className={s.status}>{detalle.status}</h4>
-                        </div>
-                    </div>
-                    <div className={s.containerBtnss}>
-                    <Button className={s.btnss} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
-                    <Button className={s.btnss} disabled={!newCart.method} onClick={updateComanda} variant="contained">Guardar</Button>
-                    <Button className={s.cancelar} color='error' onClick={cancel}  variant="contained">CANCELAR</Button>
-                    </div>
-                </div> :
-                <div className={s.containerSpinner}><Spinner/></div>
-            }
-        </div>
+      })
     )
+  }
+
+  const handleStatusBtn = () => {
+    dispatch(updateStatusOrder({ status: 'Pedido Finalizado', id: id }))
+    history.push(`/users`)
+    Swal.fire({
+      icon: 'success',
+      title: 'Mesa Cerrada',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  console.log('newCart', newCart)
+  useEffect(() => {
+    dispatch(getDetails(id))
+  }, [id, dispatch])
+
+
+  const styles = {
+    length: {
+      width: 'calc(100vw - 80px)',
+      position: 'relative',
+      left: '80px'
+    },
+    moreLength: {
+      width: 'calc(100vw - 200px)',
+      position: 'relative',
+      left: '200px'
+    },
+    less: {
+      width: '100vw'
+    }
+  }
+
+  const goback = () => {
+    history.goBack()
+  }
+
+  return (
+    <div style={windowlength.matches === false ? variables.toggle === true ? styles.length : styles.moreLength : styles.less} className={s.main}>
+      {
+        detalle.items ? <div className={s.submain}>
+          <div className={s.containerArrow}>
+            <div className={s.subcontainerArrow}>
+              <RiArrowLeftSLine onClick={goback} className={s.arrowleft} />
+              <h3 className={s.maintitle}>Detalle del pedido</h3>
+            </div>
+            <MaxWidthDialog />
+          </div>
+          <div className={s.box1}>
+            {
+              detalle.items && detalle.items.map(p => {
+                return (
+                  <Card key={p.id} title={p.title} quantity={p.quantity} unit_price={p.unit_price} />
+                )
+              })
+            }
+          </div>
+          <div className={s.containerResumen}><h3>Resumen</h3></div>
+          <div className={s.box2}>
+            <div className={s.subbox2}>
+              <h4 className={s.subbox2_title}>Forma de pago</h4>
+              <div className={s.containerChangeMethod}><ChangeMethod /></div>
+            </div>
+            <div className={s.subbox2}>
+              <h4 className={s.subbox2_title}>Total</h4>
+              <CurrencyFormat className={s.total} value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            </div>
+          </div>
+          <div className={s.containerResumen}><h3>Estado</h3></div>
+          <div className={s.box3}>
+            <div className={s.subbox2}>
+              <h4 className={s.status}>{detalle.status}</h4>
+            </div>
+          </div>
+          <div className={s.containerBtnss}>
+            <Button className={s.btnss} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
+            <Button className={s.btnss} variant="contained">Guardar</Button>
+            <Button className={s.cancelar} color='error' onClick={cancel} variant="contained">CANCELAR</Button>
+          </div>
+        </div> :
+          <div className={s.containerSpinner}><Spinner /></div>
+      }
+    </div>
+  )
 }
 
 
-function Card({quantity, title, unit_price, id}){
-
-  const {newCart, setNewCart} = useContext(cartContext)
-  const findItem = newCart.cart.find(p => p.id === id)
-
-  // const add = () => {
-  //   if(findItem){
-  //     newCart.cart.map(p => p.id === id? {
-
-  //       ...p, quantity : p.quantity + 1
-  //   }: p)
-
-  //     // setNewCart(prev => ({
-  //     //   ...prev, cart : cart.map(p => p.id === id? {
-  //     //     ...p, quantity : p.quantity + 1
-  //     // }: p)
-  //     // }))
-  //   }
-  
-  // }
-
-    return(
-        <div className={s.subbox1}>
-            <h4 className={s.cardtitle}>{title}</h4>
-            <CurrencyFormat value={unit_price} className={s.subtotal} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-            <div className={s.subbox_}>
-                <button className={s.btnadd}><HiMinus/></button>
-                  <span className={s.quantity}>{quantity}</span>
-                <button className={s.btnadd}><AiOutlinePlus/></button>
-            </div>
-        </div>
-    )
+function Card({ quantity, title, unit_price, }) {
+  return (
+    <div className={s.subbox1}>
+      <h4 className={s.cardtitle}>{title}</h4>
+      <CurrencyFormat value={unit_price * quantity} className={s.subtotal} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+      <div className={s.subbox_}>
+        <button className={s.btnadd}><HiMinus /></button>
+        <span className={s.quantity}>{quantity}</span>
+        <button className={s.btnadd}><AiOutlinePlus /></button>
+      </div>
+    </div>
+  )
 }
 
 
@@ -229,19 +184,43 @@ function MaxWidthDialog() {
   const [maxWidth, setMaxWidth] = React.useState('sm');
   const products = useSelector(state => state.products);
   const dispatch = useDispatch();
-  const {newCart, setNewCart} = useContext(cartContext);
-  const detalle = useSelector(state => state.detalle);
-
-  useEffect(() => {
-    setNewCart(prev => ({
-      ...prev, cart: detalle.items
-    }))
-  }, [dispatch])
+  const { newCart, setNewCart } = useContext(cartContext)
 
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
 
+  const AddnewProduct = (e) => {
+
+    // const {name} = e.target
+
+    setNewCart(prev => ({
+      ...prev, cart: [...prev.cart, e.target.options]
+    }))
+
+
+    //  if (checked === true){
+    //  options.salsa.length <=1 ? setOptions(prev => ({
+    //      ...prev, salsa: [...prev.salsa, name], picture_url: pic_to_render, 
+    //      id: uuidv4(), price: price, title: title
+    //    })) : setMessage(true)
+    //  }
+
+    //  if(options.salsa.length >= 2){
+    //    e.target.checked = false
+
+    //  }
+
+
+
+
+    //   if(checked === false){
+    //     setMessage(false)
+    //     setOptions(prev => ({
+    //       ...prev, salsa: prev.salsa.filter(p => p !== name)
+    //     }))
+    //   }
+  }
 
 
   const handleClickOpen = () => {
@@ -252,12 +231,12 @@ function MaxWidthDialog() {
     setOpen(false);
   };
 
- 
+
 
   return (
     <React.Fragment>
       <Button variant="outlined" className={s.plusicon} onClick={handleClickOpen}>
-        <CgMathPlus/>
+        <CgMathPlus />
       </Button>
       <Dialog
         fullWidth={fullWidth}
@@ -277,22 +256,22 @@ function MaxWidthDialog() {
               width: 'fit-content',
             }}
           >
-             <Autocomplete
-      id="grouped-demo"
-      options={products}
-      renderInput={(params) => (
-        <TextField {...params} label="Productos..." variant="outlined" />
-        )}
-      onChange={(_event, newTeam) => {
-        setNewCart(prev => ({
-          ...prev, cart: [...prev.cart, {...newTeam, quantity: 1}]
-        }))
-    
-      }}
-      getOptionLabel={option => option.title}
-      sx={{ width: 250 }}
-     
-    />
+            <Autocomplete
+              id="grouped-demo"
+              options={products}
+              renderOption={params => {
+                return (
+                  <TextField {...params} label={params} />
+                )
+              }}
+              // onChage={(value, newvalue) => {
+              //   setNewCart(prev => ({
+              //     ...prev, cart: [...prev.cart, newvalue]
+              //   }))
+              // }}
+              sx={{ width: 250 }}
+              renderInput={(params) => <TextField {...params} label="Productos" />}
+            />
           </Box>
         </DialogContent>
         <DialogActions>
@@ -305,22 +284,22 @@ function MaxWidthDialog() {
 
 const methodos = [
   {
-      image: 'https://img.utdstc.com/icon/f24/b94/f24b94db83f2c097744c62d36981fd056214096b5adb5ae80d651d188579af1e:200',
-      method: 'Efectivo',
-      alt: 'Efectivo',
-      id: 1
+    image: 'https://img.utdstc.com/icon/f24/b94/f24b94db83f2c097744c62d36981fd056214096b5adb5ae80d651d188579af1e:200',
+    method: 'Efectivo',
+    alt: 'Efectivo',
+    id: 1
   },
   {
-      image: 'https://static.vecteezy.com/system/resources/previews/004/996/077/original/qr-code-scanning-qr-code-reader-app-concept-icon-recognition-or-reading-qr-code-in-flat-style-green-and-blue-scanner-application-line-icon-illustration-vector.jpg',
-      method: 'QR',
-      alt: 'QR',
-      id: 2
+    image: 'https://static.vecteezy.com/system/resources/previews/004/996/077/original/qr-code-scanning-qr-code-reader-app-concept-icon-recognition-or-reading-qr-code-in-flat-style-green-and-blue-scanner-application-line-icon-illustration-vector.jpg',
+    method: 'QR',
+    alt: 'QR',
+    id: 2
   },
   {
-      image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
-      method: 'Invitacion',
-      alt: 'Invitacion',
-      id: 3
+    image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
+    method: 'Invitacion',
+    alt: 'Invitacion',
+    id: 3
   },
 ]
 
@@ -331,7 +310,7 @@ function ChangeMethod() {
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
 
-  
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -341,7 +320,7 @@ function ChangeMethod() {
     setOpen(false);
   };
 
-  const {newCart, setNewCart} = useContext(cartContext)
+  const { newCart, setNewCart } = useContext(cartContext)
 
   return (
     <React.Fragment>
@@ -366,16 +345,16 @@ function ChangeMethod() {
               width: 'fit-content',
             }}
           >
-         <div className={s.mainContainerMethod}>
-          {
-              methodos.map(p => {
-                return(
-            <CardMethod key={p.id} image={p.image} color={newCart.method === p.method ? '#3398db' : '#fff'} alt={p.alt} method={p.method}/>
-                )
-              })
-            }
-         </div>
-          
+            <div className={s.mainContainerMethod}>
+              {
+                methodos.map(p => {
+                  return (
+                    <CardMethod key={p.id} image={p.image} color={newCart.method === p.method ? 'red' : '#fff'} alt={p.alt} method={p.method} />
+                  )
+                })
+              }
+            </div>
+
           </Box>
         </DialogContent>
         <DialogActions>
@@ -387,17 +366,17 @@ function ChangeMethod() {
 }
 
 
-function CardMethod({image, method, color, alt}){
+function CardMethod({ image, method, color, alt }) {
 
-  const {newCart, setNewCart} = useContext(cartContext)
+  const { newCart, setNewCart } = useContext(cartContext)
   const handleChange = (e) => {
     setNewCart({ ...newCart, method: method });
-    };
+  };
 
-  return(
-      <div onClick={handleChange} style={{backgroundColor: color}}  className={s.containerMethod}>
-         <input  className={s.imageMethod} type='image' src={image} alt={alt} />
-         <h3>{method}</h3>
-      </div>
+  return (
+    <div defaultValue={newCart.method} style={{ backgroundColor: color }} className={s.containerMethod}>
+      <input className={s.imageMethod} type='image' src={image} alt={alt} />
+      <h3>{method}</h3>
+    </div>
   )
 } 

@@ -7,7 +7,8 @@ const InicialState = {
     admin: [],
     queueOfTheDay: [],
     allOrders: [],
-    detalle : {},
+    allOrders_2: [],
+    detalle : {}, 
     status: [],
     products: [],
     productsInComanda: [],
@@ -69,6 +70,7 @@ const InicialState = {
                 detalle : {},
                 cardStatusDelivery: [],
                 allOrders: [],
+                allOrders_2: [],
                 products: [],
                 crono: [],
                 productByid: {},
@@ -240,7 +242,8 @@ const InicialState = {
 
            return{
             ...state,
-            allOrders: action.payload
+            allOrders: action.payload,
+            allOrders_2: action.payload
            }
 
         case ALL_ORDERS: 
@@ -253,13 +256,25 @@ const InicialState = {
 
         case FILTER_ORDERS: 
 
-       
-     
-            return{
-               ...state,
-               allOrders: action.payload,
+          if(action.payload === 'QR' || action.payload === 'Efectivo'){
 
-            }
+            const filterMethod = state.allOrders_2.filter(p => p.method === action.payload)
+            return{
+                ...state,
+                allOrders:filterMethod,
+             }
+          }
+
+          if(action.payload === 'cancelado' || action.payload === 'Mesa Abierta'){
+
+            const filterStatus = state.allOrders_2.filter(p => p.status === action.payload)
+            return{
+                ...state,
+                allOrders:filterStatus,
+             }
+          }
+     
+           
 
        case SET_CRONO: 
          
