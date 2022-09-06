@@ -4,7 +4,7 @@ import s from './comanda.module.css'
 import {RiArrowLeftSLine} from 'react-icons/ri'
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, findProduct, getUserById, sustractItem } from '../../Redux/actions';
+import { addItem, findProduct, getProducts, getUserById, sustractItem } from '../../Redux/actions';
 import {BiFace} from 'react-icons/bi';
 import {AiFillMinusCircle} from 'react-icons/ai';
 import Button from '@mui/material/Button';
@@ -31,7 +31,7 @@ export default function Comanda(){
     const {id} = useParams();
     const dispatch = useDispatch();
 
-   
+    
 
     useEffect(() => {
       dispatch(getUserById(id))
@@ -39,6 +39,10 @@ export default function Comanda(){
 
     useEffect(() => {
         dispatch(findProduct())
+      }, [dispatch])
+
+      useEffect(() => {
+        dispatch(getProducts())
       }, [dispatch])
 
     const encurso = () => {
