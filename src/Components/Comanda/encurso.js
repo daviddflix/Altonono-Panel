@@ -129,6 +129,7 @@ export default function Encurso(){
                             )
                         })
                     } 
+                    <CardMultiple method={'Multiple'} alt='Multiple' image={'https://png.pngtree.com/png-vector/20190804/ourmid/pngtree-payment-bank-banking-card-credit-mobile-money-smartphone-png-image_1650511.jpg'}/>
                   </div>
                   <div className={s.containerTotal}>
                      <h2>Total</h2>
@@ -152,6 +153,21 @@ function Card({image, method, color, alt}){
 
     return(
         <div style={{backgroundColor: color}} onClick={handleChange} className={s.containerMethod}>
+           <input className={s.iconsMethod} type='image' src={image} alt={alt} />
+           <h3>{method}</h3>
+        </div>
+    )
+} 
+
+function CardMultiple({image, method, color, alt}){
+
+    const {client, setClient} = useContext(userContext);
+    const handleChange = (e) => {
+        setClient({ ...client, method: method });
+      };
+
+    return(
+        <div style={{backgroundColor: #fff}} onClick={handleChange} className={s.containerMethod}>
            <input className={s.iconsMethod} type='image' src={image} alt={alt} />
            <h3>{method}</h3>
         </div>
