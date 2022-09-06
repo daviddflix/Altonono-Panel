@@ -48,11 +48,7 @@ export default function Navbar (){
         }
     };
      
-    const conexion = navigator.connection.effectiveType
-    const internet = navigator.onLine
-    const statusInternet = conexion === '2g' || internet === false  ? 'Revisa tu conexion' : `Conexion estable ${conexion}`
-
-    
+  
 
     return(
        <nav  className={s.navbar}> 
