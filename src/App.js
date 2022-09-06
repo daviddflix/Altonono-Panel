@@ -29,11 +29,37 @@ import MisComandas from './Components/Comanda/misComandas/misComandas';
 import MesaAbierta from './Components/Comanda/mesaAbiertas/mesaAbierta';
 import DetailMesaAbierta from './Components/Comanda/detalleComanda/detalle';
 import DetailMesa from './Components/Comanda/mesaAbiertas/detalleComanda';
+import { addOrder } from './Redux/actions';
+import sound from './Components/Order/Sounds/alert.mp3'
+import io from "socket.io-client";
 
 function App() {
 
-  const admin = useSelector(state => state.admin)
- 
+
+  const port = 'https://altonono.herokuapp.com/'
+ const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});
+ const admin = useSelector(state => state.admin)
+
+ const playAudio = new Audio(sound);
+
+ const handlesound = () => {
+  if(admin.role === 'mozos'){
+    playAudio.pause()
+  } else {
+    playAudio.play()
+  }
+ }
+
+
+
+ useEffect(() => {  
+   let isMounted = true
+   socket.on('pedido', data => {
+       handlesound()
+       if (isMounted) dispatch(addOrder(data))
+     })
+     return ()=> { isMounted = false}
+    })
 
   const [client, setClient] = useState({
     name: '',
