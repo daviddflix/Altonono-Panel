@@ -167,7 +167,7 @@ function CardMultiple({image, method, color, alt}){
       };
 
     return(
-        <div style={{backgroundColor: #fff}} onClick={handleChange} className={s.containerMethod}>
+        <div style={{backgroundColor: '#fff'}} onClick={handleChange} className={s.containerMethod}>
            <input className={s.iconsMethod} type='image' src={image} alt={alt} />
            <h3>{method}</h3>
         </div>
