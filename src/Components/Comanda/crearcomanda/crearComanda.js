@@ -35,6 +35,8 @@ export default function CreateComanda(){
 
     const filterByDate = user.length > 0 ? user[0].payments.filter(p => p.date == date) : []
 
+    
+
     const finterInvitation = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
     const arrayInvitation = finterInvitation.length > 0 ? finterInvitation.filter(p => p.method === "Invitacion") : []
     const subInvitation = arrayInvitation.length > 0 ? arrayInvitation.map(p => p.monto) : []
@@ -50,6 +52,19 @@ export default function CreateComanda(){
     const subEfectivo = arrayEfectivo.length > 0 ? arrayEfectivo.map(p => p.monto) : []
     const totalEfectivo = subEfectivo.length > 0 ? subEfectivo.reduce((a, b) => a + b, 0) : 0
 
+
+    const filterVarios = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
+    const arrayVarios = filterVarios.length > 0 ? filterVarios.filter(p => p.method === "Varios") : []
+
+    const arrayQRS = arrayVarios.length > 0 ? arrayVarios.map(p => p.multiple.QR) : []
+    const totalqrs = arrayQRS.length > 0 ? arrayQRS.reduce((a, b) => a + b, 0) : 0
+    
+    const arrayEfectivos = arrayVarios.length > 0 ? arrayVarios.map(p => p.multiple.Efectivo) : []
+    const totalEfectivos = arrayEfectivos.length > 0 ? arrayEfectivos.reduce((a, b) => a + b, 0) : 0
+
+    console.log('arrayQRS', arrayQRS)
+    console.log('totalEfectivos', Number(totalEfectivos))
+    
    
     useEffect(() => {
         dispatch(getUserById(id))
@@ -115,8 +130,8 @@ export default function CreateComanda(){
               <Header user={!user.length ? "cargando" : user[0].name}/>
               <div className={s.mainContainer}>
               <div className={s.subcontainer}>
-                 <Card color={'#29d884'} Icon={<GiReceiveMoney className={s.moneyIcon}/>} name={'Efectivo'} total={totalEfectivo}/>
-                 <Card color={'#1976d2 '} Icon={<AiOutlineQrcode className={s.moneyIcon}/>} name={'QR'} total={totalQR}/>
+                 <Card color={'#29d884'} Icon={<GiReceiveMoney className={s.moneyIcon}/>} name={'Efectivo'} total={totalEfectivo + Number(totalEfectivos)}/>
+                 <Card color={'#1976d2 '} Icon={<AiOutlineQrcode className={s.moneyIcon}/>} name={'QR'} total={totalQR + Number(totalqrs)}/>
                  <Card color={'#282828'} Icon={<AiOutlineGift className={s.moneyIcon}/>}  name={'Invitaciones'} total={totalInvitation}/>
               </div>
               <div className={s.containerbtns}>
