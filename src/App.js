@@ -66,13 +66,15 @@ function App() {
     table: '',
     telefono: 'Moza',
     method: '',
-    comentarios: ''
+    comentarios: '',
+    multiple: {QR: '', Efectivo: ''}
   })
 
   const [newCart, setNewCart] = useState({
     method: '',
     cart: '',
-    id: 0
+    id: 0,
+    multiple: {QR: '', Efectivo: ''}
   })
   
   

@@ -206,7 +206,11 @@ const InicialState = {
                 queueOfTheDay: state.queueOfTheDay.filter(p => p.id !== updatedOrder.id),
               
             }
-        } 
+        } else {
+            return{
+                ...state
+            }
+        }
         
         break
 

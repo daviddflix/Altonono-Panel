@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,10 +6,17 @@ import { useHistory, useParams } from "react-router-dom";
 import ModalContext from "../../context/modalContext";
 import { createComanda, getUserById, resetCart } from "../../Redux/actions";
 import { Dialogo, Header } from "./comanda";
+import * as React from 'react';
+import Box from '@mui/material/Box';
 import s from './encurso.module.css'
 import userContext from "../../context/userContext";
 import Swal from 'sweetalert2'
 import CurrencyFormat from 'react-currency-format'
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
 
 const methodos = [
     {
@@ -129,15 +136,15 @@ export default function Encurso(){
                             )
                         })
                     } 
-                    <CardMultiple method={'Multiple'} alt='Multiple' image={'https://png.pngtree.com/png-vector/20190804/ourmid/pngtree-payment-bank-banking-card-credit-mobile-money-smartphone-png-image_1650511.jpg'}/>
+                    <ChangeMethod/> 
                   </div>
                   <div className={s.containerTotal}>
                      <h2>Total</h2>
                      <CurrencyFormat className={s.total}  value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                   </div>
                   <div className={s.btns}>
-                     <Button disabled={cart.length === 0 || !client.name || !client.method } onClick={comanda} variant='contained' style={{width: '40%', marginRight: '.5rem'}}>CREAR COMANDA</Button>
-                  <Button disabled={cart.length === 0 || !client.name || !client.method } onClick={letOpen} variant='contained' style={{width: '40%'}}>mesa abierta</Button>
+                     <Button disabled={cart.length === 0 || !client.name || !client.method || !client.table  } onClick={comanda} variant='contained' style={{width: '40%', marginRight: '.5rem'}}>CREAR COMANDA</Button>
+                  <Button disabled={cart.length === 0 || !client.name || !client.table } onClick={letOpen} variant='contained' style={{width: '40%'}}>mesa abierta</Button>
                   </div>
          </div>
        </div>
@@ -154,22 +161,100 @@ function Card({image, method, color, alt}){
     return(
         <div style={{backgroundColor: color}} onClick={handleChange} className={s.containerMethod}>
            <input className={s.iconsMethod} type='image' src={image} alt={alt} />
-           <h3>{method}</h3>
+           <h3 style={{fontSize: '1rem',textTransform: 'uppercase'}}>{method}</h3>
         </div>
     )
 } 
 
-function CardMultiple({image, method, color, alt}){
 
+
+const metodos = [
+    {
+        image: 'https://img.utdstc.com/icon/f24/b94/f24b94db83f2c097744c62d36981fd056214096b5adb5ae80d651d188579af1e:200',
+        method: 'Efectivo',
+        alt: 'Efectivo',
+        id: 1
+    },
+    {
+        image: 'https://static.vecteezy.com/system/resources/previews/004/996/077/original/qr-code-scanning-qr-code-reader-app-concept-icon-recognition-or-reading-qr-code-in-flat-style-green-and-blue-scanner-application-line-icon-illustration-vector.jpg',
+        method: 'QR',
+        alt: 'QR',
+        id: 2
+    },
+]
+
+function ChangeMethod() {
+    const [open, setOpen] = React.useState(false);
+    const [fullWidth, setFullWidth] = React.useState(true);
+    const [maxWidth, setMaxWidth] = React.useState('sm');
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
     const {client, setClient} = useContext(userContext);
     const handleChange = (e) => {
-        setClient({ ...client, method: method });
+        const { name, value } = e.target;
+        setClient(prev => ({ ...prev, multiple: {...prev.multiple, [name]: value} }));
       };
 
-    return(
-        <div style={{backgroundColor: '#fff'}} onClick={handleChange} className={s.containerMethod}>
-           <input className={s.iconsMethod} type='image' src={image} alt={alt} />
-           <h3>{method}</h3>
-        </div>
-    )
-} 
+      const setMethod = () => {
+        setClient(prev => ({ ...prev, method: 'Varios' }));
+      }
+  
+    return (
+      <React.Fragment>
+        <Button onClickCapture={setMethod} variant="outlined" style={{ fontSize: '1rem',fontWeight: 800, backgroundColor: client.method === 'Varios'? '#009ee3' : '#fff', border: 'none', color: '#282828'}} size="small" className={s.containerMethod} onClick={handleClickOpen}>
+         <img className={s.iconsMethod} alt="varios" src='https://png.pngtree.com/png-vector/20190804/ourmid/pngtree-payment-bank-banking-card-credit-mobile-money-smartphone-png-image_1650511.jpg'/>
+         Multiples medios
+        </Button>
+        <Dialog
+          fullWidth={fullWidth}
+          maxWidth={maxWidth}
+          open={open}
+          onClose={handleClose}
+        >
+          {/* <DialogTitle>Elige una forma de cobro</DialogTitle> */}
+          <DialogContent>
+            <Box
+              noValidate
+              component="form"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                m: 'auto',
+                width: 'fit-content',
+              }}
+            >
+              <div className={s.mainContainerMethod}>
+                  <div style={{backgroundColor: '#fff'}}  className={s.containerMethodCard}>
+                    <div className={s.boxImage}>
+                    <input className={s.iconsMethod} type='image' src={'https://img.utdstc.com/icon/f24/b94/f24b94db83f2c097744c62d36981fd056214096b5adb5ae80d651d188579af1e:200'} alt={'Efectivo'} />
+                    <h3 style={{fontSize: '1rem', textTransform: 'uppercase'}}>Efectivo</h3>
+                    </div>
+                    <TextField type='number' value={client.multiple.Efectivo || ''} onChange={handleChange} name={'Efectivo'}  className={s.textfield} id="filled-basic" label="Ingresa un monto" variant="filled" />
+                  </div>
+                  <div  style={{backgroundColor: '#fff'}}  className={s.containerMethodCard}>
+                    <div className={s.boxImage}>
+                    <input className={s.iconsMethod} type='image' src={'https://static.vecteezy.com/system/resources/previews/004/996/077/original/qr-code-scanning-qr-code-reader-app-concept-icon-recognition-or-reading-qr-code-in-flat-style-green-and-blue-scanner-application-line-icon-illustration-vector.jpg'} alt={'QR'} />
+                    <h3 style={{fontSize: '1rem', textTransform: 'uppercase'}}>QR</h3>
+                    </div>
+                    <TextField type='number' value={client.multiple.QR || ''} onChange={handleChange} name={'QR'}  className={s.textfield} id="filled-basic" label="Ingresa un monto" variant="filled" />
+                  </div>
+              </div>
+  
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>cancelar</Button>
+            <Button onClick={handleClose}>confirmar</Button>
+          </DialogActions>
+        </Dialog>
+      </React.Fragment>
+    );
+  }
+  

@@ -102,8 +102,11 @@
 .method{
     background-color: #29d884;
     padding: .5rem;
-    color: #fff;
+    color: #282828;
     border-radius: 2px;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .status{
