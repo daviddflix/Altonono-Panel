@@ -71,30 +71,30 @@ export default function Navbar (){
 
 
 
- function Button(){
+//  function Button(){
 
    
-    const {variables, setVariables} = useContext(ModalContext);
+//     const {variables, setVariables} = useContext(ModalContext);
 
-    const handleOpen = () => {
-        if(variables.toggle === false){
-            setVariables(prev => ({...prev, toggle: true}))
+//     const handleOpen = () => {
+//         if(variables.toggle === false){
+//             setVariables(prev => ({...prev, toggle: true}))
           
-        }
-        if(variables.toggle === true){
-            setVariables(prev => ({...prev, toggle: false}))
-        }
-    };
+//         }
+//         if(variables.toggle === true){
+//             setVariables(prev => ({...prev, toggle: false}))
+//         }
+//     };
      
 
-    return(
-        <label htmlFor="check" className="bar">
-    <input id="check" onClick={handleOpen}  type="checkbox"/>
+//     return(
+//         <label htmlFor="check" className="bar">
+//     <input id="check" onClick={handleOpen}  type="checkbox"/>
 
-    <span className="top"></span>
-    <span className="middle"></span>
-    <span className="bottom"></span>
-</label>
-    )
-}
+//     <span className="top"></span>
+//     <span className="middle"></span>
+//     <span className="bottom"></span>
+// </label>
+//     )
+// }
 

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink as div, useHistory, useParams } from "react-router-dom";
+import {  useHistory, useParams } from "react-router-dom";
 import ModalContext from "../../../context/modalContext";
 import { emptyDetails, getUserById } from "../../../Redux/actions";
 import { Header } from "../comanda";
@@ -14,13 +14,13 @@ export default function MesaAbierta(){
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
     const user = useSelector(state => state.userById)
-    console.log('user', user)
+
     const {id} = useParams();
     const dispatch = useDispatch();
 
     useEffect(() => {
        dispatch(getUserById(id))
-    }, [])
+    }, [dispatch, id])
 
     const styles = {
         length : {
@@ -41,7 +41,7 @@ export default function MesaAbierta(){
     const date = moment().format('l')
     const items = user.length > 0 ? user[0].payments.filter(p => p.date === date) : []
     const filterbyState = items.length > 0 ? items.filter(p => p.status === 'Mesa Abierta') : []
-console.log()
+
 
     return(
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less} className={s.main}>

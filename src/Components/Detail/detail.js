@@ -1,7 +1,7 @@
 import {  useContext, useEffect } from 'react'
 import s from './detail.module.css'
 import { useHistory, useParams } from 'react-router-dom';
-import { cancelar, getDetails, getStatus, updateStatusOrder, updateStatusOrderInConfirm } from '../../Redux/actions';
+import { cancelar, getDetails, getStatus, updateStatusOrder } from '../../Redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import {BsArrowLeft} from 'react-icons/bs'
 import {BsPersonPlus} from 'react-icons/bs'
@@ -19,7 +19,7 @@ export default function Detail (){
     const {id} = useParams();
     const history = useHistory();
     const detalle = useSelector(state => state.detalle);
-console.log('detalle', detalle.telefono)
+
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
 

@@ -212,7 +212,7 @@ const InicialState = {
             }
         }
         
-        break
+      
 
         case PRODUCTS: 
 

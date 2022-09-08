@@ -4,24 +4,17 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import { RiArrowLeftSLine } from 'react-icons/ri'
-import { addItemToOpenTable, cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
+import { addItemToOpenTable, cancelar, getDetails, getProducts } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
-import Spinner, { SpinnerTiny } from "../../spinner/spinner";
+import Spinner from "../../spinner/spinner";
 import { CgMathPlus } from 'react-icons/cg'
 import * as React from 'react';
-import userContext from "../../../context/userContext";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import { HiMinus } from 'react-icons/hi'
 import { AiOutlinePlus } from 'react-icons/ai'
 import TextField from '@mui/material/TextField';
@@ -38,8 +31,8 @@ export default function DetailMesaAbierta() {
   const { id } = useParams();
   const detalle = useSelector(state => state.detalle);
   const history = useHistory();
-  const { newCart, setNewCart } = useContext(cartContext)
-  console.log('newCart', newCart)
+  const { newCart } = useContext(cartContext)
+  
 
   const cancel = () => {
     return (
@@ -225,12 +218,12 @@ function Card({ quantity, title, unit_price, id }) {
 
 function MaxWidthDialog({id}) {
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
+  const [fullWidth, ] = React.useState(true);
+  const [maxWidth, ] = React.useState('sm');
   const products = useSelector(state => state.products);
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
-  const { newCart, setNewCart } = useContext(cartContext)
+  const {  setNewCart } = useContext(cartContext)
 
   useEffect(() => {
     dispatch(getProducts())
@@ -240,7 +233,7 @@ function MaxWidthDialog({id}) {
     setNewCart(prev => ({
       ...prev, cart: detalle.items, id: Number(id)
     }))
-  },[])
+  },[detalle.items, id, setNewCart])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -327,8 +320,8 @@ const methodos = [
 
 function ChangeMethod() {
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
+  const [fullWidth ] = React.useState(true);
+  const [maxWidth ] = React.useState('sm');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -403,8 +396,8 @@ function CardMethod({ image, method, color, alt }) {
 
 function Multiples() {
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
+  const [fullWidth] = React.useState(true);
+  const [maxWidth] = React.useState('sm');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -415,7 +408,7 @@ function Multiples() {
   };
 
   const { newCart, setNewCart } = useContext(cartContext);
-  console.log(newCart)
+ 
   const handleChange = (e) => {
       const { name, value } = e.target;
       setNewCart(prev => ({ ...prev, multiple: {...prev.multiple, [name]: value} }));

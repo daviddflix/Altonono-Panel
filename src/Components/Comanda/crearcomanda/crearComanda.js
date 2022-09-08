@@ -18,7 +18,6 @@ import { useState } from "react";
 import userContext from "../../../context/userContext";
 import {BsPlusSquare} from 'react-icons/bs'
 import CurrencyFormat from 'react-currency-format';
-import {FaUserAlt} from 'react-icons/fa'
 import { AiOutlineGift, AiOutlineQrcode } from "react-icons/ai";
 import { GiReceiveMoney } from "react-icons/gi";
 import moment from 'moment'
@@ -33,7 +32,7 @@ export default function CreateComanda(){
     const date = moment().format('l')
     const dispatch = useDispatch();
 
-    const filterByDate = user.length > 0 ? user[0].payments.filter(p => p.date == date) : []
+    const filterByDate = user.length > 0 ? user[0].payments.filter(p => p.date === date) : []
 
     
 
@@ -64,8 +63,7 @@ export default function CreateComanda(){
     const arrayOfNumbers = arrayEfectivos.length > 0 ? arrayEfectivos.map(p => parseInt(p)) : []
     const totalEfectivos = arrayOfNumbers.length > 0 ? arrayOfNumbers.reduce((a, b) => a + b, 0) : 0
 
-    console.log('arrayOfNumbers', arrayOfNumbers)
-    console.log('arrayEfectivos', arrayEfectivos)
+
     
    
     useEffect(() => {

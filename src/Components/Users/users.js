@@ -12,7 +12,6 @@ import Select from '@mui/material/Select';
 import { createUser, getAllUser } from "../../Redux/actions";
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from '../spinner/spinner'
 import {FaUserAlt} from 'react-icons/fa'
 import CurrencyFormat from 'react-currency-format';
 import moment from 'moment'
@@ -29,7 +28,7 @@ export default function Users(){
  
     useEffect(() => {
        dispatch(getAllUser())
-    }, [])
+    }, [dispatch])
 
     const styles = {
         length : {

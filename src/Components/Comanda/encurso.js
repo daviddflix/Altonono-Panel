@@ -100,7 +100,7 @@ export default function Encurso(){
 
     useEffect(() => {
         dispatch(getUserById(id))
-      }, [])
+      }, [dispatch, id])
 
     const styles = {
         length : {
@@ -168,25 +168,12 @@ function Card({image, method, color, alt}){
 
 
 
-const metodos = [
-    {
-        image: 'https://img.utdstc.com/icon/f24/b94/f24b94db83f2c097744c62d36981fd056214096b5adb5ae80d651d188579af1e:200',
-        method: 'Efectivo',
-        alt: 'Efectivo',
-        id: 1
-    },
-    {
-        image: 'https://static.vecteezy.com/system/resources/previews/004/996/077/original/qr-code-scanning-qr-code-reader-app-concept-icon-recognition-or-reading-qr-code-in-flat-style-green-and-blue-scanner-application-line-icon-illustration-vector.jpg',
-        method: 'QR',
-        alt: 'QR',
-        id: 2
-    },
-]
+
 
 function ChangeMethod() {
     const [open, setOpen] = React.useState(false);
-    const [fullWidth, setFullWidth] = React.useState(true);
-    const [maxWidth, setMaxWidth] = React.useState('sm');
+    const [fullWidth ] = React.useState(true);
+    const [maxWidth] = React.useState('sm');
   
     const handleClickOpen = () => {
       setOpen(true);
