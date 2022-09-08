@@ -57,13 +57,15 @@ export default function CreateComanda(){
     const arrayVarios = filterVarios.length > 0 ? filterVarios.filter(p => p.method === "Varios") : []
 
     const arrayQRS = arrayVarios.length > 0 ? arrayVarios.map(p => p.multiple.QR) : []
-    const totalqrs = arrayQRS.length > 0 ? arrayQRS.reduce((a, b) => a + b, 0) : 0
+    const arrayOfNumberss = arrayQRS.length > 0 ? arrayQRS.map(p => parseInt(p)) : []
+    const totalqrs = arrayOfNumberss.length > 0 ? arrayOfNumberss.reduce((a, b) => a + b, 0) : 0
     
     const arrayEfectivos = arrayVarios.length > 0 ? arrayVarios.map(p => p.multiple.Efectivo) : []
-    const totalEfectivos = arrayEfectivos.length > 0 ? arrayEfectivos.reduce((a, b) => a + b, 0) : 0
+    const arrayOfNumbers = arrayEfectivos.length > 0 ? arrayEfectivos.map(p => parseInt(p)) : []
+    const totalEfectivos = arrayOfNumbers.length > 0 ? arrayOfNumbers.reduce((a, b) => a + b, 0) : 0
 
-    console.log('arrayQRS', arrayQRS)
-    console.log('totalEfectivos', Number(totalEfectivos))
+    console.log('arrayOfNumbers', arrayOfNumbers)
+    console.log('arrayEfectivos', arrayEfectivos)
     
    
     useEffect(() => {

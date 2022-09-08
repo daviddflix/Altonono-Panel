@@ -76,7 +76,7 @@ export default function DetailMesa (){
                         </div>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Total</h4>
-                            <CurrencyFormat value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                            <CurrencyFormat style={{fontWeight: 900}} value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                         </div>
                     </div>
                     <div className={s.containerResumen}><h3>Estado</h3></div>
