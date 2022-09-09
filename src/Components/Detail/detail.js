@@ -1,7 +1,7 @@
 import {  useContext, useEffect } from 'react'
 import s from './detail.module.css'
 import { useHistory, useParams } from 'react-router-dom';
-import { cancelar, getDetails, getStatus, updateStatusOrder, updateStatusOrderInConfirm } from '../../Redux/actions';
+import { cancelar, getDetails, getStatus, updateStatusOrder } from '../../Redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import {BsArrowLeft} from 'react-icons/bs'
 import {BsPersonPlus} from 'react-icons/bs'
@@ -12,6 +12,8 @@ import CurrencyFormat from 'react-currency-format'
 import Swal from 'sweetalert2'
 import Spinner from '../spinner/spinner'
 import ModalContext from '../../context/modalContext'
+import {PrintComponent} from '../Print/print';
+
 
 export default function Detail (){
 
@@ -19,7 +21,7 @@ export default function Detail (){
     const {id} = useParams();
     const history = useHistory();
     const detalle = useSelector(state => state.detalle);
-console.log('detalle', detalle.telefono)
+
     const {variables} = useContext(ModalContext);
     const windowlength = window.matchMedia("(max-width:700px)");
 
@@ -115,13 +117,16 @@ console.log('detalle', detalle.telefono)
   <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
       <div className={s.submain}>
          <BsArrowLeft className={s.arrow} onClick={history.goBack}/>
-
+         
+    
+  
     <div className={s.mainContainer}>  
       <div className={s.subcontainer}>
         <div className={s.boxNumeroPedido}>
             <h4>Altonono</h4>
             <div>
               <h2>Pedido n. {detalle.id}</h2>
+             <PrintComponent  />
             </div>
             <h4 style={{color: 'green'}}>{detalle.method}</h4>
         </div>

@@ -4,9 +4,9 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import { RiArrowLeftSLine } from 'react-icons/ri'
-import { addItemToOpenTable, cancelar, getDetails, getProducts, updateStatusOrder } from "../../../Redux/actions";
+import { addItemToOpenTable, cancelar, getDetails, getProducts } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
-import Spinner, { SpinnerTiny } from "../../spinner/spinner";
+import Spinner from "../../spinner/spinner";
 import { CgMathPlus } from 'react-icons/cg'
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -14,19 +14,14 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import { HiMinus } from 'react-icons/hi'
 import { AiOutlinePlus } from 'react-icons/ai'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Swal from 'sweetalert2'
 import cartContext from "../../../context/cartContext";
+import m from '../encurso.module.css'
 
 export default function DetailMesaAbierta() {
 
@@ -36,8 +31,8 @@ export default function DetailMesaAbierta() {
   const { id } = useParams();
   const detalle = useSelector(state => state.detalle);
   const history = useHistory();
-  const { newCart, setNewCart } = useContext(cartContext)
-
+  const { newCart } = useContext(cartContext)
+  
 
   const cancel = () => {
     return (
@@ -58,7 +53,7 @@ export default function DetailMesaAbierta() {
               `Especificar motivo de cancelacion`
             )
           }
-        },
+        }, 
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
         if (result.isConfirmed) {
@@ -72,7 +67,7 @@ export default function DetailMesaAbierta() {
         }
       })
     )
-  }
+  } 
 
   const save = () => {
     dispatch(addItemToOpenTable(newCart))
@@ -80,7 +75,7 @@ export default function DetailMesaAbierta() {
   }
 
   const handleStatusBtn = () => {
-    dispatch(updateStatusOrder({ status: 'Pedido Finalizado', id: id }))
+    dispatch(addItemToOpenTable(newCart))
     history.push(`/users`)
     Swal.fire({
       icon: 'success',
@@ -146,7 +141,7 @@ export default function DetailMesaAbierta() {
             </div>
             <div className={s.subbox2}>
               <h4 className={s.subbox2_title}>Forma de pago</h4>
-              <h4 className={s.subbox2_method}>{detalle.method}</h4>
+              <h4 style={detalle.method === '' ? {display: 'none'} : {display: 'flex'}} className={s.subbox2_method}>{ detalle.method && detalle.method === "Varios"? `QR: $${detalle.multiple.QR} Efectivo: $${detalle.multiple.Efectivo}` : detalle.method }</h4>
               <div className={s.containerChangeMethod}><ChangeMethod /></div>
             </div>
             <div className={s.subbox2}>
@@ -162,7 +157,7 @@ export default function DetailMesaAbierta() {
           </div>
           <div className={s.containerBtnss}>
             <Button className={s.btnss} disabled={!newCart.method} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
-            <Button className={s.btnss} disabled={!newCart.method} onClick={save} variant="contained">Guardar</Button>
+            <Button className={s.btnss} onClick={save} variant="contained">Guardar</Button>
             <Button className={s.cancelar} color='error' onClick={cancel} variant="contained">CANCELAR</Button>
           </div>
         </div> :
@@ -223,13 +218,13 @@ function Card({ quantity, title, unit_price, id }) {
 
 function MaxWidthDialog({id}) {
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
+  const [fullWidth, ] = React.useState(true);
+  const [maxWidth, ] = React.useState('sm');
   const products = useSelector(state => state.products);
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
-  const { newCart, setNewCart } = useContext(cartContext)
-console.log(newCart)
+  const {  setNewCart } = useContext(cartContext)
+
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
@@ -238,7 +233,7 @@ console.log(newCart)
     setNewCart(prev => ({
       ...prev, cart: detalle.items, id: Number(id)
     }))
-  },[])
+  },[detalle.items, id, setNewCart])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -275,6 +270,15 @@ console.log(newCart)
               id="grouped-demo"
               options={products}
               getOptionLabel={option => option.title}
+              getOptionDisabled={(option) =>
+                option.available === false
+              }
+              renderOption={(props, option) => (
+                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+          
+                  {option.title} {option.description}
+                </Box>
+              )}
               onChange={(value, newvalue) => {
                 setNewCart(prev => ({
                   ...prev, cart: [...prev.cart, {...newvalue, quantity: 1}]
@@ -316,8 +320,8 @@ const methodos = [
 
 function ChangeMethod() {
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
+  const [fullWidth ] = React.useState(true);
+  const [maxWidth ] = React.useState('sm');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -331,7 +335,7 @@ function ChangeMethod() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" size="small" className={s.plusiconMethod} onClick={handleClickOpen}>
+      <Button variant="outlined" size="small"  className={s.plusiconMethod} onClick={handleClickOpen}>
         forma de cobro
       </Button>
       <Dialog
@@ -360,6 +364,7 @@ function ChangeMethod() {
                   )
                 })
               }
+              <Multiples/>
             </div>
 
           </Box>
@@ -382,8 +387,85 @@ function CardMethod({ image, method, color, alt }) {
 
   return (
     <div onClick={handleChange}  style={{ backgroundColor: color }} className={s.containerMethod}>
-      <input className={s.imageMethod} type='image' src={image} alt={alt} />
-      <h3>{method}</h3>
+      <img className={s.imageMethod} src={image} alt={alt} />
+      <h3 style={{textTransform: 'uppercase'}}>{method}</h3>
     </div>
   )
 } 
+
+
+function Multiples() {
+  const [open, setOpen] = React.useState(false);
+  const [fullWidth] = React.useState(true);
+  const [maxWidth] = React.useState('sm');
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const { newCart, setNewCart } = useContext(cartContext);
+ 
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setNewCart(prev => ({ ...prev, multiple: {...prev.multiple, [name]: value} }));
+    };
+
+    const setMethod = () => {
+      setNewCart(prev => ({ ...prev, method: 'Varios' }));
+    }
+
+  return (
+    <React.Fragment>
+      <Button onClickCapture={setMethod} variant="outlined" style={{ fontSize: '1rem',fontWeight: 800, backgroundColor: newCart.method === 'Varios'? '#009ee3' : '#fff', border: 'none', color: '#282828'}} size="small" className={s.containerMethod} onClick={handleClickOpen}>
+       <img className={m.iconsMethod} alt="varios" src='https://png.pngtree.com/png-vector/20190804/ourmid/pngtree-payment-bank-banking-card-credit-mobile-money-smartphone-png-image_1650511.jpg'/>
+       Multiples medios
+      </Button>
+      <Dialog
+        fullWidth={fullWidth}
+        maxWidth={maxWidth}
+        open={open}
+        onClose={handleClose}
+      >
+        {/* <DialogTitle>Elige una forma de cobro</DialogTitle> */}
+        <DialogContent>
+          <Box
+            noValidate
+            component="form"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              m: 'auto',
+              width: 'fit-content',
+            }}
+          >
+            <div className={m.mainContainerMethod}>
+                <div style={{backgroundColor: '#fff'}}  className={m.containerMethodCard}>
+                  <div className={m.boxImage}>
+                  <input className={m.iconsMethod} type='image' src={'https://img.utdstc.com/icon/f24/b94/f24b94db83f2c097744c62d36981fd056214096b5adb5ae80d651d188579af1e:200'} alt={'Efectivo'} />
+                  <h3 style={{fontSize: '1rem', textTransform: 'uppercase'}}>Efectivo</h3>
+                  </div>
+                  <TextField type='number' value={newCart.multiple.Efectivo || ''} onChange={handleChange} name={'Efectivo'}  className={m.textfield} id="filled-basic" label="Ingresa un monto" variant="filled" />
+                </div>
+                <div  style={{backgroundColor: '#fff'}}  className={m.containerMethodCard}>
+                  <div className={m.boxImage}>
+                  <input className={m.iconsMethod} type='image' src={'https://static.vecteezy.com/system/resources/previews/004/996/077/original/qr-code-scanning-qr-code-reader-app-concept-icon-recognition-or-reading-qr-code-in-flat-style-green-and-blue-scanner-application-line-icon-illustration-vector.jpg'} alt={'QR'} />
+                  <h3 style={{fontSize: '1rem', textTransform: 'uppercase'}}>QR</h3>
+                  </div>
+                  <TextField type='number' value={newCart.multiple.QR || ''} onChange={handleChange} name={'QR'}  className={m.textfield} id="filled-basic" label="Ingresa un monto" variant="filled" />
+                </div>
+            </div>
+
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>cancelar</Button>
+          <Button onClick={handleClose}>confirmar</Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}

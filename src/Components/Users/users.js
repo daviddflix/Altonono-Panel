@@ -12,7 +12,6 @@ import Select from '@mui/material/Select';
 import { createUser, getAllUser } from "../../Redux/actions";
 import Swal from 'sweetalert2'
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from '../spinner/spinner'
 import {FaUserAlt} from 'react-icons/fa'
 import CurrencyFormat from 'react-currency-format';
 import moment from 'moment'
@@ -29,7 +28,7 @@ export default function Users(){
  
     useEffect(() => {
        dispatch(getAllUser())
-    }, [])
+    }, [dispatch])
 
     const styles = {
         length : {
@@ -63,7 +62,7 @@ export default function Users(){
                         users.length > 0 ? users.map(p => {
                             const filterByDate = p.payments.length > 0 ? p.payments.filter(p => p.date === date) : 0
                             const filterByDateWithoutCancelation = filterByDate === 0  || filterByDate === [] ? 0 : filterByDate.filter(p => p.status === "Pedido Finalizado")
-                            const filterByDateWithoutInvitation = filterByDateWithoutCancelation === 0  ? 0 : filterByDate.filter(p => p.method !== "Invitacion")
+                            const filterByDateWithoutInvitation = filterByDateWithoutCancelation === 0  ? 0 : filterByDateWithoutCancelation.filter(p => p.method !== "Invitacion")
                             const arraytotal = filterByDateWithoutInvitation === 0  ? 0 : filterByDateWithoutInvitation.map(p => p.monto);
                             const total = arraytotal === 0 ? 0 : arraytotal.reduce((a,b) => a + b, 0)
 

@@ -26,10 +26,17 @@
     
 }
 
-.containerMethod{
+.mainContainerMethod{
+    display: flex;
+    width: 400px;
+}
+
+.boxImage{
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
     height: 150px;
     align-items: center;
     justify-content: center;
@@ -38,12 +45,38 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.imageMethod{
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+.containerMethodCard{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 150px;
+    align-items: center;
+    justify-content: center;
+    margin: .5rem;
+    border-radius: 10px;
 }
 
+.textfield{
+    position: absolute;
+    bottom: 0;
+}
+
+
+.containerMethod{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background-color: #fff;
+    border: none;
+    height: 150px;
+    align-items: center;
+    justify-content: center;
+    margin: .5rem;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
 
 .containerTotal{
     width: 100%;

@@ -5,7 +5,6 @@ import {RiArrowLeftSLine} from 'react-icons/ri'
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, findProduct, getProducts, getUserById, sustractItem } from '../../Redux/actions';
-import {BiFace} from 'react-icons/bi';
 import {AiFillMinusCircle} from 'react-icons/ai';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -16,7 +15,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import userContext from '../../context/userContext';
 import {FaUserAlt} from 'react-icons/fa'
-import {IoIosSearch} from 'react-icons/io'
 
 export default function Comanda(){
     
@@ -35,7 +33,7 @@ export default function Comanda(){
 
     useEffect(() => {
       dispatch(getUserById(id))
-    }, [])
+    }, [dispatch,id])
 
     useEffect(() => {
         dispatch(findProduct())

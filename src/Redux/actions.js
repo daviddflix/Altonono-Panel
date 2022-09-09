@@ -180,7 +180,7 @@ export function filterOrders (value){
 export function addItemToOpenTable(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateComanda`, payload)
-     console.log('addItemToOpenTable', res)
+    
     }
 }
 
@@ -207,7 +207,7 @@ export function updateStatusOrderInConfirm(payload){
 export function createComanda(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}createcomanda`, payload)
-     console.log('res', res)
+   
     }
 }
 

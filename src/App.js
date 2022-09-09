@@ -33,20 +33,21 @@ import { addOrder } from './Redux/actions';
 import sound from './Components/Order/Sounds/alert.mp3'
 import io from "socket.io-client";
 
+
 function App() {
-
-
+  
+  const [audio, setAudio] = useState(new Audio(sound));
+console.log('audio', audio)
   const port = 'https://altonono.herokuapp.com/'
  const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});
  const admin = useSelector(state => state.admin)
 
- const playAudio = new Audio(sound);
 
  const handlesound = () => {
   if(admin.role === 'mozos'){
-    playAudio.pause()
+    audio.pause()
   } else {
-    playAudio.play()
+    audio.play()
   }
  }
 
@@ -55,8 +56,8 @@ function App() {
  useEffect(() => {  
    let isMounted = true
    socket.on('pedido', data => {
-       handlesound()
-       if (isMounted) dispatch(addOrder(data))
+     if (isMounted) dispatch(addOrder(data))
+     return  handlesound
      })
      return ()=> { isMounted = false}
     })
@@ -66,13 +67,15 @@ function App() {
     table: '',
     telefono: 'Moza',
     method: '',
-    comentarios: ''
+    comentarios: '',
+    multiple: {QR: '', Efectivo: ''}
   })
 
   const [newCart, setNewCart] = useState({
     method: '',
     cart: '',
-    id: 0
+    id: 0,
+    multiple: {QR: '', Efectivo: ''}
   })
   
   

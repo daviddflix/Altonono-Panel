@@ -72,17 +72,17 @@ export default function DetailMesa (){
                         </div>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Forma de pago</h4>
-                            <h4 className={s.method}>{detalle.method}</h4>
+                            <h4 className={s.method}>{detalle.method && detalle.method === "Varios"? `QR: $${detalle.multiple.QR} Efectivo: $${detalle.multiple.Efectivo}` : detalle.method }</h4>
                         </div>
                         <div className={s.subbox2}>
                             <h4 className={s.subbox2_title}>Total</h4>
-                            <CurrencyFormat value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                            <CurrencyFormat style={{fontWeight: 900}} value={detalle.monto} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                         </div>
                     </div>
                     <div className={s.containerResumen}><h3>Estado</h3></div>
                     <div className={s.box2}>
                         <div className={s.subbox2}>
-                            <h4 className={s.status}>{detalle.status}</h4>
+                            <h4 style={detalle.status === 'cancelado' ? {color: 'red'} : {color: '#29d884'}} className={s.status }>{detalle.status}</h4>
                         </div>
                     </div>
                 </div> :

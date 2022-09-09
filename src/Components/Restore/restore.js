@@ -16,7 +16,7 @@ export default function Restore(){
        setData(e.target.value)
     }
 
-    console.log('data', data)
+ 
 
     const handleDispatch = () => {
       dispatch(updatePassword(data))
