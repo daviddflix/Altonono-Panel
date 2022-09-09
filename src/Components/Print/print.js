@@ -1,59 +1,34 @@
 
-import { Button } from "@mui/material";
-import React, { useRef } from "react";
 
+import { useRef } from "react";
+import {AiOutlinePrinter} from 'react-icons/ai'
 import ReactToPrint from "react-to-print";
-
-export default function PrintComponent() {
-  let componentRef = useRef();
-
-  return (
-    <>
-      <div>
-        {/* button to trigger printing of target component */}
-        <ReactToPrint
-          trigger={() => <Button>Print this out!</Button>}
-          content={() => componentRef}
-        />
-
-        {/* component to be printed */}
-        <ComponentToPrint ref={(el) => (componentRef = el)} />
-      </div>
-    </>
-  );
-}
+import React from "react";
+import { connect } from "react-redux";
+import {ComponentToPrint} from './componenetToprint'
 
 
-class ComponentToPrint extends React.Component {
-    render() {
-      return (
+export  function PrintComponent() {
+    let componentRef = useRef();
+   
+  
+    return (
+      <>
         <div>
-          <h2 style={{color: "green"}}>Attendance</h2>
-          <table>
-            <thead>
-              <th>S/N</th>
-              <th>Name</th>
-              <th>Email</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Njoku Samson</td>
-                <td>samson@yahoo.com</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Ebere Plenty</td>
-                <td>ebere@gmail.com</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Undefined</td>
-                <td>No Email</td>
-              </tr>
-            </tbody>
-          </table>
+          {/* button to trigger printing of target component */}
+          <ReactToPrint
+            trigger={() => <AiOutlinePrinter style={{width: '30px', height: '30px'}}/>}
+            content={() => componentRef}
+          />
+  
+       
+          <div style={{ display: "none" }}>
+       <ComponentToPrint ref={(el) => (componentRef = el)} />
+    </div>
+  
         </div>
-      );
-    }
+      </>
+    );
   }
+  
+
