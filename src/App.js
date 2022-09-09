@@ -44,10 +44,10 @@ console.log('audio', audio)
 
 
  const handlesound = () => {
-  if(admin.role === 'mozos'){
-    audio.pause()
-  } else {
+  if(admin.role === "admin"){
     audio.play()
+  } else {
+    audio.pause()
   }
  }
 
@@ -57,7 +57,7 @@ console.log('audio', audio)
    let isMounted = true
    socket.on('pedido', data => {
      if (isMounted) dispatch(addOrder(data))
-     return  handlesound
+     return  handlesound()
      })
      return ()=> { isMounted = false}
     })
