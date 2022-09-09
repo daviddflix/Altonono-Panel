@@ -38,6 +38,13 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+.imageMethod{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+
 .containerTotal{
     width: 100%;
     height: 30%;
