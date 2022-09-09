@@ -37,7 +37,7 @@ import io from "socket.io-client";
 function App() {
   
   const [audio, setAudio] = useState(new Audio(sound));
-console.log('audio', audio)
+
   const port = 'https://altonono.herokuapp.com/'
  const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});
  const admin = useSelector(state => state.admin)
