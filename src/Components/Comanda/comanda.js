@@ -207,9 +207,10 @@ export function Dialogo(){
     setClient({
         name: '',
         table: '',
-        telefono: '',
+        telefono: 'Moza',
         method: '',
-        comentarios: ''
+        comentarios: '',
+        multiple: {QR: '', Efectivo: ''}
       })
       setOpen(false);
     };

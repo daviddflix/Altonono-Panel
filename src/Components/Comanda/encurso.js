@@ -61,12 +61,13 @@ export default function Encurso(){
                 timer: 1500
               })
             setClient({
-                name: '',
-                table: '',
-                telefono: '',
-                method: '',
-                comentarios: ''
-              })
+              name: '',
+              table: '',
+              telefono: 'Moza',
+              method: '',
+              comentarios: '',
+              multiple: {QR: '', Efectivo: ''}
+            })
               history.push(`/createComanda/${id}`)
               dispatch(resetCart())
         } else{
@@ -88,12 +89,13 @@ export default function Encurso(){
             timer: 1500
           })
         setClient({
-            name: '',
-            table: '',
-            telefono: '',
-            method: '',
-            comentarios: ''
-          })
+          name: '',
+          table: '',
+          telefono: 'Moza',
+          method: '',
+          comentarios: '',
+          multiple: {QR: '', Efectivo: ''}
+        })
           dispatch(resetCart())
           history.push(`/createComanda/${id}`)
     }
@@ -185,6 +187,7 @@ function ChangeMethod() {
     };
   
     const {client, setClient} = useContext(userContext);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setClient(prev => ({ ...prev, multiple: {...prev.multiple, [name]: value} }));

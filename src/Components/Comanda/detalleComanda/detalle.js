@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import { RiArrowLeftSLine } from 'react-icons/ri'
-import { addItemToOpenTable, cancelar, getDetails, getProducts } from "../../../Redux/actions";
+import { addItemToCloseTable, addItemToOpenTable, cancelar, getDetails, getProducts } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
 import Spinner from "../../spinner/spinner";
 import { CgMathPlus } from 'react-icons/cg'
@@ -32,7 +32,8 @@ export default function DetailMesaAbierta() {
   const detalle = useSelector(state => state.detalle);
   const history = useHistory();
   const { newCart } = useContext(cartContext)
-  
+  const user = useSelector(state => state.userById)
+
 
   const cancel = () => {
     return (
@@ -63,7 +64,7 @@ export default function DetailMesaAbierta() {
             'success'
           )
           dispatch(cancelar({ status: 'cancelado', id: id }))
-          history.push(`/users`)
+          history.push(`/open_tab/${user.id}`)
         }
       })
     )
@@ -71,12 +72,14 @@ export default function DetailMesaAbierta() {
 
   const save = () => {
     dispatch(addItemToOpenTable(newCart))
-    history.push(`/users`)
+    history.push(`/open_tab/${user.id}`)
   }
 
-  const handleStatusBtn = () => {
-    dispatch(addItemToOpenTable(newCart))
-    history.push(`/users`)
+
+
+  const close = () => {
+    dispatch(addItemToCloseTable(newCart))
+    history.push(`/open_tab/${user.id}`)
     Swal.fire({
       icon: 'success',
       title: 'Mesa Cerrada',
@@ -156,7 +159,7 @@ export default function DetailMesaAbierta() {
             </div>
           </div>
           <div className={s.containerBtnss}>
-            <Button className={s.btnss} disabled={!newCart.method} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
+            <Button className={s.btnss} disabled={!newCart.method} onClick={close} variant="contained">Cerrar mesa</Button>
             <Button className={s.btnss} onClick={save} variant="contained">Guardar</Button>
             <Button className={s.cancelar} color='error' onClick={cancel} variant="contained">CANCELAR</Button>
           </div>
@@ -224,14 +227,14 @@ function MaxWidthDialog({id}) {
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
   const { newCart, setNewCart } = useContext(cartContext)
-console.log('newCart', newCart)
+ 
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
 
   useEffect(() => {
     setNewCart(prev => ({
-      ...prev, cart: detalle.items, id: Number(id)
+      ...prev, cart: detalle.items, id: Number(id), comentarios: detalle.comentarios
     }))
   },[detalle.items, id, setNewCart])
 
