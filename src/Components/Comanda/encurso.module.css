@@ -136,6 +136,12 @@
 .containerDialogo{
     justify-content: flex-end;
     width: 90%;
+    margin: .5rem 0 0 0;
+    height: 50px;
     display: flex;
     align-items: center;
+}
+
+.dialog{
+    height: 50px;
 }

@@ -52,6 +52,8 @@
     margin: 1rem 0 1rem 1rem;
     max-height: 30%;
     overflow-y: scroll;
+    border: #282828 1px solid;
+    border-radius: 2px;
 }
 
 .subbox1{

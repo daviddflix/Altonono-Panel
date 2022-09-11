@@ -75,7 +75,8 @@ function App() {
     method: '',
     cart: '',
     id: 0,
-    multiple: {QR: '', Efectivo: ''}
+    multiple: {QR: '', Efectivo: ''},
+    comentarios: '',
   })
   
   

@@ -40,11 +40,13 @@
 
 
 .iconplus{
-    margin: 0 .5rem 0 0;
+    margin: 0;
     border-radius: 50%;
     width: 25px;
     height: 25px;
     color: #3398db;
+    position: relative;
+    left: .5rem;
 }
 
 .moneyIcon{
@@ -142,11 +144,15 @@
     width: 50%;
     color: #282828;
     background-color: #3398db;
+ 
 }
 
 @media screen and (max-width: 700px) {
     .btn{
         width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .total{

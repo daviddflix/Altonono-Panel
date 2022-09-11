@@ -55,7 +55,7 @@ export default function Users(){
         <div style={windowlength.matches === false? variables.toggle === true? styles.length : styles.moreLength : styles.less}  className={s.main}>
             <div className={s.submain}>
                 <div onClick={create} className={s.header}>
-                     <button className={s.btn}><AiOutlinePlusCircle className={s.iconplus}/>CREAR</button>
+                     <button className={s.btn}><AiOutlinePlusCircle className={s.iconplus}/>CREAR CAMARERA</button>
                 </div>
                 <div className={s.containerUsers}>
                     {

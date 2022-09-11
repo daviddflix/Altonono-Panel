@@ -36,10 +36,10 @@ export default function CreateComanda(){
 
     
 
-    const finterInvitation = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
-    const arrayInvitation = finterInvitation.length > 0 ? finterInvitation.filter(p => p.method === "Invitacion") : []
-    const subInvitation = arrayInvitation.length > 0 ? arrayInvitation.map(p => p.monto) : []
-    const totalInvitation = subInvitation.length > 0 ? subInvitation.reduce((a, b) => a + b, 0) : 0
+    // const finterInvitation = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
+    // const arrayInvitation = finterInvitation.length > 0 ? finterInvitation.filter(p => p.method === "Invitacion") : []
+    // const subInvitation = arrayInvitation.length > 0 ? arrayInvitation.map(p => p.monto) : []
+    // const totalInvitation = subInvitation.length > 0 ? subInvitation.reduce((a, b) => a + b, 0) : 0
 
     const filterQR = filterByDate.length > 0 ? filterByDate.filter(p => p.status === "Pedido Finalizado") : []
     const arrayQR = filterQR.length > 0 ? filterQR.filter(p => p.method === "QR") : []
@@ -132,10 +132,10 @@ export default function CreateComanda(){
               <div className={s.subcontainer}>
                  <Card color={'#29d884'} Icon={<GiReceiveMoney className={s.moneyIcon}/>} name={'Efectivo'} total={totalEfectivo + Number(totalEfectivos)}/>
                  <Card color={'#1976d2 '} Icon={<AiOutlineQrcode className={s.moneyIcon}/>} name={'QR'} total={totalQR + Number(totalqrs)}/>
-                 <Card color={'#282828'} Icon={<AiOutlineGift className={s.moneyIcon}/>}  name={'Invitaciones'} total={totalInvitation}/>
+                 {/* <Card color={'#282828'} Icon={<AiOutlineGift className={s.moneyIcon}/>}  name={'Invitaciones'} total={totalInvitation}/> */}
               </div>
               <div className={s.containerbtns}>
-                <div className={s.btnmiscomandas}>
+                {/* <div className={s.btnmiscomandas}>
                     <Button variant="contained" className={s.dialog}  onClick={handleClickOpen}>
                     Crear Cliente
               </Button>
@@ -175,7 +175,7 @@ export default function CreateComanda(){
                   <Button onClick={create}>Crear</Button>
                   </DialogActions>
               </Dialog>
-              </div>
+              </div> */}
             <button onClick={handleOpenTables} className={s.btnmiscomandas}>Mesas Abiertas</button>
             <button onClick={handleMisComandas} className={s.btnmiscomandas}>Mis Comandas</button>
             <BsPlusSquare onClick={goToCreate} className={s.btncrearcliente}/>

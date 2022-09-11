@@ -223,8 +223,8 @@ function MaxWidthDialog({id}) {
   const products = useSelector(state => state.products);
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
-  const {  setNewCart } = useContext(cartContext)
-
+  const { newCart, setNewCart } = useContext(cartContext)
+console.log('newCart', newCart)
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
@@ -234,6 +234,12 @@ function MaxWidthDialog({id}) {
       ...prev, cart: detalle.items, id: Number(id)
     }))
   },[detalle.items, id, setNewCart])
+
+  const handleComments = (e) => {
+    setNewCart(prev => ({
+      ...prev, comentarios: e.target.value
+    }))
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -274,21 +280,33 @@ function MaxWidthDialog({id}) {
                 option.available === false
               }
               renderOption={(props, option) => (
-                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                <Box key={option.title} component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
           
                   {option.title} {option.description}
                 </Box>
               )}
               onChange={(value, newvalue) => {
+               const item = newCart.cart.find(p => p.id === newvalue.id);
+               console.log('item', item)
+               if(item){
+                setNewCart(prev => ({
+                  ...prev, cart: [...prev.cart.map(p => p.id === newvalue.id ? {
+                    ...p, quantity: p.quantity + 1
+                  } : p)]
+                }))
+               } else{
                 setNewCart(prev => ({
                   ...prev, cart: [...prev.cart, {...newvalue, quantity: 1}]
                 }))
+               }
+                
               }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Productos" />}
             />
           </Box>
         </DialogContent>
+        <TextField id="filled-basic" onChange={handleComments} value={newCart.comentarios} label="Agrega comentarios" variant="filled" />
         <DialogActions>
           <Button onClick={handleClose}>continuar</Button>
         </DialogActions>
@@ -310,12 +328,12 @@ const methodos = [
     alt: 'QR',
     id: 2
   },
-  {
-    image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
-    method: 'Invitacion',
-    alt: 'Invitacion',
-    id: 3
-  },
+  // {
+  //   image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
+  //   method: 'Invitacion',
+  //   alt: 'Invitacion',
+  //   id: 3
+  // },
 ]
 
 function ChangeMethod() {
