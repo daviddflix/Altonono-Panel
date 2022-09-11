@@ -31,7 +31,7 @@ export const  FIND_PRODUCT = 'FIND_PRODUCT'
 
 const axios = require('axios').default;
 
-const url = 'https://altonono.herokuapp.com/'
+const url = 'http://localhost:4000/'
 
 
 

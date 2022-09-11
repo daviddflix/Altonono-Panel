@@ -288,8 +288,8 @@ function MaxWidthDialog({id}) {
                 </Box>
               )}
               onChange={(value, newvalue) => {
-               const item = newCart.cart.find(p => p.id === newvalue.id);
-               console.log('item', item)
+               const item = newvalue && newCart.cart.find(p => p.id === newvalue.id);
+          
                if(item){
                 setNewCart(prev => ({
                   ...prev, cart: [...prev.cart.map(p => p.id === newvalue.id ? {
