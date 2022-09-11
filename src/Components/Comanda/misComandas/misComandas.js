@@ -52,7 +52,7 @@ export default function MisComandas(){
                     {
                         filterbyState.length > 0 ? filterbyState.map(p => {
                             return(
-                               <Card id={p.id} key={p.id} name={p.name} table={p.table}/>
+                               <Card status={p.status} id={p.id} key={p.id} name={p.name} table={p.table}/>
                             )
                         }) : <div className={s.containerNocomanda}>
                             <FcList className={s.listIcon}/>
@@ -66,7 +66,7 @@ export default function MisComandas(){
 } 
 
 
-function Card({id, name, table}){
+function Card({id, name, table, status}){
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -83,6 +83,7 @@ function Card({id, name, table}){
            <div className={s.metodo}>
              <h6>Mesa {table}</h6>
            </div>
+           {status === 'cancelado' && <h4 className={s.cancelado}>CANCELADO</h4>}
         </div>
     )
 }

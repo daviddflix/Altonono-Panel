@@ -5,7 +5,7 @@ import s from './print.module.css'
 export const ComponentToPrint = React.forwardRef((props, ref) => {
  
     const detalle = useSelector(state => state.detalle);
-console.log('detalle', detalle)
+
     return (
       <div ref={ref}>
      <div>
@@ -43,88 +43,3 @@ console.log('detalle', detalle)
     );
   });
 
-//  class ComponentToPrint extends React.Component {
-    // comentarios
-    // : 
-    // ""
-    // date
-    // : 
-    // "9/8/2022"
-    // id
-    // : 
-    // "67"
-    // items
-    // : 
-    // [{…}]
-    // method
-    // : 
-    // "Efectivo"
-    // monto
-    // : 
-    // 900
-    // multiple
-    // : 
-    // {}
-    // name
-    // : 
-    // "David"
-    // status
-    // : 
-    // "Aceptar"
-    // table
-    // : 
-    // "3"
-    // telefono
-    // : 
-    // "1125556692"
-    // time
-    // : 
-    // "18:10:46.833904-03"
-    // waiterId
-    // : 
-    // null
-//     render() {
-//         const detalles = this.props.detalles
-//         console.log('detalles', detalles) 
-       
-//       return (
-        <div>
-          <h2 style={{color: "green"}}>Attendance</h2>
-          <table>
-            <thead>
-            <tr>
-              <th>S/N</th>
-              <th>Nombre</th>
-              <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td></td>
-                <td>samson@yahoo.com</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Ebere Plenty</td>
-                <td>ebere@gmail.com</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Undefined</td>
-                <td>No Email</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-//       );
-//     }
-//   }
-
-//   const mapStateToProps = state => {
-//     return {
-//         detalles: state.detalle  // <-- name conflict
-//     }
-// }
-  
-// export default connect(mapStateToProps)(ComponentToPrint);

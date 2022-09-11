@@ -25,7 +25,7 @@
 
 .btn{
     height: 70%;
-    min-width: 15%;
+    width: 25%;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border: none;
@@ -35,6 +35,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 

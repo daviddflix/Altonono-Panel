@@ -259,7 +259,7 @@ function ChangeMethod() {
         const { name, value } = e.target;
         setClient({ ...client, [name]: value });
       };
-console.log('client', client)
+
     const handleClickOpen = () => {
       setOpen(true);
     };

@@ -32,8 +32,7 @@ export default function DetailMesaAbierta() {
   const detalle = useSelector(state => state.detalle);
   const history = useHistory();
   const { newCart } = useContext(cartContext)
-  const user = useSelector(state => state.userById)
-
+  
 
   const cancel = () => {
     return (
@@ -64,7 +63,7 @@ export default function DetailMesaAbierta() {
             'success'
           )
           dispatch(cancelar({ status: 'cancelado', id: id }))
-          history.push(`/open_tab/${user.id}`)
+          history.push(`/users`)
         }
       })
     )
@@ -72,14 +71,14 @@ export default function DetailMesaAbierta() {
 
   const save = () => {
     dispatch(addItemToOpenTable(newCart))
-    history.push(`/open_tab/${user.id}`)
+    history.push(`/users`)  
   }
 
 
 
   const close = () => {
     dispatch(addItemToCloseTable(newCart))
-    history.push(`/open_tab/${user.id}`)
+    history.push(`/users`)
     Swal.fire({
       icon: 'success',
       title: 'Mesa Cerrada',
@@ -227,7 +226,7 @@ function MaxWidthDialog({id}) {
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
   const { newCart, setNewCart } = useContext(cartContext)
- 
+
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])

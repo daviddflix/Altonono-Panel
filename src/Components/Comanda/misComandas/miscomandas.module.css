@@ -30,6 +30,7 @@
     text-decoration: none;
     color: #282828;
     width: 15%;
+    position: relative;
     height: 100px;
     background-color: fff;
     margin: 1rem;
@@ -39,6 +40,13 @@
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 5px;
+}
+
+.cancelado{
+    color: red;
+    position: absolute;
+    transform: rotate(-25deg);
+    transform-origin: top left;
 }
 
 @media screen and (max-width: 700px) {
