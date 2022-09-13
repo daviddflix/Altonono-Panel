@@ -31,7 +31,7 @@ export const  FIND_PRODUCT = 'FIND_PRODUCT'
 
 const axios = require('axios').default;
 
-const url = 'https://altonono.herokuapp.com/'
+const url = process.env.REACT_APP_URL
 
 
 
@@ -177,9 +177,16 @@ export function filterOrders (value){
 
 
 
-export function addItemToOpenTable(payload){
+export function addItemToCloseTable(payload){
     return async function(dispatch){
       const res = await axios.post(`${url}updateComanda`, payload)
+    
+    }
+}
+
+export function addItemToOpenTable(payload){
+    return async function(dispatch){
+      const res = await axios.post(`${url}updateComandaTableOpen`, payload)
     
     }
 }

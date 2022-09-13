@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import s from './detail.module.css'
 import CurrencyFormat from 'react-currency-format'
 import { RiArrowLeftSLine } from 'react-icons/ri'
-import { addItemToOpenTable, cancelar, getDetails, getProducts } from "../../../Redux/actions";
+import { addItemToCloseTable, addItemToOpenTable, cancelar, getDetails, getProducts } from "../../../Redux/actions";
 import ModalContext from "../../../context/modalContext";
 import Spinner from "../../spinner/spinner";
 import { CgMathPlus } from 'react-icons/cg'
@@ -71,11 +71,13 @@ export default function DetailMesaAbierta() {
 
   const save = () => {
     dispatch(addItemToOpenTable(newCart))
-    history.push(`/users`)
+    history.push(`/users`)  
   }
 
-  const handleStatusBtn = () => {
-    dispatch(addItemToOpenTable(newCart))
+
+
+  const close = () => {
+    dispatch(addItemToCloseTable(newCart))
     history.push(`/users`)
     Swal.fire({
       icon: 'success',
@@ -156,7 +158,7 @@ export default function DetailMesaAbierta() {
             </div>
           </div>
           <div className={s.containerBtnss}>
-            <Button className={s.btnss} disabled={!newCart.method} onClick={handleStatusBtn} variant="contained">Cerrar mesa</Button>
+            <Button className={s.btnss} disabled={!newCart.method} onClick={close} variant="contained">Cerrar mesa</Button>
             <Button className={s.btnss} onClick={save} variant="contained">Guardar</Button>
             <Button className={s.cancelar} color='error' onClick={cancel} variant="contained">CANCELAR</Button>
           </div>
@@ -223,17 +225,23 @@ function MaxWidthDialog({id}) {
   const products = useSelector(state => state.products);
   const detalle = useSelector(state => state.detalle);
   const dispatch = useDispatch();
-  const {  setNewCart } = useContext(cartContext)
-
+  const { newCart, setNewCart } = useContext(cartContext)
+console.log('newCart', newCart)
   useEffect(() => {
     dispatch(getProducts())
   }, [dispatch])
 
   useEffect(() => {
     setNewCart(prev => ({
-      ...prev, cart: detalle.items, id: Number(id)
+      ...prev, cart: detalle.items, id: Number(id), comentarios: detalle.comentarios
     }))
   },[detalle.items, id, setNewCart])
+
+  const handleComments = (e) => {
+    setNewCart(prev => ({
+      ...prev, comentarios: e.target.value
+    }))
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -274,21 +282,33 @@ function MaxWidthDialog({id}) {
                 option.available === false
               }
               renderOption={(props, option) => (
-                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                <Box key={option.title} component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
           
                   {option.title} {option.description}
                 </Box>
               )}
               onChange={(value, newvalue) => {
+               const item = newvalue && newCart.cart.find(p => p.id === newvalue.id);
+          
+               if(item){
+                setNewCart(prev => ({
+                  ...prev, cart: [...prev.cart.map(p => p.id === newvalue.id ? {
+                    ...p, quantity: p.quantity + 1
+                  } : p)]
+                }))
+               } else{
                 setNewCart(prev => ({
                   ...prev, cart: [...prev.cart, {...newvalue, quantity: 1}]
                 }))
+               }
+               setOpen(false);
               }}
               sx={{ width: 250 }}
               renderInput={(params) => <TextField {...params} label="Productos" />}
             />
           </Box>
         </DialogContent>
+        <TextField id="filled-basic" onChange={handleComments} value={newCart.comentarios} label="Agrega comentarios" variant="filled" />
         <DialogActions>
           <Button onClick={handleClose}>continuar</Button>
         </DialogActions>
@@ -310,12 +330,12 @@ const methodos = [
     alt: 'QR',
     id: 2
   },
-  {
-    image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
-    method: 'Invitacion',
-    alt: 'Invitacion',
-    id: 3
-  },
+  // {
+  //   image: 'https://cdn3.iconfinder.com/data/icons/menu-icons-2/7/18-512.png',
+  //   method: 'Invitacion',
+  //   alt: 'Invitacion',
+  //   id: 3
+  // },
 ]
 
 function ChangeMethod() {
