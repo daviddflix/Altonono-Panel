@@ -10,8 +10,8 @@
    
     display: flex;
     flex-direction: column;
-    width: 95%;
-    height: 90vh;
+    width: 100%;
+    height: calc(100vh - 50px);
     align-items: center;
     justify-content: flex-start;
    
@@ -23,10 +23,8 @@
     width: 100%;
     align-items: center;
     justify-content: space-around;
-    margin: 1rem;
     height: 10%;
     position: relative;
-   
 }
 
 .subcontainerArrow{
@@ -35,9 +33,9 @@
     width: 85%;
 }
 
-.plusicon{
+/* .plusicon{
     height: 100%;
-}
+} */
 
 .plusiconMethod{
     height: 100%;
@@ -50,9 +48,8 @@
     width: 80%;
     background-color: #fff;
     margin: 1rem 0 1rem 1rem;
-    max-height: 30%;
+    max-height: 40%;
     overflow-y: scroll;
-    border: #282828 1px solid;
     border-radius: 2px;
 }
 
@@ -232,11 +229,21 @@
 }
 
 .containerBtnss{
-    width: 95%;
+    width: 100%;
     display: flex;
     align-items: center;
-    height: calc(30% - 50px);
+    height: 15%;
     justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+}
+
+.btnss{
+    height: 80%;
+}
+
+.cancelar{
+    height: 80%;
 }
 
 .containerChangeMethod{

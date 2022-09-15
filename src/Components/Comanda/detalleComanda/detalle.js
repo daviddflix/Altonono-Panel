@@ -253,7 +253,7 @@ console.log('newCart', newCart)
 
   return (
     <React.Fragment>
-      <Button variant="outlined" className={s.plusicon} onClick={handleClickOpen}>
+      <Button style={{height: '70%', marginRight: '0.5rem'}} variant="outlined"  onClick={handleClickOpen}>
         <CgMathPlus />
       </Button>
       <Dialog
