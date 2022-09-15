@@ -33,7 +33,6 @@ import { addOrder } from './Redux/actions';
 import sound from './Components/Order/Sounds/alert.mp3'
 import io from "socket.io-client";
 
-
 function App() {
   
   const [audio, setAudio] = useState(new Audio(sound));

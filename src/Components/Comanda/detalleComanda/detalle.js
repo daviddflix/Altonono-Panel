@@ -22,11 +22,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Swal from 'sweetalert2'
 import cartContext from "../../../context/cartContext";
 import m from '../encurso.module.css'
-import * as Bluetooth from 'react-bluetooth';
 
-export default async function DetailMesaAbierta() {
+export default function DetailMesaAbierta() {
 
- 
   const dispatch = useDispatch();
   const { variables } = useContext(ModalContext);
   const windowlength = window.matchMedia("(max-width:700px)");
@@ -34,8 +32,7 @@ export default async function DetailMesaAbierta() {
   const detalle = useSelector(state => state.detalle);
   const history = useHistory();
   const { newCart } = useContext(cartContext)
-
-
+  
 
   const cancel = () => {
     return (
@@ -253,8 +250,6 @@ console.log('newCart', newCart)
   const handleClose = () => {
     setOpen(false);
   };
-
-  console.log(navigator.bl)
 
   return (
     <React.Fragment>

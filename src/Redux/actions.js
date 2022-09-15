@@ -31,7 +31,7 @@ export const  FIND_PRODUCT = 'FIND_PRODUCT'
 
 const axios = require('axios').default;
 
-const url = process.env.REACT_APP_URL
+const url = 'https://altonono.herokuapp.com/'
 
 
 
