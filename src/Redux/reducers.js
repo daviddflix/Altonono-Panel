@@ -64,7 +64,7 @@ const InicialState = {
             storage.removeItem('persist:root')
             return{
                 isLogin: false,
-                admin: {},
+                admin: [],
                 status: [],
                 queueOfTheDay: [],
                 detalle : {},

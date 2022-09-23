@@ -42,10 +42,10 @@ export default function VerticalNavbar (){
 <nav ref={wrapperRef} id='nav'  className={s.navbar}>
 <ProSidebar width={windowlength.matches=== true?  '100vw' : variables.sidebarWidth}   collapsedWidth={windowlength.matches=== true? '0px': '80px'} collapsed={variables.toggle} >
   <Menu iconShape="square">
-    <MenuItem style={admin.role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<MdDashboard />}>Dashboard<NavLink to='/'/></MenuItem>
-    <MenuItem style={admin.role === 'mozos' ? {display: 'none'}: {display: 'block'}} icon={<GoListUnordered />}>Pedidos <NavLink to='/orders'/></MenuItem>
-    <MenuItem style={admin.role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<GiMeal />}>Historial<NavLink to='/resume'/></MenuItem>
-    <MenuItem style={admin.role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<MdProductionQuantityLimits />}>Menu<NavLink to='/menu'/></MenuItem>
+    <MenuItem icon={<MdDashboard />}>Dashboard<NavLink to='/'/></MenuItem>
+    <MenuItem style={admin.length > 0 && admin && admin[0].role === 'mozos' ? {display: 'none'}: {display: 'block'}} icon={<GoListUnordered />}>Pedidos <NavLink to='/orders'/></MenuItem>
+    <MenuItem style={admin.length > 0 && admin && admin[0].role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<GiMeal />}>Historial<NavLink to='/resume'/></MenuItem>
+    <MenuItem style={admin.length > 0 && admin && admin[0].role === 'mozos' ? {display: 'none'} : {display: 'block'}} icon={<MdProductionQuantityLimits />}>Menu<NavLink to='/menu'/></MenuItem>
     <MenuItem icon={<ImUsers />}>Usuarios<NavLink to='/users'/></MenuItem>
   </Menu>
 </ProSidebar>

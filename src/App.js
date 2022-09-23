@@ -43,7 +43,7 @@ function App() {
 
 
  const handlesound = () => {
-  if(admin.role === "admin"){
+  if(admin[0].role === "admin"){
     audio.play()
   } else {
     audio.pause()

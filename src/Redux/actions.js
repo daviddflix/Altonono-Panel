@@ -1,3 +1,5 @@
+
+import Swal from 'sweetalert2'
 export const CREDENTIAL = 'CREDENTIAL'
 export const UPDATE_LOGIN = 'UPDATE_LOGIN'
 export const  ADD_ORDERS = 'ADD_ORDER'
@@ -36,9 +38,29 @@ const url = 'https://altonono.herokuapp.com/'
 
 
 export function accessAdmin(payload){
+   
     return async function (dispatch){  
-       const res = await axios.post(`${url}credenciales`, payload)
-       return dispatch({ type: CREDENTIAL, payload: res.data })
+    const rawResponse = await fetch(`${url}credenciales`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+  .then(res => {
+    if(res.length > 0){
+        dispatch(updateLogin(true))
+    } else {
+        Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Usuario o contraseña incorrecta!',
+                
+                })
+    }
+    return dispatch({ type: CREDENTIAL, payload: res })
+  })
     }        
  }
 
