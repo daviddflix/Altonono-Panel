@@ -58,7 +58,7 @@ export default function Navbar (){
                </div>
                <div className={s.subul}>
                 {/* <h3 style={internet === true ? {color: '#10c15b'} : {color: 'red'}} className={s.internet}>{statusInternet}</h3> */}
-                <button disabled={admin.role === 'mozos'} onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status.length === 0 ? s.iconOffline: status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button>
+                <button disabled={admin.length > 0 && admin && admin[0].role === 'mozos'} onClick={handleTienda} className={s.btnStatusTienda}><RiRadioButtonLine className={status.length === 0 ? s.iconOffline: status[0].status ==='Cerrado'? s.iconOffline: s.iconOnline}/>{status.length === 0? <SpinnerTiny />: status[0].status}</button>
                <div className={s.btnLogout}><Logout/></div>
               </div>
            </ul>

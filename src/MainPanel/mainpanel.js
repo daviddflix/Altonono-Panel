@@ -15,7 +15,7 @@ const MainPanel = () => {
 
    const history = useHistory();
    const dispatch = useDispatch();
-   const admin = useSelector(state => state.admin)
+   const isLogin = useSelector(state => state.isLogin)
    
 
     useEffect(()=> {
@@ -31,7 +31,7 @@ const MainPanel = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false)
-console.log('loading', loading)
+
 
   const submit = async () => {
     dispatch(accessAdmin({email: formValues.mail, password: formValues.password}))
@@ -81,8 +81,11 @@ console.log('loading', loading)
     }
   }, [formErrors, isSubmitting]);
 
-
-
+// useEffect(() => {
+//   isLogin === false && setLoading(false)
+// })
+console.log('isLogin', isLogin)
+console.log('loading', loading)
 
   return (
     <div className={s.main}>
@@ -123,7 +126,7 @@ console.log('loading', loading)
        {formErrors.password && <span className={s.span}>{formErrors.password}</span>}
      </div>
 
-     <Button variant='contained' style={{width: '50%'}} type='submit'>{loading === true ? <div className={s.spinnerContainer}><SpinnerTiny/></div> : 'Iniciar Sesion'}</Button>
+     <Button variant='contained' style={{width: '50%'}} type='submit'>Iniciar Sesion</Button>
    </form>
     <NavLink to={'/restore'} className={s.restore}>Recuperar contraseña</NavLink>
       </div>
