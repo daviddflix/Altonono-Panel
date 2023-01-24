@@ -37,7 +37,7 @@ function App() {
   
   const [audio, setAudio] = useState(new Audio(sound));
 
-  const port = 'https://altonono.herokuapp.com/'
+  const port = 'https://altononoapi-production.up.railway.app/'
  const socket = io.connect(`${port}`, {transports: ['websocket', 'polling']});
  const admin = useSelector(state => state.admin)
 
