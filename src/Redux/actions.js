@@ -33,7 +33,7 @@ export const  FIND_PRODUCT = 'FIND_PRODUCT'
 
 const axios = require('axios').default;
 
-const url = 'https://altonono.herokuapp.com/'
+const url = 'https://altononoapi-production.up.railway.app/'
 
 
 
