@@ -84,15 +84,14 @@ const MainPanel = () => {
 // useEffect(() => {
 //   isLogin === false && setLoading(false)
 // })
-console.log('isLogin', isLogin)
-console.log('loading', loading)
+
 
   return (
     <div className={s.main}>
     <div className={s.container}>
        
       <div className={s.box1}>
-      <img src={img} alt='logo' className={s.logo} />
+//       <img src={img} alt='logo' className={s.logo} />
       <h2 style={{color:'#fff', margin: '1rem'}}>Altonono</h2>
 
    <form className={s.form} onSubmit={handleSubmit} noValidate> 
